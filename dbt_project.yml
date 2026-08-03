@@ -1,0 +1,31 @@
+name: codrona_lens
+version: "0.0.0"
+config-version: 2
+
+profile: codrona_lens
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  codrona_lens:
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: ephemeral
+    marts:
+      +materialized: table
+      +schema: marts
+
+snapshots:
+  codrona_lens:
+    +target_schema: snapshots
+    +strategy: check
+    +invalidate_hard_deletes: false

@@ -1,0 +1,40 @@
+version: 2
+
+sources:
+  - name: codenet
+    description: >
+      IBM Project CodeNet. Dataset under CDLA-Permissive-2.0, tooling under
+      Apache-2.0. Verified 2026-08-03. See LEGAL.md.
+    meta:
+      licence: CDLA-Permissive-2.0
+      legal_status: verified
+    tables:
+      - name: raw_submissions
+      - name: raw_problems
+
+  - name: codeforces
+    description: >
+      Codeforces official API and the end-2024 bulk release.
+      LICENCE NOT YET VERIFIED. Adapters reading this source must not merge until
+      LEGAL.md carries a verified row.
+    meta:
+      licence: unverified
+      legal_status: blocking
+      rate_limit_per_sec: 5
+    tables:
+      - name: raw_submissions
+      - name: raw_problems
+      - name: raw_users
+      - name: raw_contests
+
+  - name: atcoder
+    description: >
+      AtCoder submission archive via the community project. Two licences apply and
+      both must clear: the tool's own, and AtCoder's terms over the underlying data.
+      LICENCE NOT YET VERIFIED.
+    meta:
+      licence: unverified
+      legal_status: blocking
+    tables:
+      - name: raw_submissions
+      - name: raw_problems

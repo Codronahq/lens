@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: dim_problem
+    description: SCD-2 problem dimension. Difficulty and tags are tracked attributes.
+    columns:
+      - name: problem_sk
+        tests: [unique, not_null]
+      - name: problem_key
+        tests: [not_null]
+      - name: valid_from
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  - name: dim_user
+    description: SCD-2 user dimension. Rating and tier are tracked attributes.
+    columns:
+      - name: user_sk
+        tests: [unique, not_null]
+      - name: user_key
+        tests: [not_null]
+
+  - name: fct_submission
+    description: >
+      One row per submission. Dimension keys are resolved as-of submitted_at, never
+      to the current version. Joining to is_current would leak future information
+      into the past and is the single most damaging error possible here.
+    columns:
+      - name: submission_key
+        tests: [unique, not_null]
+      - name: problem_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_problem')
+              field: problem_sk
+      - name: user_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_user')
+              field: user_sk
+      - name: verdict
+        tests:
+          - accepted_values:
+              values: [AC, WA, TLE, MLE, RE, CE, OLE, OTHER]
+      - name: is_accepted
+        tests: [not_null]
+      - name: execution_time_ms
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 60000
+              severity: warn

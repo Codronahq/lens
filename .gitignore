@@ -1,0 +1,33 @@
+# dbt
+target/
+dbt_packages/
+dbt_modules/
+logs/
+.user.yml
+profiles.yml
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Data — never commit corpora or extracts
+*.parquet
+*.duckdb
+*.db
+data/
+!data/.gitkeep
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
