@@ -14,13 +14,13 @@ sources:
 
   - name: codeforces
     description: >
-      Codeforces official API and the end-2024 bulk release.
-      LICENCE NOT YET VERIFIED. Adapters reading this source must not merge until
-      LEGAL.md carries a verified row.
+      Codeforces official API, self-collected. VERIFIED 2026-08-04; see LEGAL.md.
+      The third-party end-2024 bulk release is declined and is not ingested.
+      Link-never-host: no problem statements or editorials are stored or served.
     meta:
-      licence: unverified
-      legal_status: blocking
-      rate_limit_per_sec: 5
+      licence: none-stated-site-terms-govern
+      legal_status: verified
+      min_interval_ms: 2000
     tables:
       - name: raw_submissions
       - name: raw_problems
