@@ -29,12 +29,59 @@ sources:
 
   - name: atcoder
     description: >
-      AtCoder submission archive via the community project. Two licences apply and
-      both must clear: the tool's own, and AtCoder's terms over the underlying data.
-      LICENCE NOT YET VERIFIED.
+      AtCoder direct ingestion. VERIFIED 2026-08-04 as DO NOT INGEST; see LEGAL.md.
+      The kenkoooo bulk dataset states no data licence and carries no AI-training
+      opt-out signal, and AtCoder publishes no official API, so no self-collection
+      route exists. AtCoder problems and pre-2021 submissions reach the warehouse
+      through the codenet and codecontests sources instead. Per-user profile reads
+      for a self-connected handle are an application concern, not a warehouse source.
+    meta:
+      licence: none-stated
+      legal_status: do-not-ingest
+      min_interval_ms: 1000
+    tables: []
+
+  - name: codecontests
+    description: >
+      DeepMind CodeContests. Apache-2.0 code, CC BY 4.0 non-code. VERIFIED
+      2026-08-04, PARTITIONED; see LEGAL.md. Ingest CodeNet-sourced problems only,
+      filtered on the ContestProblem source field. Codeforces-sourced and
+      description2code-sourced problems are excluded. Upstream is archived and
+      frozen; snapshot at ingest and record the download date.
+    meta:
+      licence: CC-BY-4.0
+      legal_status: verified-partitioned
+      allowed_problem_sources: ["Aizu", "AtCoder"]
+      upstream_archived: "2024-12-06"
+    tables:
+      - name: raw_problems
+      - name: raw_solutions
+      - name: raw_tests
+
+  - name: zerotrac
+    description: >
+      LeetCode problem difficulty estimates by Shuxin Chen (zerotrac). MIT.
+      VERIFIED 2026-08-04; see LEGAL.md. Community estimates, not authoritative
+      LeetCode difficulty — every surface that renders one labels it as such.
+      Weekly contests 1-62 carry no rating; fall back to Codrona IRT rather than
+      emitting a null. Pin the upstream commit SHA at ingest.
+    meta:
+      licence: MIT
+      legal_status: verified
+      attribution: "Copyright (c) 2021 Shuxin Chen"
+    tables:
+      - name: raw_problem_ratings
+
+  - name: aizu
+    description: >
+      Aizu Online Judge official API (judgeapi.u-aizu.ac.jp). LICENCE NOT YET
+      VERIFIED. No row exists in LEGAL.md; adapters reading this source must not
+      merge until one does. AOJ documentation asks developers building services on
+      the API to contact them first, which is part of that verification.
     meta:
       licence: unverified
       legal_status: blocking
     tables:
       - name: raw_submissions
       - name: raw_problems
+      - name: raw_users
