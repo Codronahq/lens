@@ -74,14 +74,17 @@ sources:
 
   - name: aizu
     description: >
-      Aizu Online Judge official API (judgeapi.u-aizu.ac.jp). LICENCE NOT YET
-      VERIFIED. No row exists in LEGAL.md; adapters reading this source must not
-      merge until one does. AOJ documentation asks developers building services on
-      the API to contact them first, which is part of that verification.
+      Aizu Online Judge official API (judgeapi.u-aizu.ac.jp). PENDING PERMISSION;
+      see LEGAL.md. No licence is stated anywhere on the developer site. A
+      permission enquiry was sent to the University of Aizu on 2026-08-05 and no
+      reply has been received. Do not ingest until one is recorded. Not required
+      for Phase 1: historical Aizu submissions already arrive through the codenet
+      source under CDLA-Permissive-2.0, and AOJ would only extend coverage past
+      CodeNet's 2021 snapshot. No rate limit is published; the operator asks
+      callers to avoid excessive concurrent requests, and a figure was requested
+      in the same enquiry.
     meta:
-      licence: unverified
-      legal_status: blocking
-    tables:
-      - name: raw_submissions
-      - name: raw_problems
-      - name: raw_users
+      licence: none-stated
+      legal_status: pending-permission
+      permission_requested: "2026-08-05"
+    tables: []
