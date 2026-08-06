@@ -23,7 +23,10 @@ from pyspark.sql.types import StringType, StructField  # noqa: E402
 
 from codrona_lens.normalize.cf_submissions import (  # noqa: E402
     SUBMISSION_SCHEMA,
+    HiddenLandingFilesError,
+    audit_landing,
     deduplicate,
+    hidden_landing_files,
     landing_glob,
     normalize,
     stage,
@@ -95,6 +98,39 @@ def make_row(**overrides: Any) -> dict[str, Any]:
 
 def frame(spark: Any, rows: list[dict[str, Any]]) -> Any:
     return spark.createDataFrame(rows, schema=LANDING_SCHEMA)
+
+
+def _write_landing(root: pathlib.Path, shard: str, name: str) -> pathlib.Path:
+    """Create one landing file. Content is irrelevant; only the name is tested."""
+    path = root / shard / name
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(b"")
+    return path
+
+
+def test_audit_landing_counts_visible_files(tmp_path: pathlib.Path) -> None:
+    _write_landing(tmp_path, "00", "tourist.jsonl.gz")
+    _write_landing(tmp_path, "a1", "Petr.jsonl.gz")
+    assert audit_landing(tmp_path) == 2
+
+
+def test_underscore_handles_are_detected(tmp_path: pathlib.Path) -> None:
+    _write_landing(tmp_path, "00", "tourist.jsonl.gz")
+    _write_landing(tmp_path, "d0", "_nobita.jsonl.gz")
+    assert [p.name for p in hidden_landing_files(tmp_path)] == ["_nobita.jsonl.gz"]
+
+
+def test_audit_landing_refuses_hidden_files(tmp_path: pathlib.Path) -> None:
+    _write_landing(tmp_path, "00", "tourist.jsonl.gz")
+    _write_landing(tmp_path, "d0", "__PACIFIC__.jsonl.gz")
+    with pytest.raises(HiddenLandingFilesError, match="__PACIFIC__"):
+        audit_landing(tmp_path)
+
+
+def test_dot_prefixed_files_are_also_hidden(tmp_path: pathlib.Path) -> None:
+    _write_landing(tmp_path, "e5", ".hidden.jsonl.gz")
+    with pytest.raises(HiddenLandingFilesError):
+        audit_landing(tmp_path)
 
 
 def test_landing_glob_defaults_to_every_shard() -> None:

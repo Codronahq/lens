@@ -129,6 +129,45 @@ SUBMISSION_SCHEMA = StructType(
 HANDLE_FROM_PATH = r"([^/]+)\.jsonl\.gz$"
 
 
+class HiddenLandingFilesError(RuntimeError):
+    """Raised when the landing zone holds files Spark's reader cannot see.
+
+    Hadoop's FileInputFormat skips any path whose basename starts with "_" or
+    ".", which is how it ignores _SUCCESS and _temporary markers. Codeforces
+    handles may legally start with an underscore, so such a file is read as
+    zero rows with no warning, silently biasing the corpus against exactly
+    those users. The rule is hardcoded in Hadoop and cannot be configured
+    away, so the only fix is a filename that does not lead with those
+    characters. This is a hard error with no override: a silent sampling bias
+    must never be suppressible by a flag.
+    """
+
+
+def hidden_landing_files(input_dir: pathlib.Path) -> list[pathlib.Path]:
+    """Landing files whose basename Spark's reader will silently skip."""
+    return sorted(
+        path for path in input_dir.glob("*/*.jsonl.gz") if path.name.startswith(("_", "."))
+    )
+
+
+def audit_landing(input_dir: pathlib.Path) -> int:
+    """Fail before reading if any landing file is invisible to Spark.
+
+    Returns the number of files on disk so the caller can compare it with the
+    number Spark actually read.
+    """
+    hidden = hidden_landing_files(input_dir)
+    if hidden:
+        shown = ", ".join(path.name for path in hidden[:5])
+        more = f" (+{len(hidden) - 5} more)" if len(hidden) > 5 else ""
+        raise HiddenLandingFilesError(
+            f"{len(hidden)} landing file(s) start with '_' or '.' and would be "
+            f"skipped by Spark, dropping their rows silently: {shown}{more}. "
+            f"Rename them before normalizing."
+        )
+    return len(list(input_dir.glob("*/*.jsonl.gz")))
+
+
 def landing_glob(input_dir: pathlib.Path, shards: list[str] | None = None) -> list[str]:
     """Glob patterns for the landing zone, optionally narrowed to named shards."""
     if shards:
@@ -291,6 +330,8 @@ def write_report(report: dict[str, Any], report_dir: pathlib.Path) -> pathlib.Pa
 def print_report(report: dict[str, Any]) -> None:
     order = [
         "input_paths",
+        "files_on_disk",
+        "files_read",
         "raw_rows",
         "duplicate_rows",
         "unique_rows",
@@ -339,6 +380,7 @@ def run(
         shuffle_partitions=shuffle_partitions,
     )
     try:
+        files_on_disk = audit_landing(input_dir)
         source = read_landing(spark, input_dir, shards=shards)
         staged = stage(source).cache()
         deduped = deduplicate(staged).cache()
@@ -349,6 +391,8 @@ def run(
 
         report = summarize(staged, deduped)
         report["input_paths"] = ",".join(landing_glob(input_dir, shards))
+        report["files_on_disk"] = files_on_disk
+        report["files_read"] = int(report["distinct_source_handles"])
         report["output"] = str(output_dir)
         report["spark_version"] = spark.version
         report["elapsed_seconds"] = round(time.time() - started, 1)
