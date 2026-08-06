@@ -13,6 +13,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+spark = [
+  "pyspark==4.0.1",
+  "pyarrow>=17",
+  "duckdb>=1.1",
+]
 dev = [
   "pre-commit",
   "ruff",
@@ -21,6 +26,9 @@ dev = [
   "pyyaml",
   "types-requests",
   "types-PyYAML",
+  "pyspark==4.0.1",
+  "pyarrow>=17",
+  "duckdb>=1.1",
 ]
 
 [tool.setuptools.packages.find]

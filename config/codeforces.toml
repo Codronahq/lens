@@ -30,8 +30,11 @@ seed = 20260806
 # candidate_master 670 / master 368 / international_master 106 /
 # grandmaster 114 / international_grandmaster 60 / legendary_grandmaster 18
 [cohort.targets]
-newbie = 4000
-pupil = 5000
+# 2026-08-06 21:xx: widened to the full active population. Every band above
+# pupil was already exhausted; a full sweep removes sampling bias as a risk
+# rather than mitigating it. Already-collected users are never refetched.
+newbie = 0
+pupil = 0
 specialist = 0
 expert = 0
 candidate_master = 0
