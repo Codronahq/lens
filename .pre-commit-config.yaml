@@ -1,0 +1,44 @@
+# Every hook runs the binary from .venv, so the "rev pinned to a stale version"
+# failure class cannot occur: pre-commit and CI execute the same versions by
+# construction. mypy runs over the whole tree rather than only changed files,
+# because replacing one module can break an untouched importer.
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: ruff check
+        entry: .venv/bin/ruff
+        args: [check, --fix]
+        language: system
+        types_or: [python, pyi]
+
+      - id: ruff-format
+        name: ruff format
+        entry: .venv/bin/ruff
+        args: [format]
+        language: system
+        types_or: [python, pyi]
+
+      - id: mypy
+        name: mypy (src scripts tests)
+        entry: .venv/bin/mypy
+        args: [src, scripts, tests]
+        language: system
+        types_or: [python, pyi]
+        pass_filenames: false
+
+      - id: pytest
+        name: pytest
+        entry: .venv/bin/pytest
+        args: [-q]
+        language: system
+        types_or: [python, pyi]
+        pass_filenames: false
+
+      - id: repo-checks
+        name: repository hygiene
+        entry: .venv/bin/python
+        args: [scripts/repo_checks.py]
+        language: system
+        pass_filenames: false
+        always_run: true

@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "codrona-lens"
+version = "0.1.0"
+description = "Codrona Lens - data spine: ingestion, warehouse, analytics"
+requires-python = ">=3.11"
+license = "AGPL-3.0-or-later"
+dependencies = [
+  "requests>=2.32",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pre-commit",
+  "ruff",
+  "mypy",
+  "pytest",
+  "pyyaml",
+  "types-requests",
+  "types-PyYAML",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+# SIM108 forces a 100-char ternary that reads worse than the if/else it replaces.
+ignore = ["SIM108"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+warn_return_any = true
+
+[[tool.mypy.overrides]]
+module = ["repo_checks"]
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

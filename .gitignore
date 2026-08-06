@@ -31,3 +31,11 @@ Thumbs.db
 *.swp
 .idea/
 .vscode/
+
+# Python packaging / tool caches
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+build/
+dist/

@@ -1,0 +1,42 @@
+# Codeforces self-collection.
+#
+# The documented API limit is one request per two seconds. min_interval_seconds
+# is deliberately above it: the margin costs ~5% runtime and removes the entire
+# class of self-inflicted rate-limit bans. Do not lower it.
+
+[api]
+base_url = "https://codeforces.com/api"
+min_interval_seconds = 2.1
+page_size = 10000
+timeout_seconds = 60.0
+max_attempts = 10
+
+[paths]
+data_root = "~/codrona-data/raw/codeforces"
+
+[collection]
+# problem.name is metadata, not statement text. Link-never-host targets
+# statements and editorials; titles are retained so the recommender can name
+# what it recommends. Flip to false to drop them at landing time.
+keep_problem_name = true
+
+[cohort]
+# Committed seed makes the sample regenerable, which the reproducibility rule
+# in codrona.md section 9 requires of anything a public number rests on.
+seed = 20260806
+
+# 0 means "take the whole band". Measured population 2026-08-06:
+# newbie 37783 / pupil 8177 / specialist 5023 / expert 3165 /
+# candidate_master 670 / master 368 / international_master 106 /
+# grandmaster 114 / international_grandmaster 60 / legendary_grandmaster 18
+[cohort.targets]
+newbie = 4000
+pupil = 5000
+specialist = 0
+expert = 0
+candidate_master = 0
+master = 0
+international_master = 0
+grandmaster = 0
+international_grandmaster = 0
+legendary_grandmaster = 0
