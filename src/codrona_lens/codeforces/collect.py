@@ -58,10 +58,33 @@ def _handle_signal(signum: int, frame: FrameType | None) -> None:
     print("\n[signal] finishing current user, then stopping.", file=sys.stderr)
 
 
+LEADING_ENCODED = (("_", "%5F"), (".", "%2E"))
+
+
+def encode_leading(stem: str) -> str:
+    """Percent-encode a leading "_" or "." so Hadoop's reader can see the file.
+
+    Hadoop's FileInputFormat skips any basename starting with those two
+    characters, which is how it ignores _SUCCESS and _temporary markers. A
+    Codeforces handle may legally start with an underscore, so the file would
+    be read as zero rows with no warning. Only the first character is touched:
+    quote() already renders a literal "%" as "%25", so a stem beginning with
+    "%" is unambiguously encoded already and the transform is idempotent.
+    """
+    for char, encoded in LEADING_ENCODED:
+        if stem.startswith(char):
+            return encoded + stem[1:]
+    return stem
+
+
+def safe_filename(handle: str) -> str:
+    """The filename stem the landing zone uses for a handle."""
+    return encode_leading(urllib.parse.quote(handle, safe=""))
+
+
 def user_path(config: Config, handle: str) -> pathlib.Path:
     shard = hashlib.sha1(handle.encode("utf-8")).hexdigest()[:2]
-    safe = urllib.parse.quote(handle, safe="")
-    return config.user_status_dir / shard / f"{safe}.jsonl.gz"
+    return config.user_status_dir / shard / f"{safe_filename(handle)}.jsonl.gz"
 
 
 def write_rows(path: pathlib.Path, rows: list[dict[str, Any]]) -> None:

@@ -125,8 +125,22 @@ SUBMISSION_SCHEMA = StructType(
     ]
 )
 
-# Captures the handle from .../user_status/<shard>/<handle>.jsonl.gz
+# Captures the filename stem from .../user_status/<shard>/<stem>.jsonl.gz
 HANDLE_FROM_PATH = r"([^/]+)\.jsonl\.gz$"
+
+# The collector percent-encodes a leading "_" or "." so Hadoop's reader does
+# not skip the file. Decode exactly those two, never a general unquote: we
+# control what gets encoded, and a broad decode would corrupt any handle that
+# legitimately contains a percent sign.
+LEADING_DECODE = ((r"^%5F", "_"), (r"^%2E", "."))
+
+
+def _collected_handle() -> Column:
+    """Recover the collecting handle from the filename the collector wrote."""
+    handle = F.regexp_extract(F.input_file_name(), HANDLE_FROM_PATH, 1)
+    for pattern, replacement in LEADING_DECODE:
+        handle = F.regexp_replace(handle, pattern, replacement)
+    return handle
 
 
 class HiddenLandingFilesError(RuntimeError):
@@ -184,10 +198,7 @@ def read_landing(
     """Read the gzipped JSONL landing zone, tagging each row with its source handle."""
     paths = landing_glob(input_dir, shards)
     frame = spark.read.schema(SUBMISSION_SCHEMA).json(paths)
-    return frame.withColumn(
-        "collected_via_handle",
-        F.regexp_extract(F.input_file_name(), HANDLE_FROM_PATH, 1),
-    )
+    return frame.withColumn("collected_via_handle", _collected_handle())
 
 
 def _is_ghost() -> Column:
