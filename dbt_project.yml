@@ -6,7 +6,8 @@ profile: codrona_lens
 
 model-paths: ["models"]
 seed-paths: ["seeds"]
-test-paths: ["tests"]
+# "tests" is the pytest suite; dbt singular tests live apart from it.
+test-paths: ["dbt_tests"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 

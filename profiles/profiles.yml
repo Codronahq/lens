@@ -1,0 +1,25 @@
+# dbt connection profile. Committed deliberately: a profile in ~/.dbt is
+# invisible to CI and to anyone cloning the repo, so the warehouse path is
+# driven by an environment variable instead of a home directory.
+#
+# The DuckDB file lives outside the repo (multi-GB, same rule as the lake).
+# Point dbt at it with:
+#   export DBT_PROFILES_DIR=$PWD/profiles
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+codrona_lens:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('CODRONA_DUCKDB', '~/codrona-data/warehouse/codrona.duckdb') }}"
+      threads: 4
+      extensions:
+        - parquet
+    ci:
+      type: duckdb
+      path: "{{ env_var('CODRONA_DUCKDB', 'target/ci.duckdb') }}"
+      threads: 2
+      extensions:
+        - parquet

@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: stg_cf_submissions
+    description: >
+      Codeforces submissions staged from silver Parquet. Adds verdict_class and
+      is_evidence; discards nothing. Team submissions carry a null handle by
+      design - they are deduplicated globally by submission id upstream and stay
+      non-person-level here.
+    columns:
+      - name: submission_id
+        description: Codeforces submission id. Unique after upstream dedupe.
+        tests: [unique, not_null]
+      - name: problem_id
+        description: >
+          contestId + index, or problemsetName + index for the acmsguru archive
+          which carries no contestId at all.
+        tests: [not_null]
+      - name: verdict_class
+        tests:
+          - not_null
+          - accepted_values:
+              values: [accepted, partial, rejected, unjudged, unknown]
+      - name: is_evidence
+        description: >
+          False where the submission says nothing about ability. The skill model
+          filters on this column rather than on verdict.
+        tests: [not_null]
+      - name: is_person_level
+        tests: [not_null]
+      - name: submitted_at
+        tests: [not_null]
+      - name: submitted_year
+        description: Hive partition column, derived in UTC.
+        tests: [not_null]

@@ -88,3 +88,22 @@ sources:
       legal_status: pending-permission
       permission_requested: "2026-08-05"
     tables: []
+
+  - name: silver
+    description: >
+      Normalized Parquet produced by codrona_lens.normalize, not an external
+      feed: provenance for its contents is the codeforces source above. The
+      location is an environment variable so a snapshot can be substituted for
+      the real silver build without editing a model — a hard-coded path would
+      let stale input survive a rebuild silently.
+    meta:
+      licence: derived-see-codeforces-source
+      legal_status: derived
+    tables:
+      - name: cf_submissions
+        description: One row per Codeforces submission, deduplicated by id.
+        meta:
+          external_location: >-
+            read_parquet('{{ env_var("CODRONA_SILVER_CF", env_var("HOME") ~
+            "/codrona-data/lake/silver/cf_submissions") }}/**/*.parquet',
+            hive_partitioning = true)
