@@ -107,3 +107,19 @@ sources:
             read_parquet('{{ env_var("CODRONA_SILVER_CF", env_var("HOME") ~
             "/codrona-data/lake/silver/cf_submissions") }}/**/*.parquet',
             hive_partitioning = true)
+      - name: cf_rated_list
+        description: >
+          One user.ratedList snapshot of every active rated Codeforces user,
+          55,484 rows collected 2026-08-06. The filename carries the collection
+          date, which is what makes valid_from honest rather than invented: we
+          hold a single snapshot, so SCD-2 history here is one version deep
+          until a later pull.
+        meta:
+          snapshot_date: "2026-08-06"
+          row_count: 55484
+          note: >-
+            Declared for provenance. The file is read directly in
+            stg_cf_users.sql rather than through external_location, because the
+            DuckDB struct spec needs braces and quotes that collide with Jinja
+            templating inside YAML - one escaping layer in the model instead of
+            three in this file. The lineage graph therefore draws no edge here.

@@ -33,3 +33,39 @@ models:
       - name: submitted_year
         description: Hive partition column, derived in UTC.
         tests: [not_null]
+
+  - name: stg_cf_users
+    description: >
+      Codeforces user profiles from one ratedList snapshot. email and vkId are
+      excluded by the source allowlist and never reach the warehouse; see the
+      model header for the reasoning and for where the publication control
+      lives. One row per handle, one snapshot deep.
+    columns:
+      - name: handle
+        description: Codeforces handle. The join key to submissions, and identity.
+        tests: [unique, not_null]
+      - name: rating
+        description: >
+          Current rating at snapshot_date. Goes negative - the observed
+          minimum is -19 - so a zero lower bound is wrong here.
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: -500
+                max_value: 5000
+              config:
+                severity: warn
+      - name: max_rating
+        tests: [not_null]
+      - name: rank_name
+        description: Rating tier name at snapshot, e.g. "legendary grandmaster".
+        tests: [not_null]
+      - name: registered_at
+        tests: [not_null]
+      - name: snapshot_date
+        description: >
+          Collection date of the ratedList pull, taken from its filename. This
+          is what dim_user uses as valid_from, so the date is a measured fact
+          rather than a build timestamp.
+        tests: [not_null]
