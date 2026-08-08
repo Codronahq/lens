@@ -35,6 +35,13 @@ repos:
         types_or: [python, pyi]
         pass_filenames: false
 
+      - id: dbt-parse
+        name: dbt parse
+        entry: .venv/bin/dbt
+        args: [parse, --target, ci]
+        language: system
+        pass_filenames: false
+        files: '(\.sql|\.yml|\.yaml)$'
       - id: repo-checks
         name: repository hygiene
         entry: .venv/bin/python

@@ -33,5 +33,11 @@ jobs:
       - name: Tests
         run: pytest -q
 
+      - name: dbt parse
+        env:
+          CODRONA_DUCKDB: target/ci.duckdb
+        run: |
+          dbt deps
+          dbt parse --target ci
       - name: Repository hygiene
         run: python3 scripts/repo_checks.py

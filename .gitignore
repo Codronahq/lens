@@ -44,5 +44,5 @@ dist/
 # env-var-driven DuckDB path, and a profile that exists solely in ~/.dbt is
 # invisible to CI and to anyone cloning the repo. The blanket rule above stays
 # in force for every other profiles.yml.
-!profiles/profiles.yml
-profiles/.user.yml
+!profiles.yml
+profiles/

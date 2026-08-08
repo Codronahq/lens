@@ -3,8 +3,8 @@
 # driven by an environment variable instead of a home directory.
 #
 # The DuckDB file lives outside the repo (multi-GB, same rule as the lake).
-# Point dbt at it with:
-#   export DBT_PROFILES_DIR=$PWD/profiles
+# This file sits at the project root, where dbt looks before falling back to
+# ~/.dbt, so no DBT_PROFILES_DIR export is needed from any shell.
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 

@@ -27,6 +27,8 @@ dev = [
   "types-requests",
   "types-PyYAML",
   "pyspark==4.0.1",
+  "dbt-core>=1.12,<2.0",
+  "dbt-duckdb>=1.10,<2.0",
   "pyarrow>=17",
   "duckdb>=1.1",
 ]
