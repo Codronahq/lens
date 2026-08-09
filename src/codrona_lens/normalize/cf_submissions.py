@@ -131,8 +131,12 @@ HANDLE_FROM_PATH = r"([^/]+)\.jsonl\.gz$"
 # The collector percent-encodes a leading "_" or "." so Hadoop's reader does
 # not skip the file. Decode exactly those two, never a general unquote: we
 # control what gets encoded, and a broad decode would corrupt any handle that
-# legitimately contains a percent sign.
-LEADING_DECODE = ((r"^%5F", "_"), (r"^%2E", "."))
+# legitimately contains a percent sign. Spark's input_file_name() returns
+# a URI, so the "%" the collector wrote arrives as "%25" and the file
+# %5FWXZY.jsonl.gz reads back as %255FWXZY.jsonl.gz -- strip that leading
+# layer first. Every pattern is anchored to the start, so a reader that
+# hands back a raw path is unaffected and the sequence stays idempotent.
+LEADING_DECODE = ((r"^%25", "%"), (r"^%5F", "_"), (r"^%2E", "."))
 
 
 def _collected_handle() -> Column:

@@ -2,6 +2,9 @@
 
 The Spark-backed tests build tiny in-memory frames rather than reading the
 landing zone, so they gate the transform logic without any data dependency.
+The one exception is the filename-decode test, which must read real
+files: injecting ``collected_via_handle`` as a literal is exactly how a
+URI-encoding bug survived every other test in this file.
 They skip when no JVM is present, which keeps them honest in a CI job that has
 not installed a JDK: the suite reports skips rather than passing vacuously.
 
@@ -10,6 +13,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 from __future__ import annotations
 
+import gzip
+import json
 import pathlib
 import shutil
 from typing import Any
@@ -29,6 +34,7 @@ from codrona_lens.normalize.cf_submissions import (  # noqa: E402
     hidden_landing_files,
     landing_glob,
     normalize,
+    read_landing,
     stage,
 )
 
@@ -279,3 +285,27 @@ def test_deduplicate_is_deterministic_on_the_collecting_handle(spark: Any) -> No
 def test_normalize_preserves_distinct_submissions(spark: Any) -> None:
     rows = [make_row(id=n) for n in range(1, 6)]
     assert normalize(frame(spark, rows)).count() == 5
+
+
+def test_collected_handle_decodes_uri_names(spark: Any, tmp_path: pathlib.Path) -> None:
+    """Percent-encoded filenames must round-trip back to the real handle.
+
+    Spark's ``input_file_name()`` returns a URI, so the literal "%" the
+    collector writes arrives as "%25" and ``%5FWXZY.jsonl.gz`` reads back as
+    ``%255FWXZY.jsonl.gz``. This reads files Spark actually opened rather than
+    injecting the column, which is why it catches what the others could not.
+    """
+    zone = tmp_path / "user_status" / "00"
+    zone.mkdir(parents=True)
+    cases = {
+        "%5FWXZY": "_WXZY",
+        "%2EMuhammad.": ".Muhammad.",
+        "tourist": "tourist",
+    }
+    for index, stem in enumerate(cases):
+        with gzip.open(zone / f"{stem}.jsonl.gz", "wt") as handle:
+            handle.write(json.dumps({"id": index + 1}) + "\n")
+
+    frame = read_landing(spark, tmp_path / "user_status")
+    got = {row["collected_via_handle"] for row in frame.collect()}
+    assert got == set(cases.values())
