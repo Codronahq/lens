@@ -1,24 +1,50 @@
 version: 2
-
 models:
   - name: dim_problem
-    description: SCD-2 problem dimension. Difficulty and tags are tracked attributes.
+    description: >
+      SCD-2 problem dimension, one row per problem version. Degenerate today - a
+      single collection snapshot means one version per problem - but the shape and
+      the as-of join contract are real. Rating and name were measured invariant
+      within the snapshot; tags vary for 7 of 35,566 problems and are resolved by a
+      deterministic richest-then-lexicographic tiebreak. Unrated problems are kept
+      with a NULL rating.
     columns:
       - name: problem_sk
+        description: Surrogate key. Natural key plus version start.
         tests: [unique, not_null]
       - name: problem_key
+        description: >
+          Codeforces problem id. Valid as a global key - the 417 acmsguru problems
+          carry no contestId but do carry a problem_id, and their id space was
+          measured disjoint from the 35,149 mainline ids.
+        tests: [unique, not_null]
+      - name: problemset_name
+        description: acmsguru for the SGU archive, codeforces otherwise.
         tests: [not_null]
       - name: valid_from
         tests: [not_null]
       - name: is_current
         tests: [not_null]
+      - name: is_unrated
+        tests: [not_null]
 
   - name: dim_user
-    description: SCD-2 user dimension. Rating and tier are tracked attributes.
+    description: >
+      SCD-2 user dimension, one row per user version. Keyed on the handle Codeforces
+      answered for, never on a submission's author handle - see codrona.md section
+      6. Degenerate today for the same reason as dim_problem. Rating and rank are
+      current values applied retroactively until user.rating history lands.
     columns:
       - name: user_sk
         tests: [unique, not_null]
       - name: user_key
+        description: The collected handle. The only authoritative identity.
+        tests: [unique, not_null]
+      - name: snapshot_date
+        tests: [not_null]
+      - name: valid_from
+        tests: [not_null]
+      - name: is_current
         tests: [not_null]
 
   - name: fct_submission
@@ -26,6 +52,8 @@ models:
       One row per submission. Dimension keys are resolved as-of submitted_at, never
       to the current version. Joining to is_current would leak future information
       into the past and is the single most damaging error possible here.
+      Multi-member team submissions are kept and attribute to the member who
+      survived global dedupe; filter on is_person_level for any per-user measure.
     columns:
       - name: submission_key
         tests: [unique, not_null]
@@ -33,23 +61,68 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('dim_problem')
-              field: problem_sk
+              arguments:
+                to: ref('dim_problem')
+                field: problem_sk
       - name: user_sk
         tests:
           - not_null
           - relationships:
-              to: ref('dim_user')
-              field: user_sk
+              arguments:
+                to: ref('dim_user')
+                field: user_sk
       - name: verdict
+        description: >
+          The raw Codeforces verdict, carried verbatim. These 15 values are the
+          complete set observed over 23,607,105 rows, plus 4 rows where Codeforces
+          returned no verdict at all. No generic judge enum matches this set:
+          Codeforces emits OK rather than AC, has no OLE, and does emit
+          IDLENESS_LIMIT_EXCEEDED and PRESENTATION_ERROR. A verdict outside this
+          list is a new Codeforces verdict and must be classified deliberately in
+          stg_cf_submissions before it reaches the skill model.
         tests:
           - accepted_values:
-              values: [AC, WA, TLE, MLE, RE, CE, OLE, OTHER]
+              arguments:
+                values:
+                  - OK
+                  - WRONG_ANSWER
+                  - TIME_LIMIT_EXCEEDED
+                  - MEMORY_LIMIT_EXCEEDED
+                  - IDLENESS_LIMIT_EXCEEDED
+                  - RUNTIME_ERROR
+                  - COMPILATION_ERROR
+                  - PRESENTATION_ERROR
+                  - PARTIAL
+                  - CHALLENGED
+                  - SKIPPED
+                  - REJECTED
+                  - FAILED
+                  - CRASHED
+                  - TESTING
+      - name: verdict_class
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [accepted, partial, rejected, unjudged, unknown]
+      - name: is_evidence
+        tests: [not_null]
       - name: is_accepted
         tests: [not_null]
+      - name: is_person_level
+        tests: [not_null]
       - name: execution_time_ms
+        description: >
+          Codeforces clamps this at its own per-problem time limit. The observed
+          maximum over the full corpus is exactly 60000 ms with zero rows above it,
+          so a 60000 bound would pass today by one millisecond and trip the moment a
+          problem carries a higher limit. The bound is set to 300000 as a garbage
+          sanity check rather than a fit to the current maximum, and warns rather
+          than errors so a real edge case is never clamped out of the signal.
         tests:
           - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 60000
-              severity: warn
+              arguments:
+                min_value: 0
+                max_value: 300000
+              config:
+                severity: warn
