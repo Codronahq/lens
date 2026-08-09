@@ -5,14 +5,15 @@
 --   verdict_class  accepted / partial / rejected / unjudged / unknown
 --   is_evidence    false where the submission says nothing about ability
 --
--- Measured over 16.87M rows, the distinction is load-bearing. PARTIAL carries
--- points on 112,010 of 112,017 rows, so it is real ordinal evidence rather
--- than a rejection. CHALLENGED carries zero points on all 10,204 rows: the
--- code was accepted and then broken in the challenge phase, which is a
--- failure. SKIPPED is heterogeneous - 63% carry a problem rating and 60% are
--- in-contest, so some were judged before being invalidated - and is treated
--- as unjudged in full, because feeding contest-clustered pseudo-failures to
--- the skill model would teach it that strong users fail more.
+-- Measured over the full 23,607,105-row corpus, the distinction is
+-- load-bearing. PARTIAL carries points on 128,886 of 128,893 rows, so it is
+-- real ordinal evidence rather than a rejection. CHALLENGED carries zero
+-- points on all 12,411 rows: the code was accepted and then broken in the
+-- challenge phase, which is a failure. SKIPPED is heterogeneous - 69.7%
+-- carry a problem rating and 54.4% are in-contest, so some were judged
+-- before being invalidated - and is treated as unjudged in full, because
+-- feeding contest-clustered pseudo-failures to the skill model would teach
+-- it that strong users fail more.
 --
 -- An unrecognised verdict falls to 'unknown' and is NOT evidence. Defaulting
 -- it to 'rejected' would let a new Codeforces verdict corrupt calibration
