@@ -1,0 +1,27 @@
+version: 2
+sources:
+  - name: zerotrac
+    description: >
+      Community LeetCode problem-difficulty estimates by Shuxin Chen (zerotrac),
+      MIT licensed (verified 2026-08-04, LEGAL.md). NOT CORPUS - contributes zero
+      submission rows. These are the maintainer's own Elo/MLE computations, which
+      is what distinguishes them from republished platform records and is why
+      this source clears where the Codeforces bulk release did not.
+
+      Pinned to a commit SHA rather than a branch. The file is rewritten weekly
+      after each contest, so reading main would let historical ratings change
+      underneath the warehouse with no signal. The SHA lives in the filename, so
+      the pin is visible on disk rather than only in config.
+    tables:
+      - name: problem_ratings
+        description: >
+          data.json as published: 2,549 records, one per rated contest problem,
+          nine fields present on every row. Preferred over ratings.txt because
+          the latter is tab-separated text carrying CJK titles, where a tab
+          inside a title would silently shift every field.
+        meta:
+          external_location: >-
+            read_json('{{ env_var("CODRONA_ZEROTRAC_JSON", env_var("HOME") ~
+            "/codrona-data/raw/zerotrac/data_" ~
+            env_var("CODRONA_ZEROTRAC_SHA",
+            "881a239306ce7a339e32e7825cdb9c00fead00f1") ~ ".json") }}')

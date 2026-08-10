@@ -1,0 +1,26 @@
+version: 2
+models:
+  - name: dim_problem_leetcode
+    description: >
+      LeetCode problem dimension built from the pinned zerotrac snapshot. Built
+      ahead of its facts: no LeetCode submissions exist in the warehouse yet.
+      Ratings are community estimates and are labelled as such wherever
+      displayed, per the MIT attribution obligation in LEGAL.md.
+    columns:
+      - name: problem_sk
+        tests: [unique, not_null]
+      - name: problem_key
+        description: LeetCode URL slug. Its own key space.
+        tests: [unique, not_null]
+      - name: rating_source
+        description: >
+          Names the estimator on every row so no surface can render the number
+          as an official LeetCode difficulty by omission.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [zerotrac-elo-mle]
+      - name: snapshot_version
+        description: Carries the pinned commit SHA, so the provenance is a column.
+        tests: [not_null]

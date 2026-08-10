@@ -1,0 +1,41 @@
+version: 2
+models:
+  - name: stg_zerotrac_ratings
+    description: >
+      Community LeetCode difficulty estimates from the pinned zerotrac snapshot.
+      Not corpus - zero submission rows.
+    columns:
+      - name: title_slug
+        description: >
+          LeetCode URL slug. The key, because every adapter route in the L1-L4
+          ladder addresses problems by slug rather than numeric id.
+        tests: [unique, not_null]
+      - name: leetcode_id
+        description: Platform-internal numeric id. Unique, carried as secondary.
+        tests: [unique, not_null]
+      - name: community_rating
+        description: >
+          Elo/MLE estimate by the maintainer, NOT a LeetCode difficulty. Spans
+          1084.13 to 3773.76 in the pinned snapshot; the range test is a garbage
+          check rather than a fit to those bounds, and warns so a genuinely
+          harder problem is never clamped out of the data.
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 6000
+              config:
+                severity: warn
+      - name: contest_type
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [weekly, biweekly, unknown]
+      - name: problem_index
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [Q1, Q2, Q3, Q4, Q5]
