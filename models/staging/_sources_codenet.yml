@@ -1,0 +1,33 @@
+version: 2
+sources:
+  - name: codenet
+    description: >
+      IBM Project CodeNet 1.0.0, a frozen archive published May 2021 under
+      CDLA-Permissive-2.0 (verified 2026-08-03, LEGAL.md). 13,916,868
+      submissions across 4,053 AIZU and AtCoder problems. Coverage stops at
+      2020-10-01: this is an archive, not a feed, and nothing here will ever
+      grow. Separate spine from Codeforces - no shared user, problem or verdict
+      space until IRT produces a cross-judge difficulty equivalence.
+    tables:
+      - name: silver_submissions
+        description: >
+          Normalized submissions written by the PySpark job, partitioned by
+          submitted_year across 2009-2020. Paths are env-var driven so a
+          snapshot can never silently outlive the real build.
+        meta:
+          external_location: >-
+            read_parquet('{{ env_var("CODRONA_SILVER_CODENET", env_var("HOME") ~
+            "/codrona-data/lake/silver/codenet_submissions") }}/**/*.parquet',
+            hive_partitioning = true)
+      - name: problem_index
+        description: >
+          problem_list.csv as shipped. Holds all 4,053 problems including the
+          five with no submissions, which is why the problem dimension is built
+          from here rather than from the fact side. The rating, tags and
+          complexity columns are empty on every row and are not selected
+          downstream.
+        meta:
+          external_location: >-
+            read_csv('{{ env_var("CODRONA_CODENET_METADATA", env_var("HOME") ~
+            "/codrona-data/raw/codenet/Project_CodeNet/metadata")
+            }}/problem_list.csv', header = true)

@@ -1,0 +1,29 @@
+version: 2
+models:
+  - name: dim_problem_codenet
+    description: >
+      CodeNet problem dimension, 4,053 rows, one per problem. Not SCD-2: the
+      archive is frozen and no mechanism could produce a second version, so
+      snapshot_version carries the honest versioning instead. Built from the
+      index rather than from submissions so the five problems with no attempts
+      survive.
+    columns:
+      - name: problem_sk
+        tests: [unique, not_null]
+      - name: problem_key
+        description: CodeNet problem id, p##### form. Its own key space.
+        tests: [unique, not_null]
+      - name: judge
+        description: Which judge the problem came from.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [AIZU, AtCoder]
+      - name: submission_count
+        description: Zero for the five problems nobody ever attempted.
+        tests: [not_null]
+      - name: has_no_submissions
+        tests: [not_null]
+      - name: snapshot_version
+        tests: [not_null]

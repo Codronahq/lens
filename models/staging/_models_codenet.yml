@@ -1,0 +1,70 @@
+version: 2
+models:
+  - name: stg_codenet_submissions
+    description: >
+      CodeNet submissions staged from silver Parquet. Thin by design - the
+      normalize job does the deriving, and everything it derives was measured
+      over the full corpus first.
+    columns:
+      - name: submission_id
+        description: Globally unique across all 13,916,868 rows, measured.
+        tests: [unique, not_null]
+      - name: problem_id
+        tests: [not_null]
+      - name: user_id
+        description: >
+          Anonymised by IBM and joinable to nothing outside CodeNet. Carries no
+          rename hazard, but also no cross-judge linking and no flywheel
+          connection.
+        tests: [not_null]
+      - name: judge
+        description: Resolved for every row - zero nulls, measured.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [AIZU, AtCoder]
+      - name: status
+        description: >
+          The raw CodeNet status, carried verbatim. These twelve values are the
+          complete set over the full corpus. Three of them - Internal error,
+          Query Limit Exceeded, Judge System Error - never appeared in a
+          200-file sample and were found only by the full scan; IBM's README
+          lists "Internal Error" with different casing and omits Query Limit
+          Exceeded entirely, so this list follows the data, not the docs.
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - Accepted
+                  - Wrong Answer
+                  - Runtime Error
+                  - Time Limit Exceeded
+                  - Compile Error
+                  - "WA: Presentation Error"
+                  - Memory Limit Exceeded
+                  - Output Limit Exceeded
+                  - Query Limit Exceeded
+                  - Judge Not Available
+                  - Internal error
+                  - Judge System Error
+      - name: verdict_class
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [accepted, partial, rejected, unjudged, unknown]
+      - name: is_evidence
+        tests: [not_null]
+      - name: is_accepted
+        tests: [not_null]
+      - name: has_corrupt_timing
+        description: >
+          True where CodeNet recorded a negative cpu_time on a row that did
+          execute. 852 rows, all AIZU. Corrupt is not the same state as absent,
+          and collapsing them would turn a broken reading into a real one.
+        tests: [not_null]
+      - name: submitted_at
+        tests: [not_null]
+      - name: submitted_year
+        tests: [not_null]
