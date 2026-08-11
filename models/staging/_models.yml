@@ -20,7 +20,8 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: [accepted, partial, rejected, unjudged, unknown]
+              arguments:
+                values: [accepted, partial, rejected, unjudged, unknown]
       - name: is_evidence
         description: >
           False where the submission says nothing about ability. The skill model
