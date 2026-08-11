@@ -27,3 +27,14 @@ models:
         tests: [not_null]
       - name: snapshot_version
         tests: [not_null]
+      - name: has_statement
+        description: >
+          True for the 3,474 problems DeepMind CodeContests covers. The other
+          579 carry a NULL statement, which is expected coverage rather than a
+          gap: CodeContests took a subset of CodeNet.
+        tests: [not_null]
+      - name: statement
+        description: >
+          Problem text from CodeContests under CC BY 4.0 - the licensed route to
+          statement embeddings, since Codeforces statements can never be stored.
+          NULL where has_statement is false.

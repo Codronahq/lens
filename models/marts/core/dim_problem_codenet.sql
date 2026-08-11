@@ -44,6 +44,24 @@ attempted as (
     from {{ ref('stg_codenet_submissions') }}
     group by 1
 
+),
+
+-- CodeContests covers 3,474 of these 4,053 problems. DeepMind took a subset, so
+-- 579 problems legitimately have no row and the join below is a LEFT join - an
+-- inner join would silently delete them from the dimension, which is the
+-- silent-drop class codrona.md section 9 treats as a hard error.
+enriched as (
+
+    select
+        problem_id,
+        statement,
+        statement_chars,
+        is_description_translated,
+        test_count,
+        generated_test_count,
+        solution_count
+    from {{ ref('stg_codecontests_problems') }}
+
 )
 
 select
@@ -64,8 +82,21 @@ select
     attempted.last_submission_at,
     attempted.problem_id is null as has_no_submissions,
 
-    'codenet-1.0.0' as snapshot_version
+    'codenet-1.0.0' as snapshot_version,
+
+    -- Statement text arrives from DeepMind CodeContests under CC BY 4.0, the
+    -- licensed route to statement embeddings. NULL on the 579 problems
+    -- CodeContests does not cover; that is expected coverage, not a gap to fill.
+    enriched.statement,
+    enriched.statement_chars,
+    enriched.is_description_translated,
+    enriched.test_count,
+    enriched.generated_test_count,
+    enriched.solution_count,
+    enriched.problem_id is not null as has_statement
 
 from index_rows
 left join attempted
     on index_rows.id = attempted.problem_id
+left join enriched
+    on index_rows.id = enriched.problem_id

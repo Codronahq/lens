@@ -1,0 +1,41 @@
+version: 2
+models:
+  - name: stg_codecontests_problems
+    description: >
+      CodeContests problem statements for the CodeNet-sourced partition, from
+      the pinned revision. Not corpus - zero submission rows.
+    columns:
+      - name: problem_id
+        description: >
+          CodeNet p##### id, extracted from the problem name. Joins to
+          dim_problem_codenet.problem_key with zero orphans, measured.
+        tests: [unique, not_null]
+      - name: judge
+        description: >
+          Agrees with dim_problem_codenet on every row, across two independent
+          provenance chains - IBM's index and DeepMind's scrape.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [AIZU, AtCoder]
+      - name: statement
+        description: The licensed statement text. Feeds embeddings in Phase 4.
+        tests: [not_null]
+      - name: statement_chars
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+                max_value: 100000
+              config:
+                severity: warn
+      - name: is_description_translated
+        description: >
+          Load-bearing for embeddings, not trivia. 1,088 rows are machine
+          translations of Japanese originals and embed differently from the
+          2,386 native ones.
+        tests: [not_null]
+      - name: test_count
+        tests: [not_null]

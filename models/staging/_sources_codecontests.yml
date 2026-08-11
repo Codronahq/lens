@@ -1,0 +1,37 @@
+version: 2
+sources:
+  - name: codecontests
+    description: >
+      DeepMind CodeContests, CC BY 4.0 (verified 2026-08-04, LEGAL.md), read
+      from DeepMind's own HuggingFace dataset rather than the gs:// Riegeli
+      release - same licence from the same rights holder, in a format the stack
+      already reads. NOT CORPUS: contributes zero submission rows.
+
+      PARTITIONED AT INGEST, not at query time. Only sources 5 (AtCoder) and 6
+      (AIZU) are fetched, because those are the CodeNet-sourced problems whose
+      licence we verified. The 7,819 Codeforces problems are excluded and never
+      land on disk: link-never-host is binding, and obtaining Codeforces
+      statements through a third party does not launder them. CodeChef and
+      HackerEarth are excluded for the same want-of-a-verified-licence reason.
+
+      The source enum was MEASURED, not taken from the proto definition: across
+      all 39 train shards, sources 5 and 6 carry a p##### CodeNet problem id on
+      100% of rows while sources 1, 2 and 3 carry one on 0%. The partition is
+      therefore objectively testable rather than resting on a remembered
+      mapping - which mattered, because the remembered mapping was wrong.
+
+      Pinned to revision 802411c3010cb00d1b05bad57ca77365a3c699d6.
+    tables:
+      - name: codenet_problems
+        description: >
+          3,474 problems - 2,151 AIZU and 1,323 AtCoder - with statements and
+          metadata. Solutions and incorrect_solutions are deliberately NOT
+          fetched: they are Phase 4 material for the post-mortem agent, and
+          storing several GB of source code months before anything reads it
+          buys nothing. Their COUNTS are kept so Phase 4 knows what is there.
+        meta:
+          external_location: >-
+            read_parquet('{{ env_var("CODRONA_CODECONTESTS_PARQUET",
+            env_var("HOME") ~ "/codrona-data/raw/codecontests/" ~
+            "codecontests_codenet_" ~ env_var("CODRONA_CODECONTESTS_SHA",
+            "802411c3010cb00d1b05bad57ca77365a3c699d6") ~ ".parquet") }}')
