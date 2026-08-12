@@ -30,8 +30,6 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
-{% set min_cohort_users = 5 %}
-
 with users as (
 
     select
@@ -61,7 +59,7 @@ grouped as (
 
 reportable as (
 
-    select * from grouped where cohort_users >= {{ min_cohort_users }}
+    select * from grouped where cohort_users >= {{ var('min_cohort_users') }}
 
 ),
 
@@ -76,7 +74,7 @@ suppressed as (
         cast(null as bigint) as candidate_master_plus,
         cast(null as varchar) as most_common_country
     from grouped
-    where cohort_users < {{ min_cohort_users }}
+    where cohort_users < {{ var('min_cohort_users') }}
     having sum(cohort_users) > 0
 
 )

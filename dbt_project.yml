@@ -14,6 +14,12 @@ snapshot-paths: ["snapshots"]
 target-path: "target"
 clean-targets: ["target", "dbt_packages"]
 
+# Minimum cell size for any published observatory aggregate. It lives here
+# rather than in a model because two models enforce it and a threshold
+# duplicated per model drifts the moment one of them is edited.
+vars:
+  min_cohort_users: 5
+
 models:
   codrona_lens:
     staging:

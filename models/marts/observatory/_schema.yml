@@ -52,13 +52,21 @@ models:
       Cohort users by self-declared country, with the undeclared population
       emitted as its own row. Country is optional and declaring it correlates
       with strength (1212.5 mean against 937.0), so every slice here describes a
-      stronger-than-average subpopulation and must be labelled as such.
+      stronger-than-average subpopulation and must be labelled as such. Cells
+      below the minimum size keep their name and count but publish no rating
+      statistics: at one user, a mean is that person's rating.
     columns:
       - name: country
         tests: [unique, not_null]
       - name: is_undeclared
         tests: [not_null]
       - name: cohort_users
+        tests: [not_null]
+      - name: is_reportable
+        description: >
+          False where the cell holds fewer than min_cohort_users people. The
+          rating statistics are null on those rows; the name and count remain
+          so the denominator stays visible.
         tests: [not_null]
 
   - name: obs_organization_participation

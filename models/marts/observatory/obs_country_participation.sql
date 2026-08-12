@@ -19,6 +19,18 @@
 -- Cohort counts are also stratified (codrona.md section 6), so these are counts
 -- of our users, never of a country's Codeforces population.
 --
+-- SMALL CELLS PUBLISH NO STATISTICS, AND THIS WAS MEASURED, NOT ASSUMED.
+-- 64 of 158 country rows hold fewer than five users and 1 is the minimum.
+-- At one user the mean equals the max and equals that person's current
+-- rating, next to their declared country - and user.ratedList is
+-- filterable by country, so the row resolves to a named account in one
+-- query against the same source it came from. The row therefore keeps its
+-- name and its count, so coverage stays visible, and drops every rating
+-- statistic. This differs from obs_organization_participation, which
+-- collapses the row entirely, and the asymmetry is deliberate: an
+-- organisation name at two users identifies a specific cohort, a country
+-- name at one user identifies a country.
+--
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
 with users as (
@@ -30,17 +42,35 @@ with users as (
     from {{ ref('dim_user') }}
     where is_current
 
+),
+
+grouped as (
+
+    select
+        country,
+        is_undeclared,
+        count(*) as cohort_users,
+        round(100.0 * count(*) / sum(count(*)) over (), 3) as cohort_share_pct,
+        round(avg(rating), 1) as mean_rating,
+        median(rating) as median_rating,
+        max(rating) as max_rating,
+        count(*) filter (where rating >= 1900) as candidate_master_plus
+    from users
+    group by country, is_undeclared
+
 )
 
 select
     country,
     is_undeclared,
-    count(*) as cohort_users,
-    round(100.0 * count(*) / sum(count(*)) over (), 3) as cohort_share_pct,
-    round(avg(rating), 1) as mean_rating,
-    median(rating) as median_rating,
-    max(rating) as max_rating,
-    count(*) filter (where rating >= 1900) as candidate_master_plus
-from users
-group by country, is_undeclared
+    cohort_users,
+    cohort_share_pct,
+    case when cohort_users >= {{ var('min_cohort_users') }} then mean_rating end as mean_rating,
+    case when cohort_users >= {{ var('min_cohort_users') }} then median_rating end as median_rating,
+    case when cohort_users >= {{ var('min_cohort_users') }} then max_rating end as max_rating,
+    case
+        when cohort_users >= {{ var('min_cohort_users') }} then candidate_master_plus
+    end as candidate_master_plus,
+    cohort_users >= {{ var('min_cohort_users') }} as is_reportable
+from grouped
 order by cohort_users desc
