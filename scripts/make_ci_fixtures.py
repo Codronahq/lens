@@ -37,6 +37,16 @@ encoded below, each traced to the test that enforces it:
   every collected handle is rated   -> relationships on dim_user
   ratings agree with the problemset -> assert_problemset_ratings_agree
 
+RUNNING THIS LOCALLY NEEDS THE PARSE CACHE CLEARED FIRST. dbt's
+``target/partial_parse.msgpack`` survives a ``--target`` switch, so models can
+render with env_var values captured under the previous target while others pick
+up the new ones - a single run reading fixture paths for one source and
+``~/codrona-data`` for another, which surfaces as a test failure that looks like
+a data bug and is not. Delete ``target/partial_parse.msgpack`` (or pass
+``--no-partial-parse``) before reproducing CI locally. CI itself is immune: a
+clean checkout has no cache, which is why CI can be green while the same command
+fails on a laptop.
+
 SPDX-License-Identifier: AGPL-3.0-or-later
 """
 
