@@ -1,0 +1,76 @@
+version: 2
+models:
+  - name: obs_rating_distribution
+    description: >
+      Cohort users per Codeforces rating band. The honest denominator for every
+      sliced chart: this one covers all 55,484 collected users. Counts are
+      cohort counts under the stratified sampling policy, never platform totals.
+    columns:
+      - name: rating_band
+        tests: [unique, not_null]
+      - name: band_order
+        tests: [unique, not_null]
+      - name: cohort_users
+        tests: [not_null]
+      - name: cohort_share_pct
+        tests: [not_null]
+
+  - name: obs_activity_by_year
+    description: >
+      Submissions, active users and problems attempted per year. The final year
+      is truncated by the collection window and flags itself, so a chart cannot
+      imply a collapse that is really a partial year.
+    columns:
+      - name: submitted_year
+        tests: [unique, not_null]
+      - name: submissions
+        tests: [not_null]
+      - name: is_partial_year
+        tests: [not_null]
+      - name: accepted_pct
+        description: Share of submissions accepted. Bounded 0-100 by construction.
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+
+  - name: obs_tag_landscape
+    description: >
+      Per-tag problem counts with Codeforces' own ratings and population-wide
+      solve counts. Both difficulty columns are independent of our cohort, which
+      is why they are carried together. A problem appears once per tag.
+    columns:
+      - name: tag
+        tests: [unique, not_null]
+      - name: problems_with_tag
+        tests: [not_null]
+
+  - name: obs_country_participation
+    description: >
+      Cohort users by self-declared country, with the undeclared population
+      emitted as its own row. Country is optional and declaring it correlates
+      with strength (1212.5 mean against 937.0), so every slice here describes a
+      stronger-than-average subpopulation and must be labelled as such.
+    columns:
+      - name: country
+        tests: [unique, not_null]
+      - name: is_undeclared
+        tests: [not_null]
+      - name: cohort_users
+        tests: [not_null]
+
+  - name: obs_organization_participation
+    description: >
+      Cohort users by declared organisation, free text and unnormalised.
+      Organisations with fewer than five users are collapsed into a single
+      suppressed row carrying only a count, because organisation plus rating is
+      close to identifying at small cell sizes.
+    columns:
+      - name: organization
+        tests: [unique, not_null]
+      - name: cohort_users
+        tests: [not_null]
+      - name: is_reportable
+        tests: [not_null]
