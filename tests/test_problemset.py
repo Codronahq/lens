@@ -33,6 +33,14 @@ from codrona_lens.codeforces.problemset import (
 
 Json = dict[str, Any]
 
+ACMSGURU_PROBLEM: dict[str, Any] = {
+    "problemsetName": "acmsguru",
+    "index": "553",
+    "name": "Pearls",
+    "type": "PROGRAMMING",
+    "tags": ["*special"],
+}
+
 FETCHED_AT = "2026-08-12T09:00:00+00:00"
 
 
@@ -95,6 +103,57 @@ def test_missing_index_has_no_key() -> None:
 
 def test_no_contest_and_no_problemset_has_no_key() -> None:
     assert build_problem_id({"index": "A"}) is None
+
+
+def test_bare_statistic_has_no_key_without_context() -> None:
+    """A named problemset drops problemsetName from every statistic row.
+
+    Measured on acmsguru: all 453 statistics carry only index and solvedCount.
+    Without the requested name they cannot be keyed, and the strict rule must
+    still say so - inheriting a name by accident is what this guards.
+    """
+    assert build_problem_id({"index": "553", "solvedCount": 195}) is None
+
+
+def test_requested_problemset_name_supplies_the_missing_context() -> None:
+    key = build_problem_id(
+        {"index": "553", "solvedCount": 195},
+        default_problemset_name="acmsguru",
+    )
+    assert key == "acmsguru553"
+
+
+def test_default_never_overrides_a_name_present_on_the_row() -> None:
+    row = {"problemsetName": "acmsguru", "index": "553"}
+    key = build_problem_id(row, default_problemset_name="somethingelse")
+    assert key == "acmsguru553"
+
+
+def test_default_never_overrides_a_contest_id() -> None:
+    row = {"contestId": 1234, "index": "A"}
+    assert build_problem_id(row, default_problemset_name="acmsguru") == "1234A"
+
+
+def test_named_problemset_statistics_join_by_inherited_context() -> None:
+    """End to end on the real acmsguru shape: no contestId anywhere."""
+    result = {
+        "problems": [ACMSGURU_PROBLEM],
+        "problemStatistics": [{"index": "553", "solvedCount": 195}],
+    }
+    records = records_for(result, ACMSGURU_PROBLEMSET)
+    assert records[0]["problem_id"] == "acmsguru553"
+    assert records[0]["solved_count"] == 195
+    assert records[0]["problem_rating"] is None
+
+
+def test_mainline_statistics_still_require_their_own_key() -> None:
+    """The strict path is unchanged: no context is supplied for the mainline."""
+    result = {
+        "problems": [problem()],
+        "problemStatistics": [{"index": "A", "solvedCount": 1}],
+    }
+    with pytest.raises(ProblemsetError, match="no derivable key"):
+        records_for(result)
 
 
 # --- record construction ---------------------------------------------------

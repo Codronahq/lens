@@ -61,12 +61,27 @@ class ProblemsetError(Exception):
     """A structural problem in the response that must not reach disk."""
 
 
-def build_problem_id(problem: dict[str, Any]) -> str | None:
+def build_problem_id(
+    problem: dict[str, Any],
+    *,
+    default_problemset_name: str | None = None,
+) -> str | None:
     """Mirror of normalize.cf_submissions._problem_id, in Python.
 
     Contest problems key on contestId; the acmsguru archive has no contestId at
     all and keys on its problemset name. Returns None when neither rule applies,
     which the caller treats as fatal rather than writing an unjoinable row.
+
+    ``default_problemset_name`` exists for one measured reason. When a custom
+    problemset is requested BY NAME, Codeforces omits problemsetName from every
+    row of problemStatistics - it is already known from the request - so those
+    rows carry only index and solvedCount and cannot be keyed on their own.
+    Measured on acmsguru: 453 of 453 statistics lack both contestId and
+    problemsetName, while 453 of 453 problems carry problemsetName. Supplying
+    the requested name restores exactly the key the submission corpus already
+    uses, because submission rows do carry problemsetName. The default is None,
+    so the mainline path keeps the strict rule and an unkeyable row still
+    raises rather than silently inheriting a name.
     """
     index = problem.get("index")
     if index is None:
@@ -75,17 +90,23 @@ def build_problem_id(problem: dict[str, Any]) -> str | None:
     if contest_id is not None:
         return f"{contest_id}{index}"
     problemset_name = problem.get("problemsetName")
+    if problemset_name is None:
+        problemset_name = default_problemset_name
     if problemset_name is not None:
         return f"{problemset_name}{index}"
     return None
 
 
-def index_statistics(statistics: list[dict[str, Any]]) -> dict[str, int]:
+def index_statistics(
+    statistics: list[dict[str, Any]],
+    *,
+    default_name: str | None = None,
+) -> dict[str, int]:
     """Map problem_id -> solvedCount, rejecting anything that cannot be keyed."""
     out: dict[str, int] = {}
     for raw in statistics:
         stat = _pick(raw, STATISTIC_FIELDS)
-        problem_id = build_problem_id(stat)
+        problem_id = build_problem_id(stat, default_problemset_name=default_name)
         if problem_id is None:
             raise ProblemsetError(f"statistic with no derivable key: {stat}")
         solved = stat.get("solvedCount")
@@ -108,7 +129,8 @@ def build_records(
         msg = f"{problemset_source}: problems/problemStatistics not lists"
         raise ProblemsetError(msg)
 
-    solved_by_id = index_statistics(statistics)
+    named = None if problemset_source == MAIN_PROBLEMSET else problemset_source
+    solved_by_id = index_statistics(statistics, default_name=named)
     records: list[dict[str, Any]] = []
     seen: set[str] = set()
 
