@@ -5,9 +5,10 @@ models:
       SCD-2 problem dimension, one row per problem version. Degenerate today - a
       single collection snapshot means one version per problem - but the shape and
       the as-of join contract are real. Rating and name were measured invariant
-      within the snapshot; tags vary for 7 of 35,566 problems and are resolved by a
-      deterministic richest-then-lexicographic tiebreak. Unrated problems are kept
-      with a NULL rating.
+      within the snapshot. Tags come from the problemset snapshot where one exists
+      and from the submission tiebreak otherwise; tags_source records which, and
+      the tiebreak was measured wrong on 4 of the 11,764 overlapping problems.
+      Unrated problems are kept with a NULL rating.
     columns:
       - name: problem_sk
         description: Surrogate key. Natural key plus version start.
@@ -27,6 +28,29 @@ models:
         tests: [not_null]
       - name: is_unrated
         tests: [not_null]
+      - name: in_public_problemset
+        description: >
+          True where the public problemset carries this problem. False for gym
+          and for mirror, practice and special-format contests, which the archive
+          does not publish - 23,802 of 35,566 problems.
+        tests: [not_null]
+      - name: tags_source
+        description: problemset where the snapshot supplied tags, submissions otherwise.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [problemset, submissions]
+      - name: solved_count
+        description: >
+          Accepted solutions across ALL Codeforces users, not our cohort, so it is
+          an independent check on cohort sampling bias. NULL means the problem is
+          not in the public archive, never that nobody solved it.
+      - name: problemset_rating
+        description: >
+          The snapshot's rating, kept beside problem_rating rather than replacing
+          it so assert_problemset_ratings_agree stays a real comparison between
+          two independent routes instead of a tautology.
 
   - name: dim_user
     description: >
