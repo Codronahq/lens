@@ -45,6 +45,12 @@ select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 # SIM108 forces a 100-char ternary that reads worse than the if/else it replaces.
 ignore = ["SIM108"]
 
+[tool.ruff.lint.per-file-ignores]
+# Databricks injects `spark` into the notebook session; it is not importable, so
+# every reference reads as undefined to a static checker. Scoped to F821 alone -
+# the notebook is otherwise held to the same rules as the rest of the tree.
+"notebooks/*.ipynb" = ["F821"]
+
 [tool.mypy]
 python_version = "3.11"
 warn_unused_configs = true
