@@ -1,0 +1,106 @@
+{
+  "table": "obs_rating_distribution",
+  "caveat": "Cohort users per Codeforces rating band. The honest denominator for every sliced chart: this one covers all 55,484 collected users. Counts are cohort counts under the stratified sampling policy, never platform totals.",
+  "columns": [
+    "rating_band",
+    "band_order",
+    "cohort_users",
+    "cohort_share_pct",
+    "min_rating",
+    "max_rating",
+    "mean_rating"
+  ],
+  "row_count": 10,
+  "rows": [
+    {
+      "rating_band": "newbie",
+      "band_order": 1,
+      "cohort_users": 37783,
+      "cohort_share_pct": 68.097,
+      "min_rating": -19,
+      "max_rating": 1199,
+      "mean_rating": 817.7
+    },
+    {
+      "rating_band": "pupil",
+      "band_order": 2,
+      "cohort_users": 8177,
+      "cohort_share_pct": 14.738,
+      "min_rating": 1200,
+      "max_rating": 1399,
+      "mean_rating": 1290.2
+    },
+    {
+      "rating_band": "specialist",
+      "band_order": 3,
+      "cohort_users": 5023,
+      "cohort_share_pct": 9.053,
+      "min_rating": 1400,
+      "max_rating": 1599,
+      "mean_rating": 1482.8
+    },
+    {
+      "rating_band": "expert",
+      "band_order": 4,
+      "cohort_users": 3165,
+      "cohort_share_pct": 5.704,
+      "min_rating": 1600,
+      "max_rating": 1898,
+      "mean_rating": 1710.4
+    },
+    {
+      "rating_band": "candidate master",
+      "band_order": 5,
+      "cohort_users": 670,
+      "cohort_share_pct": 1.208,
+      "min_rating": 1900,
+      "max_rating": 2099,
+      "mean_rating": 1981.9
+    },
+    {
+      "rating_band": "master",
+      "band_order": 6,
+      "cohort_users": 368,
+      "cohort_share_pct": 0.663,
+      "min_rating": 2100,
+      "max_rating": 2299,
+      "mean_rating": 2181.4
+    },
+    {
+      "rating_band": "international master",
+      "band_order": 7,
+      "cohort_users": 106,
+      "cohort_share_pct": 0.191,
+      "min_rating": 2300,
+      "max_rating": 2399,
+      "mean_rating": 2346.2
+    },
+    {
+      "rating_band": "grandmaster",
+      "band_order": 8,
+      "cohort_users": 114,
+      "cohort_share_pct": 0.205,
+      "min_rating": 2403,
+      "max_rating": 2598,
+      "mean_rating": 2486.6
+    },
+    {
+      "rating_band": "international grandmaster",
+      "band_order": 9,
+      "cohort_users": 60,
+      "cohort_share_pct": 0.108,
+      "min_rating": 2608,
+      "max_rating": 2998,
+      "mean_rating": 2756.4
+    },
+    {
+      "rating_band": "legendary grandmaster",
+      "band_order": 10,
+      "cohort_users": 18,
+      "cohort_share_pct": 0.032,
+      "min_rating": 3012,
+      "max_rating": 3857,
+      "mean_rating": 3289.1
+    }
+  ]
+}

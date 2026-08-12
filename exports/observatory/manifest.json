@@ -1,0 +1,18 @@
+{
+  "files": [
+    "obs_rating_distribution.json",
+    "obs_activity_by_year.json",
+    "obs_tag_landscape.json",
+    "obs_country_participation.json",
+    "obs_organization_participation.json"
+  ],
+  "row_counts": {
+    "obs_rating_distribution": 10,
+    "obs_activity_by_year": 17,
+    "obs_tag_landscape": 39,
+    "obs_country_participation": 158,
+    "obs_organization_participation": 612
+  },
+  "min_cohort_users": 5,
+  "note": "Aggregates only. Cohort counts are stratified and are never platform totals. Cells describing fewer than min_cohort_users people publish no statistics."
+}

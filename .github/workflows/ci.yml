@@ -48,5 +48,14 @@ jobs:
           dbt parse --target ci
           python3 scripts/make_ci_fixtures.py --root target/fixtures
           dbt build --target ci --exclude tag:real_data
+
+      # The warehouse tests gate the tables; this gates the artefact that
+      # leaves the machine. Run against the synthetic fixture warehouse, so
+      # the export path itself is exercised on every push.
+      - name: Observatory export gate
+        run: |
+          python3 -m codrona_lens.observatory.export \
+            --database target/ci.duckdb --out target/export-ci --check
+
       - name: Repository hygiene
         run: python3 scripts/repo_checks.py

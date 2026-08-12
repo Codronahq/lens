@@ -1,0 +1,6137 @@
+{
+  "table": "obs_organization_participation",
+  "caveat": "Cohort users by declared organisation, free text and unnormalised. Organisations with fewer than five users are collapsed into a single suppressed row carrying only a count, because organisation plus rating is close to identifying at small cell sizes.",
+  "columns": [
+    "organization",
+    "cohort_users",
+    "mean_rating",
+    "median_rating",
+    "max_rating",
+    "candidate_master_plus",
+    "most_common_country",
+    "is_reportable"
+  ],
+  "row_count": 612,
+  "rows": [
+    {
+      "organization": "IIT Roorkee",
+      "cohort_users": 243,
+      "mean_rating": 1301.7,
+      "median_rating": 1323.0,
+      "max_rating": 2218,
+      "candidate_master_plus": 7,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Kharagpur",
+      "cohort_users": 185,
+      "mean_rating": 1302.0,
+      "median_rating": 1325.0,
+      "max_rating": 2150,
+      "candidate_master_plus": 4,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Patna",
+      "cohort_users": 175,
+      "mean_rating": 1240.8,
+      "median_rating": 1233.0,
+      "max_rating": 2475,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Lucknow",
+      "cohort_users": 164,
+      "mean_rating": 1151.0,
+      "median_rating": 1133.5,
+      "max_rating": 1765,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Guwahati",
+      "cohort_users": 152,
+      "mean_rating": 1340.7,
+      "median_rating": 1378.0,
+      "max_rating": 2275,
+      "candidate_master_plus": 6,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Delhi Technological University",
+      "cohort_users": 135,
+      "mean_rating": 1129.2,
+      "median_rating": 1131.0,
+      "max_rating": 2239,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Vellore Institute of Technology, Bhopal",
+      "cohort_users": 131,
+      "mean_rating": 900.4,
+      "median_rating": 911.0,
+      "max_rating": 1662,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Kanpur",
+      "cohort_users": 126,
+      "mean_rating": 1355.1,
+      "median_rating": 1358.5,
+      "max_rating": 2070,
+      "candidate_master_plus": 4,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "BIRLA INSTITUTE OF TECHNOLOGY, MESRA",
+      "cohort_users": 123,
+      "mean_rating": 1129.1,
+      "median_rating": 1145.0,
+      "max_rating": 1846,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Allahabad",
+      "cohort_users": 113,
+      "mean_rating": 1316.1,
+      "median_rating": 1340.0,
+      "max_rating": 2243,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jiangly Fan Club",
+      "cohort_users": 106,
+      "mean_rating": 1515.8,
+      "median_rating": 1472.5,
+      "max_rating": 3812,
+      "candidate_master_plus": 25,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Hyderabad",
+      "cohort_users": 104,
+      "mean_rating": 1252.0,
+      "median_rating": 1252.0,
+      "max_rating": 2341,
+      "candidate_master_plus": 2,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT BHU Varanasi",
+      "cohort_users": 101,
+      "mean_rating": 1344.0,
+      "median_rating": 1355.0,
+      "max_rating": 1970,
+      "candidate_master_plus": 3,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Bombay",
+      "cohort_users": 99,
+      "mean_rating": 1276.2,
+      "median_rating": 1290.0,
+      "max_rating": 2133,
+      "candidate_master_plus": 2,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Delhi",
+      "cohort_users": 97,
+      "mean_rating": 1426.3,
+      "median_rating": 1429.0,
+      "max_rating": 2354,
+      "candidate_master_plus": 5,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "'IIT Delhi'",
+      "cohort_users": 94,
+      "mean_rating": 1252.0,
+      "median_rating": 1310.0,
+      "max_rating": 1960,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "LNMIIT",
+      "cohort_users": 91,
+      "mean_rating": 1187.1,
+      "median_rating": 1168.0,
+      "max_rating": 2136,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Dwarkadas J. Sanghvi College of Engineering",
+      "cohort_users": 89,
+      "mean_rating": 1052.0,
+      "median_rating": 1034.0,
+      "max_rating": 1914,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Indore",
+      "cohort_users": 85,
+      "mean_rating": 1311.3,
+      "median_rating": 1303.0,
+      "max_rating": 2016,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Motilal Nehru National Institue of Technology",
+      "cohort_users": 84,
+      "mean_rating": 1131.1,
+      "median_rating": 1161.0,
+      "max_rating": 1701,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT(ISM) DHANBAD",
+      "cohort_users": 79,
+      "mean_rating": 1265.8,
+      "median_rating": 1262.0,
+      "max_rating": 1765,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "BITS Pilani Goa Campus",
+      "cohort_users": 77,
+      "mean_rating": 1307.6,
+      "median_rating": 1344.0,
+      "max_rating": 1968,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "DA-IICT",
+      "cohort_users": 76,
+      "mean_rating": 1229.3,
+      "median_rating": 1234.0,
+      "max_rating": 1852,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "VNR VJIET",
+      "cohort_users": 76,
+      "mean_rating": 1103.6,
+      "median_rating": 1097.5,
+      "max_rating": 1716,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Jamshedpur",
+      "cohort_users": 74,
+      "mean_rating": 1145.5,
+      "median_rating": 1141.5,
+      "max_rating": 1864,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Hyderabad",
+      "cohort_users": 71,
+      "mean_rating": 1355.5,
+      "median_rating": 1372.0,
+      "max_rating": 1959,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Rourkela",
+      "cohort_users": 68,
+      "mean_rating": 1170.0,
+      "median_rating": 1113.5,
+      "max_rating": 1812,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Mandi",
+      "cohort_users": 67,
+      "mean_rating": 1161.8,
+      "median_rating": 1150.0,
+      "max_rating": 1694,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Maulana Azad National Institute of Technology",
+      "cohort_users": 67,
+      "mean_rating": 1157.1,
+      "median_rating": 1175.0,
+      "max_rating": 1593,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Technology Ropar",
+      "cohort_users": 65,
+      "mean_rating": 1286.8,
+      "median_rating": 1298.0,
+      "max_rating": 1823,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Sardar Patel Institute of technology",
+      "cohort_users": 64,
+      "mean_rating": 1061.6,
+      "median_rating": 1056.5,
+      "max_rating": 1673,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCIS Ain Shams University",
+      "cohort_users": 61,
+      "mean_rating": 1294.4,
+      "median_rating": 1270.0,
+      "max_rating": 2182,
+      "candidate_master_plus": 2,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "NITK , Surathkal",
+      "cohort_users": 61,
+      "mean_rating": 1223.2,
+      "median_rating": 1202.0,
+      "max_rating": 1848,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Durgapur",
+      "cohort_users": 60,
+      "mean_rating": 1146.5,
+      "median_rating": 1156.5,
+      "max_rating": 1510,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Netaji Subhas University of Technology",
+      "cohort_users": 60,
+      "mean_rating": 1158.9,
+      "median_rating": 1143.0,
+      "max_rating": 1645,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Technology Madras",
+      "cohort_users": 58,
+      "mean_rating": 1359.0,
+      "median_rating": 1409.5,
+      "max_rating": 2270,
+      "candidate_master_plus": 2,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Scaler School of Technology",
+      "cohort_users": 57,
+      "mean_rating": 1126.4,
+      "median_rating": 1062.0,
+      "max_rating": 1913,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Jabalpur",
+      "cohort_users": 54,
+      "mean_rating": 1262.0,
+      "median_rating": 1241.5,
+      "max_rating": 1938,
+      "candidate_master_plus": 2,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "MSOT, Ghaziabad",
+      "cohort_users": 53,
+      "mean_rating": 818.9,
+      "median_rating": 825.0,
+      "max_rating": 1030,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Shahjalal University Of Science And Technology",
+      "cohort_users": 52,
+      "mean_rating": 954.9,
+      "median_rating": 904.0,
+      "max_rating": 1623,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Institute Of Technology, Nirma University",
+      "cohort_users": 51,
+      "mean_rating": 1098.5,
+      "median_rating": 1145.0,
+      "max_rating": 1514,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Delhi",
+      "cohort_users": 50,
+      "mean_rating": 1200.3,
+      "median_rating": 1238.0,
+      "max_rating": 1746,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Bhilai",
+      "cohort_users": 48,
+      "mean_rating": 1208.6,
+      "median_rating": 1212.5,
+      "max_rating": 1816,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Raipur",
+      "cohort_users": 47,
+      "mean_rating": 1156.3,
+      "median_rating": 1151.0,
+      "max_rating": 1686,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Silchar",
+      "cohort_users": 47,
+      "mean_rating": 1164.8,
+      "median_rating": 1132.0,
+      "max_rating": 1714,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Nirma University",
+      "cohort_users": 47,
+      "mean_rating": 1310.6,
+      "median_rating": 1285.0,
+      "max_rating": 1920,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "#IIT (ISM) DHANBAD",
+      "cohort_users": 46,
+      "mean_rating": 1053.0,
+      "median_rating": 1058.5,
+      "max_rating": 1631,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jadavpur University",
+      "cohort_users": 46,
+      "mean_rating": 1196.1,
+      "median_rating": 1256.5,
+      "max_rating": 1738,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NST-ADYPU",
+      "cohort_users": 45,
+      "mean_rating": 1068.8,
+      "median_rating": 1028.0,
+      "max_rating": 1582,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "SVNIT",
+      "cohort_users": 44,
+      "mean_rating": 1252.5,
+      "median_rating": 1207.5,
+      "max_rating": 2487,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Allame Helli",
+      "cohort_users": 42,
+      "mean_rating": 1486.9,
+      "median_rating": 1455.5,
+      "max_rating": 2743,
+      "candidate_master_plus": 4,
+      "most_common_country": "Iran",
+      "is_reportable": true
+    },
+    {
+      "organization": "CHANDIGARH UNIVERSITY",
+      "cohort_users": 42,
+      "mean_rating": 1024.2,
+      "median_rating": 1013.0,
+      "max_rating": 1907,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "DAIICT",
+      "cohort_users": 42,
+      "mean_rating": 1170.9,
+      "median_rating": 1188.0,
+      "max_rating": 1690,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Rajshahi University of Engineering and Technology",
+      "cohort_users": 42,
+      "mean_rating": 1082.4,
+      "median_rating": 1092.0,
+      "max_rating": 1607,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "' IIT Guwahati '",
+      "cohort_users": 41,
+      "mean_rating": 1137.1,
+      "median_rating": 1142.0,
+      "max_rating": 1545,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "ABV-IIITM Gwalior",
+      "cohort_users": 41,
+      "mean_rating": 1230.6,
+      "median_rating": 1181.0,
+      "max_rating": 1993,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT BHU (Varanasi)",
+      "cohort_users": 41,
+      "mean_rating": 1239.2,
+      "median_rating": 1237.0,
+      "max_rating": 1762,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "BITS Pilani, Pilani campus",
+      "cohort_users": 39,
+      "mean_rating": 1250.1,
+      "median_rating": 1304.0,
+      "max_rating": 1917,
+      "candidate_master_plus": 2,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Bhagalpur",
+      "cohort_users": 38,
+      "mean_rating": 1107.2,
+      "median_rating": 1084.5,
+      "max_rating": 1543,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Warangal",
+      "cohort_users": 38,
+      "mean_rating": 1121.2,
+      "median_rating": 1174.5,
+      "max_rating": 1555,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "'IIT Hyderabad'",
+      "cohort_users": 37,
+      "mean_rating": 1162.5,
+      "median_rating": 1186.0,
+      "max_rating": 1733,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Vadodara",
+      "cohort_users": 37,
+      "mean_rating": 1148.4,
+      "median_rating": 1163.0,
+      "max_rating": 1689,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Bhubaneswar",
+      "cohort_users": 37,
+      "mean_rating": 1237.8,
+      "median_rating": 1233.0,
+      "max_rating": 1641,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "ITMO University",
+      "cohort_users": 37,
+      "mean_rating": 1528.4,
+      "median_rating": 1508.0,
+      "max_rating": 3530,
+      "candidate_master_plus": 7,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Information Technology, Pune",
+      "cohort_users": 37,
+      "mean_rating": 1097.7,
+      "median_rating": 1081.0,
+      "max_rating": 1655,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "KIET GROUP OF INSITUTIONS",
+      "cohort_users": 37,
+      "mean_rating": 1065.2,
+      "median_rating": 1146.0,
+      "max_rating": 1388,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "MNNIT , Allahabad",
+      "cohort_users": 37,
+      "mean_rating": 1079.8,
+      "median_rating": 1119.0,
+      "max_rating": 1633,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Jodhpur",
+      "cohort_users": 36,
+      "mean_rating": 1220.8,
+      "median_rating": 1243.5,
+      "max_rating": 1853,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Kharagpur, India",
+      "cohort_users": 36,
+      "mean_rating": 1276.7,
+      "median_rating": 1317.0,
+      "max_rating": 1988,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Roorkee (IITR)",
+      "cohort_users": 36,
+      "mean_rating": 1230.1,
+      "median_rating": 1218.5,
+      "max_rating": 1768,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "International Islamic University Chittagong",
+      "cohort_users": 36,
+      "mean_rating": 949.9,
+      "median_rating": 967.5,
+      "max_rating": 1436,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT BHU , Varanasi",
+      "cohort_users": 35,
+      "mean_rating": 1250.3,
+      "median_rating": 1255.0,
+      "max_rating": 1684,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Military Institute of Science and Technology",
+      "cohort_users": 35,
+      "mean_rating": 919.5,
+      "median_rating": 901.0,
+      "max_rating": 1438,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Kurukshetra",
+      "cohort_users": 35,
+      "mean_rating": 1180.9,
+      "median_rating": 1221.0,
+      "max_rating": 1663,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Pune Institute of Computer Technology",
+      "cohort_users": 35,
+      "mean_rating": 1179.6,
+      "median_rating": 1137.0,
+      "max_rating": 1812,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Ropar",
+      "cohort_users": 34,
+      "mean_rating": 1218.4,
+      "median_rating": 1267.0,
+      "max_rating": 1532,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Islamic University of Technology",
+      "cohort_users": 34,
+      "mean_rating": 1220.7,
+      "median_rating": 1250.5,
+      "max_rating": 1933,
+      "candidate_master_plus": 1,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "BFCAI Benha University",
+      "cohort_users": 33,
+      "mean_rating": 1131.3,
+      "median_rating": 1137.0,
+      "max_rating": 1848,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "NST-Rishihood",
+      "cohort_users": 33,
+      "mean_rating": 1242.8,
+      "median_rating": 1233.0,
+      "max_rating": 1677,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "BITS Pilani , Pilani Campus",
+      "cohort_users": 32,
+      "mean_rating": 1233.8,
+      "median_rating": 1205.5,
+      "max_rating": 1756,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "BUET",
+      "cohort_users": 32,
+      "mean_rating": 1264.6,
+      "median_rating": 1339.0,
+      "max_rating": 1772,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jaypee Institute Of Information Technology , Noida",
+      "cohort_users": 32,
+      "mean_rating": 1157.3,
+      "median_rating": 1183.5,
+      "max_rating": 1692,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Chittagong University of Eng and Tech",
+      "cohort_users": 31,
+      "mean_rating": 1136.1,
+      "median_rating": 1115.0,
+      "max_rating": 1722,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Pandit Deendayal Energy University (PDEU)",
+      "cohort_users": 31,
+      "mean_rating": 1080.6,
+      "median_rating": 1156.0,
+      "max_rating": 1493,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "'IIIT Hyderabad'",
+      "cohort_users": 30,
+      "mean_rating": 1079.9,
+      "median_rating": 1109.5,
+      "max_rating": 1830,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "AUST",
+      "cohort_users": 30,
+      "mean_rating": 999.5,
+      "median_rating": 985.5,
+      "max_rating": 1616,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Daffodil International University",
+      "cohort_users": 30,
+      "mean_rating": 1069.1,
+      "median_rating": 1091.5,
+      "max_rating": 1532,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCI-Cairo university",
+      "cohort_users": 30,
+      "mean_rating": 1274.5,
+      "median_rating": 1225.5,
+      "max_rating": 2093,
+      "candidate_master_plus": 2,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Bangladesh University of Business and Technology",
+      "cohort_users": 29,
+      "mean_rating": 913.4,
+      "median_rating": 959.0,
+      "max_rating": 1561,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Bangalore",
+      "cohort_users": 29,
+      "mean_rating": 1175.9,
+      "median_rating": 1138.0,
+      "max_rating": 1815,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "INDIAN INSTITUTE OF TECHNOLOGY VARANASI ( IIT BHU)",
+      "cohort_users": 29,
+      "mean_rating": 1250.4,
+      "median_rating": 1265.0,
+      "max_rating": 1661,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "United International University",
+      "cohort_users": 28,
+      "mean_rating": 889.9,
+      "median_rating": 923.0,
+      "max_rating": 1167,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Walchand College of Engineering , Sangli",
+      "cohort_users": 28,
+      "mean_rating": 1007.8,
+      "median_rating": 1012.0,
+      "max_rating": 1291,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "BITS Pilani Hyderabad Campus",
+      "cohort_users": 27,
+      "mean_rating": 1144.5,
+      "median_rating": 1117.0,
+      "max_rating": 1673,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IET Lucknow",
+      "cohort_users": 27,
+      "mean_rating": 1263.1,
+      "median_rating": 1222.0,
+      "max_rating": 1930,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT KOTTAYAM",
+      "cohort_users": 27,
+      "mean_rating": 1131.3,
+      "median_rating": 1104.0,
+      "max_rating": 1570,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Veermata Jijabai Technological Institute",
+      "cohort_users": 27,
+      "mean_rating": 1129.4,
+      "median_rating": 1118.0,
+      "max_rating": 1706,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Vellore Institute of Technology, Chennai",
+      "cohort_users": 27,
+      "mean_rating": 1165.7,
+      "median_rating": 1162.0,
+      "max_rating": 1681,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "ABV IIITM GWALIOR",
+      "cohort_users": 26,
+      "mean_rating": 1122.3,
+      "median_rating": 1104.0,
+      "max_rating": 1516,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Trichy",
+      "cohort_users": 26,
+      "mean_rating": 1191.2,
+      "median_rating": 1192.0,
+      "max_rating": 1562,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Comilla University",
+      "cohort_users": 25,
+      "mean_rating": 1063.5,
+      "median_rating": 1068.0,
+      "max_rating": 1656,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Dhirubhai Ambani Institute of Info and Comm Tech",
+      "cohort_users": 25,
+      "mean_rating": 1012.2,
+      "median_rating": 1011.0,
+      "max_rating": 1414,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "PSUT",
+      "cohort_users": 25,
+      "mean_rating": 1100.6,
+      "median_rating": 1154.0,
+      "max_rating": 1623,
+      "candidate_master_plus": 0,
+      "most_common_country": "Jordan",
+      "is_reportable": true
+    },
+    {
+      "organization": "East West University",
+      "cohort_users": 24,
+      "mean_rating": 930.3,
+      "median_rating": 955.0,
+      "max_rating": 1579,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "KIT kalaignar karunanidhi",
+      "cohort_users": 24,
+      "mean_rating": 801.3,
+      "median_rating": 793.0,
+      "max_rating": 1185,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Mawlana Bhashani Science and Technology University",
+      "cohort_users": 24,
+      "mean_rating": 1122.7,
+      "median_rating": 1121.5,
+      "max_rating": 1794,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "VISHWAKARMA INSTITUTE OF TECHNOLOGY",
+      "cohort_users": 24,
+      "mean_rating": 1146.8,
+      "median_rating": 1097.5,
+      "max_rating": 1931,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT BHU",
+      "cohort_users": 23,
+      "mean_rating": 1369.8,
+      "median_rating": 1303.0,
+      "max_rating": 1844,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "LNM institute of information technology",
+      "cohort_users": 23,
+      "mean_rating": 996.6,
+      "median_rating": 997.0,
+      "max_rating": 1714,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Alexandria University - FCDS",
+      "cohort_users": 22,
+      "mean_rating": 1056.3,
+      "median_rating": 903.5,
+      "max_rating": 2105,
+      "candidate_master_plus": 1,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "American International University Bangladesh",
+      "cohort_users": 22,
+      "mean_rating": 1087.6,
+      "median_rating": 1067.5,
+      "max_rating": 1593,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Brac University",
+      "cohort_users": 22,
+      "mean_rating": 1168.5,
+      "median_rating": 1120.0,
+      "max_rating": 1868,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Technology Delhi",
+      "cohort_users": 22,
+      "mean_rating": 1307.1,
+      "median_rating": 1409.5,
+      "max_rating": 1749,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "K. J. Somaiya College of Engineering, Mumbai",
+      "cohort_users": 22,
+      "mean_rating": 1120.7,
+      "median_rating": 1148.5,
+      "max_rating": 1594,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Metropolitan University",
+      "cohort_users": 22,
+      "mean_rating": 895.1,
+      "median_rating": 877.5,
+      "max_rating": 1163,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Nile University",
+      "cohort_users": 22,
+      "mean_rating": 1329.6,
+      "median_rating": 1313.0,
+      "max_rating": 1941,
+      "candidate_master_plus": 1,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Pabna University of Science and Technology",
+      "cohort_users": 22,
+      "mean_rating": 956.8,
+      "median_rating": 949.5,
+      "max_rating": 1452,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "'IIT Roorkee'",
+      "cohort_users": 21,
+      "mean_rating": 1124.3,
+      "median_rating": 1128.0,
+      "max_rating": 1566,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Dharwad",
+      "cohort_users": 21,
+      "mean_rating": 1114.0,
+      "median_rating": 1084.0,
+      "max_rating": 1769,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Islamic University,Bangladesh",
+      "cohort_users": 21,
+      "mean_rating": 1111.3,
+      "median_rating": 1130.0,
+      "max_rating": 1492,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jahangirnagar University",
+      "cohort_users": 21,
+      "mean_rating": 1112.8,
+      "median_rating": 1012.0,
+      "max_rating": 1617,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "PES University",
+      "cohort_users": 21,
+      "mean_rating": 980.3,
+      "median_rating": 1040.0,
+      "max_rating": 1984,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Shahjalal University of Science and Technology",
+      "cohort_users": 21,
+      "mean_rating": 1261.8,
+      "median_rating": 1256.0,
+      "max_rating": 1966,
+      "candidate_master_plus": 1,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Naya Raipur",
+      "cohort_users": 20,
+      "mean_rating": 999.7,
+      "median_rating": 1002.5,
+      "max_rating": 1705,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "KIT kalaignarkarunanidhi",
+      "cohort_users": 20,
+      "mean_rating": 812.7,
+      "median_rating": 788.5,
+      "max_rating": 1363,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Hamirpur",
+      "cohort_users": 20,
+      "mean_rating": 1149.0,
+      "median_rating": 1118.5,
+      "max_rating": 1749,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Jalandhar",
+      "cohort_users": 20,
+      "mean_rating": 1229.4,
+      "median_rating": 1232.5,
+      "max_rating": 1662,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Punjab Engineering College, Chandigarh",
+      "cohort_users": 20,
+      "mean_rating": 987.4,
+      "median_rating": 1014.5,
+      "max_rating": 1510,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "#IIT(ISM) DHANBAD",
+      "cohort_users": 19,
+      "mean_rating": 1237.0,
+      "median_rating": 1300.0,
+      "max_rating": 1634,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Computers and Information Fayoum university",
+      "cohort_users": 19,
+      "mean_rating": 1138.6,
+      "median_rating": 1168.0,
+      "max_rating": 1890,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIEST Shibpur",
+      "cohort_users": 19,
+      "mean_rating": 1152.7,
+      "median_rating": 1178.0,
+      "max_rating": 1559,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Gandhinagar",
+      "cohort_users": 19,
+      "mean_rating": 1258.8,
+      "median_rating": 1249.0,
+      "max_rating": 1900,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute Of Information Technology, Bhopal",
+      "cohort_users": 19,
+      "mean_rating": 1266.4,
+      "median_rating": 1234.0,
+      "max_rating": 1623,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "KIIT University",
+      "cohort_users": 19,
+      "mean_rating": 1142.8,
+      "median_rating": 1058.0,
+      "max_rating": 1869,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Faculty of Engineering Helwan University",
+      "cohort_users": 18,
+      "mean_rating": 1159.2,
+      "median_rating": 1064.5,
+      "max_rating": 1671,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Information Technology, Nagpur",
+      "cohort_users": 18,
+      "mean_rating": 1249.8,
+      "median_rating": 1190.0,
+      "max_rating": 1921,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "KIT-kalaignarkarunanidhi",
+      "cohort_users": 18,
+      "mean_rating": 866.6,
+      "median_rating": 804.5,
+      "max_rating": 1182,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Agartala",
+      "cohort_users": 18,
+      "mean_rating": 1084.8,
+      "median_rating": 1024.0,
+      "max_rating": 1712,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "SSN College Of Engineering",
+      "cohort_users": 18,
+      "mean_rating": 1206.0,
+      "median_rating": 1314.5,
+      "max_rating": 1462,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "University Of Rajshahi",
+      "cohort_users": 18,
+      "mean_rating": 1201.0,
+      "median_rating": 1188.5,
+      "max_rating": 1721,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of Jordan",
+      "cohort_users": 18,
+      "mean_rating": 1063.7,
+      "median_rating": 1024.5,
+      "max_rating": 1802,
+      "candidate_master_plus": 0,
+      "most_common_country": "Jordan",
+      "is_reportable": true
+    },
+    {
+      "organization": "ajay kumar garg engineering college",
+      "cohort_users": 18,
+      "mean_rating": 1181.2,
+      "median_rating": 1167.0,
+      "max_rating": 1999,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "jordan university of science and technology",
+      "cohort_users": 18,
+      "mean_rating": 1132.4,
+      "median_rating": 1083.0,
+      "max_rating": 2297,
+      "candidate_master_plus": 1,
+      "most_common_country": "Jordan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Aleppo University",
+      "cohort_users": 17,
+      "mean_rating": 1231.8,
+      "median_rating": 1131.0,
+      "max_rating": 2147,
+      "candidate_master_plus": 2,
+      "most_common_country": "Syria",
+      "is_reportable": true
+    },
+    {
+      "organization": "Chengdu Foreign Languages School",
+      "cohort_users": 17,
+      "mean_rating": 1698.1,
+      "median_rating": 1694.0,
+      "max_rating": 1996,
+      "candidate_master_plus": 5,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jalpaiguri Government Engineering College",
+      "cohort_users": 17,
+      "mean_rating": 1130.8,
+      "median_rating": 1029.0,
+      "max_rating": 1598,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Premier University Chittagong",
+      "cohort_users": 17,
+      "mean_rating": 903.6,
+      "median_rating": 911.0,
+      "max_rating": 1379,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Roof Academy",
+      "cohort_users": 17,
+      "mean_rating": 910.7,
+      "median_rating": 890.0,
+      "max_rating": 1188,
+      "candidate_master_plus": 0,
+      "most_common_country": "Azerbaijan",
+      "is_reportable": true
+    },
+    {
+      "organization": "UESTC",
+      "cohort_users": 17,
+      "mean_rating": 1632.6,
+      "median_rating": 1642.0,
+      "max_rating": 2010,
+      "candidate_master_plus": 2,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Assiut University",
+      "cohort_users": 16,
+      "mean_rating": 1172.9,
+      "median_rating": 1074.5,
+      "max_rating": 1919,
+      "candidate_master_plus": 1,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCAI - BSU",
+      "cohort_users": 16,
+      "mean_rating": 1113.3,
+      "median_rating": 1148.5,
+      "max_rating": 1477,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Kota",
+      "cohort_users": 16,
+      "mean_rating": 1168.7,
+      "median_rating": 1140.5,
+      "max_rating": 1996,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIITDM KURNOOL",
+      "cohort_users": 16,
+      "mean_rating": 941.1,
+      "median_rating": 938.5,
+      "max_rating": 1525,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT VARANASI (BHU)",
+      "cohort_users": 16,
+      "mean_rating": 1227.9,
+      "median_rating": 1187.0,
+      "max_rating": 1930,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Leading University, Sylhet",
+      "cohort_users": 16,
+      "mean_rating": 1110.7,
+      "median_rating": 1221.0,
+      "max_rating": 1550,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Lovely Professional University",
+      "cohort_users": 16,
+      "mean_rating": 1063.8,
+      "median_rating": 973.0,
+      "max_rating": 1623,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Malaviya National Institute of Technology(MNIT)",
+      "cohort_users": 16,
+      "mean_rating": 1279.1,
+      "median_rating": 1325.0,
+      "max_rating": 1656,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "National Institute of Technology Patna",
+      "cohort_users": 16,
+      "mean_rating": 1111.9,
+      "median_rating": 1106.5,
+      "max_rating": 1413,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "South China University of Technology",
+      "cohort_users": 16,
+      "mean_rating": 1603.8,
+      "median_rating": 1536.0,
+      "max_rating": 2083,
+      "candidate_master_plus": 3,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "St. Joseph's College of Engineering, Chennai",
+      "cohort_users": 16,
+      "mean_rating": 874.2,
+      "median_rating": 888.5,
+      "max_rating": 1327,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "The LNM Institute of Information Technology",
+      "cohort_users": 16,
+      "mean_rating": 1093.1,
+      "median_rating": 1060.5,
+      "max_rating": 1491,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of Brasilia",
+      "cohort_users": 16,
+      "mean_rating": 1299.4,
+      "median_rating": 1240.0,
+      "max_rating": 1874,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "0x3F Club",
+      "cohort_users": 15,
+      "mean_rating": 1755.6,
+      "median_rating": 1712.0,
+      "max_rating": 2516,
+      "candidate_master_plus": 4,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "DAIICT, GANDHINAGAR,GUJARAT",
+      "cohort_users": 15,
+      "mean_rating": 1140.2,
+      "median_rating": 1086.0,
+      "max_rating": 1512,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Dept. of CSE, IUBAT",
+      "cohort_users": 15,
+      "mean_rating": 998.6,
+      "median_rating": 1040.0,
+      "max_rating": 1341,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Dhaka University of Engineering and Technology",
+      "cohort_users": 15,
+      "mean_rating": 963.0,
+      "median_rating": 1035.0,
+      "max_rating": 1245,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCAI SVNU",
+      "cohort_users": 15,
+      "mean_rating": 916.6,
+      "median_rating": 997.0,
+      "max_rating": 1263,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Faculty of Engineering, Ain Shams University",
+      "cohort_users": 15,
+      "mean_rating": 1333.2,
+      "median_rating": 1375.0,
+      "max_rating": 1869,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "GL BAJAJ Institute of technology and management",
+      "cohort_users": 15,
+      "mean_rating": 736.1,
+      "median_rating": 744.0,
+      "max_rating": 1122,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Galgotias University",
+      "cohort_users": 15,
+      "mean_rating": 1058.3,
+      "median_rating": 1025.0,
+      "max_rating": 1580,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Graphic Era Hill University",
+      "cohort_users": 15,
+      "mean_rating": 1109.5,
+      "median_rating": 1013.0,
+      "max_rating": 1963,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Helwan University, Faculty of Computer Science",
+      "cohort_users": 15,
+      "mean_rating": 1138.9,
+      "median_rating": 1209.0,
+      "max_rating": 1590,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Surat",
+      "cohort_users": 15,
+      "mean_rating": 1035.7,
+      "median_rating": 1098.0,
+      "max_rating": 1427,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Rookee",
+      "cohort_users": 15,
+      "mean_rating": 1202.8,
+      "median_rating": 1168.0,
+      "max_rating": 1807,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Information Technology ,Ranchi",
+      "cohort_users": 15,
+      "mean_rating": 1042.7,
+      "median_rating": 1065.0,
+      "max_rating": 1462,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "KUET",
+      "cohort_users": 15,
+      "mean_rating": 1249.8,
+      "median_rating": 1248.0,
+      "max_rating": 1735,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "LNMIIT, Jaipur",
+      "cohort_users": 15,
+      "mean_rating": 1129.7,
+      "median_rating": 1133.0,
+      "max_rating": 1483,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Maharaja Agrasen Institute of Technology",
+      "cohort_users": 15,
+      "mean_rating": 1116.7,
+      "median_rating": 1138.0,
+      "max_rating": 1437,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Menofia University",
+      "cohort_users": 15,
+      "mean_rating": 1179.9,
+      "median_rating": 1131.0,
+      "max_rating": 1687,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Patna",
+      "cohort_users": 15,
+      "mean_rating": 1053.4,
+      "median_rating": 1047.0,
+      "max_rating": 1538,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of Netrokona",
+      "cohort_users": 15,
+      "mean_rating": 950.0,
+      "median_rating": 1004.0,
+      "max_rating": 1275,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Bennett University",
+      "cohort_users": 14,
+      "mean_rating": 1056.6,
+      "median_rating": 1080.5,
+      "max_rating": 1757,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Damascus -University ITE",
+      "cohort_users": 14,
+      "mean_rating": 1038.3,
+      "median_rating": 1030.5,
+      "max_rating": 1398,
+      "candidate_master_plus": 0,
+      "most_common_country": "Syria",
+      "is_reportable": true
+    },
+    {
+      "organization": "Fci south valley university",
+      "cohort_users": 14,
+      "mean_rating": 1373.6,
+      "median_rating": 1376.0,
+      "max_rating": 1659,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Harcourt Butler Technical University, Kanpur",
+      "cohort_users": 14,
+      "mean_rating": 1250.0,
+      "median_rating": 1160.0,
+      "max_rating": 1676,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Jammu",
+      "cohort_users": 14,
+      "mean_rating": 963.9,
+      "median_rating": 1053.0,
+      "max_rating": 1383,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Technology Kharagpur",
+      "cohort_users": 14,
+      "mean_rating": 1146.6,
+      "median_rating": 1109.0,
+      "max_rating": 1676,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "MIT",
+      "cohort_users": 14,
+      "mean_rating": 1963.4,
+      "median_rating": 1682.5,
+      "max_rating": 3857,
+      "candidate_master_plus": 6,
+      "most_common_country": "United States",
+      "is_reportable": true
+    },
+    {
+      "organization": "Madan Mohan Malaviya University of Technology",
+      "cohort_users": 14,
+      "mean_rating": 1075.1,
+      "median_rating": 1117.5,
+      "max_rating": 1456,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Moscow IPT",
+      "cohort_users": 14,
+      "mean_rating": 1811.0,
+      "median_rating": 1777.5,
+      "max_rating": 2765,
+      "candidate_master_plus": 6,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Noakhali Science and Technology University",
+      "cohort_users": 14,
+      "mean_rating": 1040.9,
+      "median_rating": 1021.0,
+      "max_rating": 1581,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Saint Petersburg SU",
+      "cohort_users": 14,
+      "mean_rating": 1854.6,
+      "median_rating": 1752.0,
+      "max_rating": 3303,
+      "candidate_master_plus": 4,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "SundarSTEM School | CS Section",
+      "cohort_users": 14,
+      "mean_rating": 1421.4,
+      "median_rating": 1436.0,
+      "max_rating": 1704,
+      "candidate_master_plus": 0,
+      "most_common_country": "Pakistan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Vignan's Institute of Information Technology",
+      "cohort_users": 14,
+      "mean_rating": 1021.6,
+      "median_rating": 1046.0,
+      "max_rating": 1810,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Anhui Normal University",
+      "cohort_users": 13,
+      "mean_rating": 1265.2,
+      "median_rating": 1262.0,
+      "max_rating": 1741,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Beihang University",
+      "cohort_users": 13,
+      "mean_rating": 1896.6,
+      "median_rating": 1854.0,
+      "max_rating": 2430,
+      "candidate_master_plus": 5,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Chennai institute of tech",
+      "cohort_users": 13,
+      "mean_rating": 1031.1,
+      "median_rating": 942.0,
+      "max_rating": 1502,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "ECUST",
+      "cohort_users": 13,
+      "mean_rating": 1560.9,
+      "median_rating": 1601.0,
+      "max_rating": 1792,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "East Delta University",
+      "cohort_users": 13,
+      "mean_rating": 897.5,
+      "median_rating": 855.0,
+      "max_rating": 1233,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "FRITL",
+      "cohort_users": 13,
+      "mean_rating": 1271.0,
+      "median_rating": 1229.0,
+      "max_rating": 1834,
+      "candidate_master_plus": 0,
+      "most_common_country": "Azerbaijan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Higher School of Economics",
+      "cohort_users": 13,
+      "mean_rating": 1909.5,
+      "median_rating": 1863.0,
+      "max_rating": 2897,
+      "candidate_master_plus": 5,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Homs University",
+      "cohort_users": 13,
+      "mean_rating": 1290.9,
+      "median_rating": 1311.0,
+      "max_rating": 1857,
+      "candidate_master_plus": 0,
+      "most_common_country": "Syria",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Bhubaneswar",
+      "cohort_users": 13,
+      "mean_rating": 1078.4,
+      "median_rating": 1176.0,
+      "max_rating": 1514,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT DHANBAD",
+      "cohort_users": 13,
+      "mean_rating": 1252.4,
+      "median_rating": 1215.0,
+      "max_rating": 1447,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Madras",
+      "cohort_users": 13,
+      "mean_rating": 1167.8,
+      "median_rating": 1330.0,
+      "max_rating": 1637,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Technology Patna",
+      "cohort_users": 13,
+      "mean_rating": 1126.1,
+      "median_rating": 1083.0,
+      "max_rating": 1646,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "MIT Academy of Engineering, Alandi",
+      "cohort_users": 13,
+      "mean_rating": 933.8,
+      "median_rating": 933.0,
+      "max_rating": 1651,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "MNIT Jaipur",
+      "cohort_users": 13,
+      "mean_rating": 1065.2,
+      "median_rating": 1082.0,
+      "max_rating": 1470,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Parul Institute of Engineering and Technology",
+      "cohort_users": 13,
+      "mean_rating": 847.8,
+      "median_rating": 865.0,
+      "max_rating": 1275,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "SZTU",
+      "cohort_users": 13,
+      "mean_rating": 1272.4,
+      "median_rating": 1207.0,
+      "max_rating": 1635,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Sylhet Engineering College",
+      "cohort_users": 13,
+      "mean_rating": 1081.8,
+      "median_rating": 1238.0,
+      "max_rating": 1557,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Thapar Institute of Engineering and Technology",
+      "cohort_users": 13,
+      "mean_rating": 959.1,
+      "median_rating": 1083.0,
+      "max_rating": 1384,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "XING LUCU BANGET",
+      "cohort_users": 13,
+      "mean_rating": 1369.1,
+      "median_rating": 1253.0,
+      "max_rating": 1943,
+      "candidate_master_plus": 2,
+      "most_common_country": "Indonesia",
+      "is_reportable": true
+    },
+    {
+      "organization": "cowwycow no human rights",
+      "cohort_users": 13,
+      "mean_rating": 1563.2,
+      "median_rating": 1504.0,
+      "max_rating": 2210,
+      "candidate_master_plus": 2,
+      "most_common_country": "Vietnam",
+      "is_reportable": true
+    },
+    {
+      "organization": "karpagam college of engineering",
+      "cohort_users": 13,
+      "mean_rating": 664.4,
+      "median_rating": 618.0,
+      "max_rating": 1141,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "ABES Engineering College, Ghaziabad",
+      "cohort_users": 12,
+      "mean_rating": 1181.2,
+      "median_rating": 1131.5,
+      "max_rating": 1895,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Army Institute Of Technology (AIT), Pune",
+      "cohort_users": 12,
+      "mean_rating": 1264.3,
+      "median_rating": 1283.0,
+      "max_rating": 1630,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Faculty OF Engineering Alexandria University",
+      "cohort_users": 12,
+      "mean_rating": 1156.7,
+      "median_rating": 1121.5,
+      "max_rating": 1441,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Sonepat",
+      "cohort_users": 12,
+      "mean_rating": 1208.3,
+      "median_rating": 1238.0,
+      "max_rating": 1584,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIITDM, Jabalpur, M.P",
+      "cohort_users": 12,
+      "mean_rating": 1077.7,
+      "median_rating": 1015.5,
+      "max_rating": 1400,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Technology Roorkee",
+      "cohort_users": 12,
+      "mean_rating": 1138.3,
+      "median_rating": 1120.5,
+      "max_rating": 1593,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Metropolitan University , Sylhet , Bangladesh",
+      "cohort_users": 12,
+      "mean_rating": 872.9,
+      "median_rating": 922.0,
+      "max_rating": 1243,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Moscow, School 179",
+      "cohort_users": 12,
+      "mean_rating": 1650.0,
+      "median_rating": 1759.0,
+      "max_rating": 2338,
+      "candidate_master_plus": 4,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Purdue University",
+      "cohort_users": 12,
+      "mean_rating": 1590.8,
+      "median_rating": 1498.5,
+      "max_rating": 2326,
+      "candidate_master_plus": 4,
+      "most_common_country": "United States",
+      "is_reportable": true
+    },
+    {
+      "organization": "Seoul National University",
+      "cohort_users": 12,
+      "mean_rating": 1856.1,
+      "median_rating": 1882.0,
+      "max_rating": 2474,
+      "candidate_master_plus": 6,
+      "most_common_country": "South Korea",
+      "is_reportable": true
+    },
+    {
+      "organization": "Tran Dai Nghia High School For The Gifted",
+      "cohort_users": 12,
+      "mean_rating": 1268.4,
+      "median_rating": 1150.0,
+      "max_rating": 2004,
+      "candidate_master_plus": 1,
+      "most_common_country": "Vietnam",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of Waterloo",
+      "cohort_users": 12,
+      "mean_rating": 1474.3,
+      "median_rating": 1449.0,
+      "max_rating": 2136,
+      "candidate_master_plus": 1,
+      "most_common_country": "Canada",
+      "is_reportable": true
+    },
+    {
+      "organization": "WYU",
+      "cohort_users": 12,
+      "mean_rating": 1247.5,
+      "median_rating": 1186.0,
+      "max_rating": 1751,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "student",
+      "cohort_users": 12,
+      "mean_rating": 855.2,
+      "median_rating": 787.5,
+      "max_rating": 1459,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "BVRIT Hyderabad",
+      "cohort_users": 11,
+      "mean_rating": 777.1,
+      "median_rating": 817.0,
+      "max_rating": 1050,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Daffodil International Univarsity",
+      "cohort_users": 11,
+      "mean_rating": 828.1,
+      "median_rating": 817.0,
+      "max_rating": 1187,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Dayananda Sagar College Of Engineering",
+      "cohort_users": 11,
+      "mean_rating": 1023.4,
+      "median_rating": 1135.0,
+      "max_rating": 1491,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Faculty of Sciences Cairo university",
+      "cohort_users": 11,
+      "mean_rating": 1152.6,
+      "median_rating": 1143.0,
+      "max_rating": 1522,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "JSS Academy of Technical Education Noida",
+      "cohort_users": 11,
+      "mean_rating": 1014.5,
+      "median_rating": 1034.0,
+      "max_rating": 1228,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jessore University of Science and Technology",
+      "cohort_users": 11,
+      "mean_rating": 1201.0,
+      "median_rating": 1167.0,
+      "max_rating": 1650,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "KAIST",
+      "cohort_users": 11,
+      "mean_rating": 1864.5,
+      "median_rating": 1808.0,
+      "max_rating": 2381,
+      "candidate_master_plus": 5,
+      "most_common_country": "South Korea",
+      "is_reportable": true
+    },
+    {
+      "organization": "KBTU",
+      "cohort_users": 11,
+      "mean_rating": 1457.6,
+      "median_rating": 1490.0,
+      "max_rating": 1914,
+      "candidate_master_plus": 1,
+      "most_common_country": "Kazakhstan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Nanjing Foreign Language School",
+      "cohort_users": 11,
+      "mean_rating": 1573.7,
+      "median_rating": 1429.0,
+      "max_rating": 2407,
+      "candidate_master_plus": 4,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "National Institute of Technology Raipur",
+      "cohort_users": 11,
+      "mean_rating": 1087.3,
+      "median_rating": 1010.0,
+      "max_rating": 1537,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "North South University",
+      "cohort_users": 11,
+      "mean_rating": 1161.4,
+      "median_rating": 1263.0,
+      "max_rating": 1582,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "PDPM IIITDM JABALPUR",
+      "cohort_users": 11,
+      "mean_rating": 1150.8,
+      "median_rating": 1206.0,
+      "max_rating": 1516,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Rangamati Science and Technology University",
+      "cohort_users": 11,
+      "mean_rating": 934.8,
+      "median_rating": 954.0,
+      "max_rating": 1578,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "SEAS, Ahmedabad University",
+      "cohort_users": 11,
+      "mean_rating": 1197.4,
+      "median_rating": 1138.0,
+      "max_rating": 1961,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "SVNIT, Surat",
+      "cohort_users": 11,
+      "mean_rating": 922.4,
+      "median_rating": 961.0,
+      "max_rating": 1241,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Yonsei University",
+      "cohort_users": 11,
+      "mean_rating": 1743.5,
+      "median_rating": 1820.0,
+      "max_rating": 2513,
+      "candidate_master_plus": 5,
+      "most_common_country": "South Korea",
+      "is_reportable": true
+    },
+    {
+      "organization": "Ain shams University, FCIS",
+      "cohort_users": 10,
+      "mean_rating": 1062.5,
+      "median_rating": 1048.0,
+      "max_rating": 1513,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Ajay Kumar Garg Engineering college, Ghaziabad",
+      "cohort_users": 10,
+      "mean_rating": 1049.7,
+      "median_rating": 1060.5,
+      "max_rating": 1491,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "BWINF",
+      "cohort_users": 10,
+      "mean_rating": 1302.2,
+      "median_rating": 1383.0,
+      "max_rating": 1853,
+      "candidate_master_plus": 0,
+      "most_common_country": "Germany",
+      "is_reportable": true
+    },
+    {
+      "organization": "Carnegie Mellon University",
+      "cohort_users": 10,
+      "mean_rating": 1557.2,
+      "median_rating": 1502.5,
+      "max_rating": 2576,
+      "candidate_master_plus": 2,
+      "most_common_country": "United States",
+      "is_reportable": true
+    },
+    {
+      "organization": "Escuela Superior de Cómputo",
+      "cohort_users": 10,
+      "mean_rating": 1080.5,
+      "median_rating": 920.0,
+      "max_rating": 2308,
+      "candidate_master_plus": 1,
+      "most_common_country": "Mexico",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCI Assiut University",
+      "cohort_users": 10,
+      "mean_rating": 891.8,
+      "median_rating": 904.0,
+      "max_rating": 1554,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCIS Mansoura University",
+      "cohort_users": 10,
+      "mean_rating": 1360.5,
+      "median_rating": 1412.0,
+      "max_rating": 1678,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "German University in Cairo",
+      "cohort_users": 10,
+      "mean_rating": 1287.9,
+      "median_rating": 1359.0,
+      "max_rating": 1728,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Google",
+      "cohort_users": 10,
+      "mean_rating": 1517.2,
+      "median_rating": 1379.0,
+      "max_rating": 2943,
+      "candidate_master_plus": 2,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Graphic Era University",
+      "cohort_users": 10,
+      "mean_rating": 1111.6,
+      "median_rating": 1106.5,
+      "max_rating": 1388,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "High School for the Gifted - VNU.HCM",
+      "cohort_users": 10,
+      "mean_rating": 1678.5,
+      "median_rating": 1694.0,
+      "max_rating": 1952,
+      "candidate_master_plus": 2,
+      "most_common_country": "Vietnam",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT , Surat",
+      "cohort_users": 10,
+      "mean_rating": 1138.7,
+      "median_rating": 1148.0,
+      "max_rating": 1626,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Bhopal",
+      "cohort_users": 10,
+      "mean_rating": 1133.8,
+      "median_rating": 1207.5,
+      "max_rating": 1447,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Nagpur",
+      "cohort_users": 10,
+      "mean_rating": 1067.4,
+      "median_rating": 1054.5,
+      "max_rating": 1356,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT (BHU) Varanasi",
+      "cohort_users": 10,
+      "mean_rating": 1315.3,
+      "median_rating": 1291.0,
+      "max_rating": 1836,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT DELHI, New Delhi, India",
+      "cohort_users": 10,
+      "mean_rating": 1397.4,
+      "median_rating": 1405.0,
+      "max_rating": 1802,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Technology Guwahati",
+      "cohort_users": 10,
+      "mean_rating": 945.1,
+      "median_rating": 953.0,
+      "max_rating": 1538,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Technology Kanpur",
+      "cohort_users": 10,
+      "mean_rating": 1157.3,
+      "median_rating": 1124.0,
+      "max_rating": 1703,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "KIT-CBE",
+      "cohort_users": 10,
+      "mean_rating": 932.2,
+      "median_rating": 872.5,
+      "max_rating": 1478,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "KLE TECHNOLOGICAL UNIVERSITY",
+      "cohort_users": 10,
+      "mean_rating": 889.7,
+      "median_rating": 868.5,
+      "max_rating": 1185,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Khazar University",
+      "cohort_users": 10,
+      "mean_rating": 964.3,
+      "median_rating": 974.5,
+      "max_rating": 1218,
+      "candidate_master_plus": 0,
+      "most_common_country": "Azerbaijan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Lovely Professioanl University",
+      "cohort_users": 10,
+      "mean_rating": 934.3,
+      "median_rating": 996.0,
+      "max_rating": 1247,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Manipal Institute Of Technology, Manipal",
+      "cohort_users": 10,
+      "mean_rating": 1034.5,
+      "median_rating": 1001.5,
+      "max_rating": 1564,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Manipal University Jaipur",
+      "cohort_users": 10,
+      "mean_rating": 1019.4,
+      "median_rating": 1030.5,
+      "max_rating": 1538,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Motilal Nehru National Institute Of Technology",
+      "cohort_users": 10,
+      "mean_rating": 1035.2,
+      "median_rating": 1039.0,
+      "max_rating": 1519,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NRNU MEPhI",
+      "cohort_users": 10,
+      "mean_rating": 1652.6,
+      "median_rating": 1533.0,
+      "max_rating": 2221,
+      "candidate_master_plus": 3,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Nanyang Technological University",
+      "cohort_users": 10,
+      "mean_rating": 1525.2,
+      "median_rating": 1625.0,
+      "max_rating": 2265,
+      "candidate_master_plus": 3,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Netaji Subhas Institute of Technology, Delhi",
+      "cohort_users": 10,
+      "mean_rating": 1142.6,
+      "median_rating": 1154.5,
+      "max_rating": 1511,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Pakistan STEM School",
+      "cohort_users": 10,
+      "mean_rating": 880.8,
+      "median_rating": 882.5,
+      "max_rating": 977,
+      "candidate_master_plus": 0,
+      "most_common_country": "Pakistan",
+      "is_reportable": true
+    },
+    {
+      "organization": "RDFZ",
+      "cohort_users": 10,
+      "mean_rating": 1767.0,
+      "median_rating": 1895.5,
+      "max_rating": 2439,
+      "candidate_master_plus": 5,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Rajiv gandhi institute of petroleum technology",
+      "cohort_users": 10,
+      "mean_rating": 1008.6,
+      "median_rating": 1042.5,
+      "max_rating": 1458,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "SCTR'S Pune Institute of Computer Technology",
+      "cohort_users": 10,
+      "mean_rating": 1054.2,
+      "median_rating": 1021.0,
+      "max_rating": 1528,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "SOI",
+      "cohort_users": 10,
+      "mean_rating": 1319.7,
+      "median_rating": 1300.0,
+      "max_rating": 1633,
+      "candidate_master_plus": 0,
+      "most_common_country": "Syria",
+      "is_reportable": true
+    },
+    {
+      "organization": "Sina Salehzade Fanclub",
+      "cohort_users": 10,
+      "mean_rating": 1275.7,
+      "median_rating": 1205.0,
+      "max_rating": 1736,
+      "candidate_master_plus": 0,
+      "most_common_country": "Iran",
+      "is_reportable": true
+    },
+    {
+      "organization": "Sp 221",
+      "cohort_users": 10,
+      "mean_rating": 1355.9,
+      "median_rating": 1451.5,
+      "max_rating": 1690,
+      "candidate_master_plus": 0,
+      "most_common_country": "Poland",
+      "is_reportable": true
+    },
+    {
+      "organization": "Suez Canal University",
+      "cohort_users": 10,
+      "mean_rating": 1180.1,
+      "median_rating": 1237.5,
+      "max_rating": 1443,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Universidad de Chile",
+      "cohort_users": 10,
+      "mean_rating": 1054.9,
+      "median_rating": 1023.5,
+      "max_rating": 2189,
+      "candidate_master_plus": 1,
+      "most_common_country": "Chile",
+      "is_reportable": true
+    },
+    {
+      "organization": "Yarmouk University",
+      "cohort_users": 10,
+      "mean_rating": 840.2,
+      "median_rating": 851.5,
+      "max_rating": 1131,
+      "candidate_master_plus": 0,
+      "most_common_country": "Jordan",
+      "is_reportable": true
+    },
+    {
+      "organization": "banda mopsou",
+      "cohort_users": 10,
+      "mean_rating": 1482.2,
+      "median_rating": 1477.0,
+      "max_rating": 2092,
+      "candidate_master_plus": 1,
+      "most_common_country": "Belarus",
+      "is_reportable": true
+    },
+    {
+      "organization": "horny",
+      "cohort_users": 10,
+      "mean_rating": 1600.7,
+      "median_rating": 1632.0,
+      "max_rating": 2179,
+      "candidate_master_plus": 3,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "sohag university",
+      "cohort_users": 10,
+      "mean_rating": 1047.8,
+      "median_rating": 1160.5,
+      "max_rating": 1770,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "vardhaman college of engineering",
+      "cohort_users": 10,
+      "mean_rating": 780.7,
+      "median_rating": 936.5,
+      "max_rating": 1265,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "(Aleppo)University",
+      "cohort_users": 9,
+      "mean_rating": 891.4,
+      "median_rating": 940.0,
+      "max_rating": 1282,
+      "candidate_master_plus": 0,
+      "most_common_country": "Syria",
+      "is_reportable": true
+    },
+    {
+      "organization": "1162",
+      "cohort_users": 9,
+      "mean_rating": 566.9,
+      "median_rating": 588.0,
+      "max_rating": 885,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Aditya University",
+      "cohort_users": 9,
+      "mean_rating": 858.2,
+      "median_rating": 856.0,
+      "max_rating": 1068,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Allame Helli 3",
+      "cohort_users": 9,
+      "mean_rating": 1391.0,
+      "median_rating": 1409.0,
+      "max_rating": 1801,
+      "candidate_master_plus": 0,
+      "most_common_country": "Iran",
+      "is_reportable": true
+    },
+    {
+      "organization": "B V Raju Institute of Technology",
+      "cohort_users": 9,
+      "mean_rating": 685.3,
+      "median_rating": 591.0,
+      "max_rating": 1509,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "BAIUST",
+      "cohort_users": 9,
+      "mean_rating": 835.9,
+      "median_rating": 841.0,
+      "max_rating": 1128,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "BITS Pilani",
+      "cohort_users": 9,
+      "mean_rating": 1028.6,
+      "median_rating": 1066.0,
+      "max_rating": 1474,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Bangalore Institute of Technology",
+      "cohort_users": 9,
+      "mean_rating": 1091.4,
+      "median_rating": 1003.0,
+      "max_rating": 1513,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "COEP Technological University",
+      "cohort_users": 9,
+      "mean_rating": 859.3,
+      "median_rating": 924.0,
+      "max_rating": 1029,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "CSE, University of Dhaka",
+      "cohort_users": 9,
+      "mean_rating": 1158.7,
+      "median_rating": 1141.0,
+      "max_rating": 1624,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Damietta University",
+      "cohort_users": 9,
+      "mean_rating": 1075.2,
+      "median_rating": 1035.0,
+      "max_rating": 1431,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "FAST NUCES",
+      "cohort_users": 9,
+      "mean_rating": 1140.8,
+      "median_rating": 1120.0,
+      "max_rating": 1469,
+      "candidate_master_plus": 0,
+      "most_common_country": "Pakistan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Fan Club Kuzma_A",
+      "cohort_users": 9,
+      "mean_rating": 1469.2,
+      "median_rating": 1479.0,
+      "max_rating": 1985,
+      "candidate_master_plus": 1,
+      "most_common_country": "Ukraine",
+      "is_reportable": true
+    },
+    {
+      "organization": "GLA University Mathura",
+      "cohort_users": 9,
+      "mean_rating": 938.9,
+      "median_rating": 901.0,
+      "max_rating": 1294,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Heritage Institute Of Technology",
+      "cohort_users": 9,
+      "mean_rating": 1092.3,
+      "median_rating": 1040.0,
+      "max_rating": 1524,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT UNA",
+      "cohort_users": 9,
+      "mean_rating": 1252.1,
+      "median_rating": 1195.0,
+      "max_rating": 1650,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IMO 2026 winners",
+      "cohort_users": 9,
+      "mean_rating": 1713.0,
+      "median_rating": 1660.0,
+      "max_rating": 2134,
+      "candidate_master_plus": 2,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Independent University, Bangladesh",
+      "cohort_users": 9,
+      "mean_rating": 866.7,
+      "median_rating": 878.0,
+      "max_rating": 1250,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jimei University",
+      "cohort_users": 9,
+      "mean_rating": 1315.9,
+      "median_rating": 1210.0,
+      "max_rating": 1793,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Khulna University",
+      "cohort_users": 9,
+      "mean_rating": 1041.1,
+      "median_rating": 1006.0,
+      "max_rating": 1365,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Luxor University",
+      "cohort_users": 9,
+      "mean_rating": 1030.1,
+      "median_rating": 1145.0,
+      "max_rating": 1356,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Madhav institute of technology and Science",
+      "cohort_users": 9,
+      "mean_rating": 973.2,
+      "median_rating": 955.0,
+      "max_rating": 1330,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "National University of Singapore",
+      "cohort_users": 9,
+      "mean_rating": 1662.7,
+      "median_rating": 1610.0,
+      "max_rating": 2268,
+      "candidate_master_plus": 3,
+      "most_common_country": "Singapore",
+      "is_reportable": true
+    },
+    {
+      "organization": "Netaji Subhas Institute Of Technology",
+      "cohort_users": 9,
+      "mean_rating": 963.7,
+      "median_rating": 892.0,
+      "max_rating": 1308,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Noida Institute of Engineering and Technology",
+      "cohort_users": 9,
+      "mean_rating": 909.4,
+      "median_rating": 908.0,
+      "max_rating": 1240,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Northeastern University at Qinhuangdao",
+      "cohort_users": 9,
+      "mean_rating": 1620.0,
+      "median_rating": 1636.0,
+      "max_rating": 1953,
+      "candidate_master_plus": 2,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Pontifícia Universidade Católica de Goias",
+      "cohort_users": 9,
+      "mean_rating": 1076.1,
+      "median_rating": 1057.0,
+      "max_rating": 1418,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "RV college of engineering",
+      "cohort_users": 9,
+      "mean_rating": 1096.9,
+      "median_rating": 1134.0,
+      "max_rating": 1431,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "SRM Institute of Science and Technology, Chennai",
+      "cohort_users": 9,
+      "mean_rating": 969.7,
+      "median_rating": 950.0,
+      "max_rating": 1378,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Universidad Tecnica Federico Santa Maria",
+      "cohort_users": 9,
+      "mean_rating": 1022.8,
+      "median_rating": 1096.0,
+      "max_rating": 1228,
+      "candidate_master_plus": 0,
+      "most_common_country": "Chile",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of Chittagong",
+      "cohort_users": 9,
+      "mean_rating": 1007.8,
+      "median_rating": 881.0,
+      "max_rating": 1440,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Uttara University",
+      "cohort_users": 9,
+      "mean_rating": 816.1,
+      "median_rating": 728.0,
+      "max_rating": 1608,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "VIT BHOPAL",
+      "cohort_users": 9,
+      "mean_rating": 766.3,
+      "median_rating": 764.0,
+      "max_rating": 1108,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Varendra University",
+      "cohort_users": 9,
+      "mean_rating": 841.0,
+      "median_rating": 822.0,
+      "max_rating": 1258,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Yancheng Institute Of Technology",
+      "cohort_users": 9,
+      "mean_rating": 1147.1,
+      "median_rating": 1065.0,
+      "max_rating": 1733,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Yerevan Physmath school",
+      "cohort_users": 9,
+      "mean_rating": 1280.3,
+      "median_rating": 1304.0,
+      "max_rating": 1679,
+      "candidate_master_plus": 0,
+      "most_common_country": "Armenia",
+      "is_reportable": true
+    },
+    {
+      "organization": "bhagwan parshuram institute of technology",
+      "cohort_users": 9,
+      "mean_rating": 1065.6,
+      "median_rating": 1020.0,
+      "max_rating": 1503,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "# school",
+      "cohort_users": 8,
+      "mean_rating": 1195.8,
+      "median_rating": 1125.0,
+      "max_rating": 1762,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Acpc Club Damietta University",
+      "cohort_users": 8,
+      "mean_rating": 757.8,
+      "median_rating": 812.5,
+      "max_rating": 1323,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Ain Shams FCIS",
+      "cohort_users": 8,
+      "mean_rating": 978.5,
+      "median_rating": 963.0,
+      "max_rating": 1372,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Al-Wataniya Private University",
+      "cohort_users": 8,
+      "mean_rating": 1053.3,
+      "median_rating": 977.5,
+      "max_rating": 1425,
+      "candidate_master_plus": 0,
+      "most_common_country": "Syria",
+      "is_reportable": true
+    },
+    {
+      "organization": "Birla Institute Of Technology And Science Pilani",
+      "cohort_users": 8,
+      "mean_rating": 1053.6,
+      "median_rating": 1236.5,
+      "max_rating": 1590,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Dormilones",
+      "cohort_users": 8,
+      "mean_rating": 894.9,
+      "median_rating": 891.5,
+      "max_rating": 1639,
+      "candidate_master_plus": 0,
+      "most_common_country": "Mexico",
+      "is_reportable": true
+    },
+    {
+      "organization": "Farzanegan 1 highschool",
+      "cohort_users": 8,
+      "mean_rating": 1700.0,
+      "median_rating": 1576.5,
+      "max_rating": 2329,
+      "candidate_master_plus": 2,
+      "most_common_country": "Iran",
+      "is_reportable": true
+    },
+    {
+      "organization": "Federal University of Campina Grande",
+      "cohort_users": 8,
+      "mean_rating": 1098.8,
+      "median_rating": 1041.0,
+      "max_rating": 1763,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "G.L Bajaj Institute of technology and management",
+      "cohort_users": 8,
+      "mean_rating": 859.1,
+      "median_rating": 854.5,
+      "max_rating": 1408,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Georgia Institute of Technology",
+      "cohort_users": 8,
+      "mean_rating": 1601.4,
+      "median_rating": 1587.0,
+      "max_rating": 2304,
+      "candidate_master_plus": 2,
+      "most_common_country": "United States",
+      "is_reportable": true
+    },
+    {
+      "organization": "HSTU",
+      "cohort_users": 8,
+      "mean_rating": 1076.0,
+      "median_rating": 1081.0,
+      "max_rating": 1468,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "IISER Bhopal",
+      "cohort_users": 8,
+      "mean_rating": 1045.0,
+      "median_rating": 997.5,
+      "max_rating": 1607,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Palakkad",
+      "cohort_users": 8,
+      "mean_rating": 1042.6,
+      "median_rating": 1017.0,
+      "max_rating": 1324,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indira Gandhi Delhi Technical University for Women",
+      "cohort_users": 8,
+      "mean_rating": 1014.1,
+      "median_rating": 805.5,
+      "max_rating": 1617,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Institute of Science and Technology",
+      "cohort_users": 8,
+      "mean_rating": 936.3,
+      "median_rating": 1008.0,
+      "max_rating": 1323,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jagannath University",
+      "cohort_users": 8,
+      "mean_rating": 883.4,
+      "median_rating": 884.5,
+      "max_rating": 1251,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jamalpur Sci-Tech University",
+      "cohort_users": 8,
+      "mean_rating": 762.3,
+      "median_rating": 723.0,
+      "max_rating": 1073,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jatiya Kabi Kazi Nazrul Islam University",
+      "cohort_users": 8,
+      "mean_rating": 990.4,
+      "median_rating": 1014.0,
+      "max_rating": 1487,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "KALINGA INSTITUTTE OF INDUSTRIAL TECHNOLOGY",
+      "cohort_users": 8,
+      "mean_rating": 984.8,
+      "median_rating": 971.0,
+      "max_rating": 1318,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "MIT World Peace University - Pune",
+      "cohort_users": 8,
+      "mean_rating": 976.8,
+      "median_rating": 897.5,
+      "max_rating": 1529,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Malaviya National Institute of Technology ,Jaipur",
+      "cohort_users": 8,
+      "mean_rating": 1199.6,
+      "median_rating": 1195.5,
+      "max_rating": 1492,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Manipal University (MUJ) Jaipur",
+      "cohort_users": 8,
+      "mean_rating": 821.0,
+      "median_rating": 910.5,
+      "max_rating": 1202,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Moscow, Lyceum 2nd School",
+      "cohort_users": 8,
+      "mean_rating": 1212.9,
+      "median_rating": 1362.0,
+      "max_rating": 1720,
+      "candidate_master_plus": 0,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Moscow, lyceum 1568",
+      "cohort_users": 8,
+      "mean_rating": 1621.0,
+      "median_rating": 1715.0,
+      "max_rating": 1969,
+      "candidate_master_plus": 1,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT DELHI",
+      "cohort_users": 8,
+      "mean_rating": 1191.9,
+      "median_rating": 1133.0,
+      "max_rating": 1886,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "National Institute of Technology Silchar",
+      "cohort_users": 8,
+      "mean_rating": 973.3,
+      "median_rating": 1014.0,
+      "max_rating": 1314,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "National Taiwan University",
+      "cohort_users": 8,
+      "mean_rating": 2216.0,
+      "median_rating": 2411.5,
+      "max_rating": 2774,
+      "candidate_master_plus": 6,
+      "most_common_country": "Taiwan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Newton school of Technology",
+      "cohort_users": 8,
+      "mean_rating": 938.9,
+      "median_rating": 921.0,
+      "max_rating": 1273,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Northern University Bangladesh",
+      "cohort_users": 8,
+      "mean_rating": 1003.5,
+      "median_rating": 1069.5,
+      "max_rating": 1350,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Saratov State U",
+      "cohort_users": 8,
+      "mean_rating": 1366.1,
+      "median_rating": 1372.5,
+      "max_rating": 1701,
+      "candidate_master_plus": 0,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Southeast University, Dhaka",
+      "cohort_users": 8,
+      "mean_rating": 1027.8,
+      "median_rating": 1094.0,
+      "max_rating": 1197,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Stand AGAINST Zionism",
+      "cohort_users": 8,
+      "mean_rating": 1586.4,
+      "median_rating": 1582.0,
+      "max_rating": 2287,
+      "candidate_master_plus": 2,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Success Code",
+      "cohort_users": 8,
+      "mean_rating": 1334.5,
+      "median_rating": 1330.0,
+      "max_rating": 1949,
+      "candidate_master_plus": 1,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Thakur college of Engineering and Technology",
+      "cohort_users": 8,
+      "mean_rating": 883.4,
+      "median_rating": 898.5,
+      "max_rating": 1459,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Tribo Olímpica",
+      "cohort_users": 8,
+      "mean_rating": 1518.1,
+      "median_rating": 1440.0,
+      "max_rating": 2066,
+      "candidate_master_plus": 2,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "UFPE",
+      "cohort_users": 8,
+      "mean_rating": 1346.8,
+      "median_rating": 1288.5,
+      "max_rating": 1756,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "USACO",
+      "cohort_users": 8,
+      "mean_rating": 1417.3,
+      "median_rating": 1308.0,
+      "max_rating": 2249,
+      "candidate_master_plus": 1,
+      "most_common_country": "United States",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of Central Florida",
+      "cohort_users": 8,
+      "mean_rating": 1752.5,
+      "median_rating": 1765.5,
+      "max_rating": 2462,
+      "candidate_master_plus": 2,
+      "most_common_country": "United States",
+      "is_reportable": true
+    },
+    {
+      "organization": "Vishwakarma Government Engineering College",
+      "cohort_users": 8,
+      "mean_rating": 953.5,
+      "median_rating": 958.0,
+      "max_rating": 1198,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Visvesvaraya National Institute of Technology",
+      "cohort_users": 8,
+      "mean_rating": 979.8,
+      "median_rating": 904.0,
+      "max_rating": 1629,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Vit Bhopal University",
+      "cohort_users": 8,
+      "mean_rating": 774.1,
+      "median_rating": 787.5,
+      "max_rating": 1262,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "birzeit University",
+      "cohort_users": 8,
+      "mean_rating": 1033.8,
+      "median_rating": 1063.5,
+      "max_rating": 1497,
+      "candidate_master_plus": 0,
+      "most_common_country": "Palestinian Territory",
+      "is_reportable": true
+    },
+    {
+      "organization": "k1r1t0 fanclub",
+      "cohort_users": 8,
+      "mean_rating": 1532.5,
+      "median_rating": 1348.5,
+      "max_rating": 2317,
+      "candidate_master_plus": 2,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Aktau BIL",
+      "cohort_users": 7,
+      "mean_rating": 1430.3,
+      "median_rating": 1458.0,
+      "max_rating": 1555,
+      "candidate_master_plus": 0,
+      "most_common_country": "Kazakhstan",
+      "is_reportable": true
+    },
+    {
+      "organization": "BUET, CSE",
+      "cohort_users": 7,
+      "mean_rating": 1030.0,
+      "median_rating": 1028.0,
+      "max_rating": 1264,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "BVRIT NARSAPUR",
+      "cohort_users": 7,
+      "mean_rating": 829.6,
+      "median_rating": 784.0,
+      "max_rating": 1066,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Bangladesh University of Professionals(BUP)",
+      "cohort_users": 7,
+      "mean_rating": 865.9,
+      "median_rating": 860.0,
+      "max_rating": 1211,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Barshon Sir Fan Club",
+      "cohort_users": 7,
+      "mean_rating": 1289.7,
+      "median_rating": 1289.0,
+      "max_rating": 1780,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "CMRCET",
+      "cohort_users": 7,
+      "mean_rating": 1095.6,
+      "median_rating": 1056.0,
+      "max_rating": 1556,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "CYF",
+      "cohort_users": 7,
+      "mean_rating": 1304.4,
+      "median_rating": 1336.0,
+      "max_rating": 1651,
+      "candidate_master_plus": 0,
+      "most_common_country": "Belarus",
+      "is_reportable": true
+    },
+    {
+      "organization": "Capital Normal University High School",
+      "cohort_users": 7,
+      "mean_rating": 1787.1,
+      "median_rating": 1757.0,
+      "max_rating": 2130,
+      "candidate_master_plus": 2,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Colégio Etapa",
+      "cohort_users": 7,
+      "mean_rating": 1477.9,
+      "median_rating": 1588.0,
+      "max_rating": 1809,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "Dharmsinh Desai University, Nadiad",
+      "cohort_users": 7,
+      "mean_rating": 1030.6,
+      "median_rating": 1101.0,
+      "max_rating": 1276,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCI Suez Canal University",
+      "cohort_users": 7,
+      "mean_rating": 965.1,
+      "median_rating": 1058.0,
+      "max_rating": 1156,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCIS-october 6 university",
+      "cohort_users": 7,
+      "mean_rating": 1193.7,
+      "median_rating": 1208.0,
+      "max_rating": 1474,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "FaMAF",
+      "cohort_users": 7,
+      "mean_rating": 1478.0,
+      "median_rating": 1629.0,
+      "max_rating": 2440,
+      "candidate_master_plus": 2,
+      "most_common_country": "Argentina",
+      "is_reportable": true
+    },
+    {
+      "organization": "Faculty Of Computer Science El Shorouk Academy",
+      "cohort_users": 7,
+      "mean_rating": 1140.9,
+      "median_rating": 1044.0,
+      "max_rating": 1373,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Gayatri Vidya Parishad College of Engineering",
+      "cohort_users": 7,
+      "mean_rating": 1012.6,
+      "median_rating": 1041.0,
+      "max_rating": 1451,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Government college of Engineering Aurangabad",
+      "cohort_users": 7,
+      "mean_rating": 1075.4,
+      "median_rating": 1007.0,
+      "max_rating": 1649,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Green University Of Bangladesh",
+      "cohort_users": 7,
+      "mean_rating": 909.3,
+      "median_rating": 817.0,
+      "max_rating": 1405,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Gyeonggi Science High School",
+      "cohort_users": 7,
+      "mean_rating": 1880.1,
+      "median_rating": 1732.0,
+      "max_rating": 2529,
+      "candidate_master_plus": 2,
+      "most_common_country": "South Korea",
+      "is_reportable": true
+    },
+    {
+      "organization": "HIAST",
+      "cohort_users": 7,
+      "mean_rating": 1376.6,
+      "median_rating": 1397.0,
+      "max_rating": 1763,
+      "candidate_master_plus": 0,
+      "most_common_country": "Syria",
+      "is_reportable": true
+    },
+    {
+      "organization": "Hanyang University",
+      "cohort_users": 7,
+      "mean_rating": 1547.7,
+      "median_rating": 1741.0,
+      "max_rating": 2305,
+      "candidate_master_plus": 2,
+      "most_common_country": "South Korea",
+      "is_reportable": true
+    },
+    {
+      "organization": "IET DAVV",
+      "cohort_users": 7,
+      "mean_rating": 1102.7,
+      "median_rating": 1036.0,
+      "max_rating": 1548,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "INRTU",
+      "cohort_users": 7,
+      "mean_rating": 968.7,
+      "median_rating": 889.0,
+      "max_rating": 1161,
+      "candidate_master_plus": 0,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "INSAT",
+      "cohort_users": 7,
+      "mean_rating": 1431.3,
+      "median_rating": 1536.0,
+      "max_rating": 1779,
+      "candidate_master_plus": 0,
+      "most_common_country": "Tunisia",
+      "is_reportable": true
+    },
+    {
+      "organization": "ITSUR",
+      "cohort_users": 7,
+      "mean_rating": 1262.7,
+      "median_rating": 1295.0,
+      "max_rating": 1654,
+      "candidate_master_plus": 0,
+      "most_common_country": "Mexico",
+      "is_reportable": true
+    },
+    {
+      "organization": "Improvis",
+      "cohort_users": 7,
+      "mean_rating": 1005.1,
+      "median_rating": 1093.0,
+      "max_rating": 1459,
+      "candidate_master_plus": 0,
+      "most_common_country": "Armenia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Information Technology Sricity",
+      "cohort_users": 7,
+      "mean_rating": 1335.4,
+      "median_rating": 1238.0,
+      "max_rating": 1687,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Science",
+      "cohort_users": 7,
+      "mean_rating": 1284.7,
+      "median_rating": 1335.0,
+      "max_rating": 1927,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Statistical Institute , Bangalore",
+      "cohort_users": 7,
+      "mean_rating": 1239.4,
+      "median_rating": 1166.0,
+      "max_rating": 1813,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jagiellonian University",
+      "cohort_users": 7,
+      "mean_rating": 1665.7,
+      "median_rating": 1654.0,
+      "max_rating": 2192,
+      "candidate_master_plus": 2,
+      "most_common_country": "Ukraine",
+      "is_reportable": true
+    },
+    {
+      "organization": "Latakia University",
+      "cohort_users": 7,
+      "mean_rating": 1238.6,
+      "median_rating": 1017.0,
+      "max_rating": 1993,
+      "candidate_master_plus": 1,
+      "most_common_country": "Syria",
+      "is_reportable": true
+    },
+    {
+      "organization": "MANIT Bhopal",
+      "cohort_users": 7,
+      "mean_rating": 1008.9,
+      "median_rating": 1055.0,
+      "max_rating": 1208,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Monash University",
+      "cohort_users": 7,
+      "mean_rating": 1506.4,
+      "median_rating": 1454.0,
+      "max_rating": 2301,
+      "candidate_master_plus": 2,
+      "most_common_country": "Australia",
+      "is_reportable": true
+    },
+    {
+      "organization": "National Institute Of Technology Agartala",
+      "cohort_users": 7,
+      "mean_rating": 1214.0,
+      "median_rating": 1227.0,
+      "max_rating": 1578,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "OIL",
+      "cohort_users": 7,
+      "mean_rating": 1370.1,
+      "median_rating": 1381.0,
+      "max_rating": 1884,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "PDPM IIIT JABALPUR",
+      "cohort_users": 7,
+      "mean_rating": 1255.0,
+      "median_rating": 1259.0,
+      "max_rating": 1498,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "PPU",
+      "cohort_users": 7,
+      "mean_rating": 1198.0,
+      "median_rating": 1224.0,
+      "max_rating": 1616,
+      "candidate_master_plus": 0,
+      "most_common_country": "Palestinian Territory",
+      "is_reportable": true
+    },
+    {
+      "organization": "PTUK",
+      "cohort_users": 7,
+      "mean_rating": 1004.1,
+      "median_rating": 1020.0,
+      "max_rating": 1365,
+      "candidate_master_plus": 0,
+      "most_common_country": "Palestinian Territory",
+      "is_reportable": true
+    },
+    {
+      "organization": "PrSTU",
+      "cohort_users": 7,
+      "mean_rating": 742.9,
+      "median_rating": 740.0,
+      "max_rating": 893,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Qyzylorda Bilim-Innovation",
+      "cohort_users": 7,
+      "mean_rating": 1512.9,
+      "median_rating": 1530.0,
+      "max_rating": 2208,
+      "candidate_master_plus": 2,
+      "most_common_country": "Kazakhstan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Shenzhen Middle School",
+      "cohort_users": 7,
+      "mean_rating": 1708.4,
+      "median_rating": 1458.0,
+      "max_rating": 2667,
+      "candidate_master_plus": 2,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Thadomal Shahani Engineering College",
+      "cohort_users": 7,
+      "mean_rating": 1011.4,
+      "median_rating": 1075.0,
+      "max_rating": 1300,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "The Wrong Side Of Heaven",
+      "cohort_users": 7,
+      "mean_rating": 1721.6,
+      "median_rating": 1452.0,
+      "max_rating": 2898,
+      "candidate_master_plus": 2,
+      "most_common_country": "Iran",
+      "is_reportable": true
+    },
+    {
+      "organization": "Universidad Peruana de Ciencias Aplicadas",
+      "cohort_users": 7,
+      "mean_rating": 1204.3,
+      "median_rating": 1289.0,
+      "max_rating": 1563,
+      "candidate_master_plus": 0,
+      "most_common_country": "Peru",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of Cambridge",
+      "cohort_users": 7,
+      "mean_rating": 2101.7,
+      "median_rating": 2090.0,
+      "max_rating": 2828,
+      "candidate_master_plus": 5,
+      "most_common_country": "Hong Kong",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of Dhaka",
+      "cohort_users": 7,
+      "mean_rating": 1469.9,
+      "median_rating": 1395.0,
+      "max_rating": 2311,
+      "candidate_master_plus": 1,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of Information Technology and Sciences",
+      "cohort_users": 7,
+      "mean_rating": 869.7,
+      "median_rating": 865.0,
+      "max_rating": 1269,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of Texas at Austin",
+      "cohort_users": 7,
+      "mean_rating": 1712.0,
+      "median_rating": 1815.0,
+      "max_rating": 2130,
+      "candidate_master_plus": 2,
+      "most_common_country": "United States",
+      "is_reportable": true
+    },
+    {
+      "organization": "Warszawa, XIV LO Staszica",
+      "cohort_users": 7,
+      "mean_rating": 1603.9,
+      "median_rating": 1631.0,
+      "max_rating": 2472,
+      "candidate_master_plus": 2,
+      "most_common_country": "Poland",
+      "is_reportable": true
+    },
+    {
+      "organization": "Wtf Strong",
+      "cohort_users": 7,
+      "mean_rating": 2038.3,
+      "median_rating": 1907.0,
+      "max_rating": 2462,
+      "candidate_master_plus": 4,
+      "most_common_country": "United States",
+      "is_reportable": true
+    },
+    {
+      "organization": "YazdOI",
+      "cohort_users": 7,
+      "mean_rating": 1287.3,
+      "median_rating": 1219.0,
+      "max_rating": 1897,
+      "candidate_master_plus": 0,
+      "most_common_country": "Iran",
+      "is_reportable": true
+    },
+    {
+      "organization": "potty boys (niche)",
+      "cohort_users": 7,
+      "mean_rating": 1621.3,
+      "median_rating": 1587.0,
+      "max_rating": 2221,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "' IIT Guwahati'",
+      "cohort_users": 6,
+      "mean_rating": 1179.8,
+      "median_rating": 1182.0,
+      "max_rating": 1540,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "AASTU, A2SV",
+      "cohort_users": 6,
+      "mean_rating": 1225.0,
+      "median_rating": 1254.5,
+      "max_rating": 1587,
+      "candidate_master_plus": 0,
+      "most_common_country": "Ethiopia",
+      "is_reportable": true
+    },
+    {
+      "organization": "AE high school",
+      "cohort_users": 6,
+      "mean_rating": 1703.8,
+      "median_rating": 1693.0,
+      "max_rating": 1920,
+      "candidate_master_plus": 1,
+      "most_common_country": "Iran",
+      "is_reportable": true
+    },
+    {
+      "organization": "AESC MSU",
+      "cohort_users": 6,
+      "mean_rating": 1598.0,
+      "median_rating": 1597.0,
+      "max_rating": 1917,
+      "candidate_master_plus": 1,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Al-Khwarizmi ICT school",
+      "cohort_users": 6,
+      "mean_rating": 1368.0,
+      "median_rating": 1424.5,
+      "max_rating": 2291,
+      "candidate_master_plus": 1,
+      "most_common_country": "Uzbekistan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Algoritm Akademiyasi",
+      "cohort_users": 6,
+      "mean_rating": 1536.5,
+      "median_rating": 1497.5,
+      "max_rating": 1967,
+      "candidate_master_plus": 1,
+      "most_common_country": "Uzbekistan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Arab International University",
+      "cohort_users": 6,
+      "mean_rating": 1032.0,
+      "median_rating": 932.5,
+      "max_rating": 1379,
+      "candidate_master_plus": 0,
+      "most_common_country": "Syria",
+      "is_reportable": true
+    },
+    {
+      "organization": "BMS Institute of Technology and Management",
+      "cohort_users": 6,
+      "mean_rating": 946.8,
+      "median_rating": 1021.0,
+      "max_rating": 1187,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "BSMRSTU",
+      "cohort_users": 6,
+      "mean_rating": 1037.8,
+      "median_rating": 1016.5,
+      "max_rating": 1618,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Begum Rokeya University, Rangpur",
+      "cohort_users": 6,
+      "mean_rating": 957.8,
+      "median_rating": 904.5,
+      "max_rating": 1453,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Benha National university",
+      "cohort_users": 6,
+      "mean_rating": 1032.3,
+      "median_rating": 1007.0,
+      "max_rating": 1435,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Brainware University",
+      "cohort_users": 6,
+      "mean_rating": 958.5,
+      "median_rating": 883.0,
+      "max_rating": 1635,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "CSE, University of Rajshahi",
+      "cohort_users": 6,
+      "mean_rating": 1089.2,
+      "median_rating": 1028.5,
+      "max_rating": 1504,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "CUHK",
+      "cohort_users": 6,
+      "mean_rating": 1416.2,
+      "median_rating": 1603.0,
+      "max_rating": 1858,
+      "candidate_master_plus": 0,
+      "most_common_country": "Hong Kong",
+      "is_reportable": true
+    },
+    {
+      "organization": "Cairo University - Faculty of Engineering",
+      "cohort_users": 6,
+      "mean_rating": 1020.3,
+      "median_rating": 1028.5,
+      "max_rating": 1387,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "DTU",
+      "cohort_users": 6,
+      "mean_rating": 1103.7,
+      "median_rating": 1041.0,
+      "max_rating": 1703,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Dhaka City College",
+      "cohort_users": 6,
+      "mean_rating": 991.2,
+      "median_rating": 983.5,
+      "max_rating": 1413,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Dr. DY Patil College of Engineering, Pune",
+      "cohort_users": 6,
+      "mean_rating": 1081.2,
+      "median_rating": 1020.5,
+      "max_rating": 1542,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "ELTE",
+      "cohort_users": 6,
+      "mean_rating": 1869.3,
+      "median_rating": 2029.5,
+      "max_rating": 2807,
+      "candidate_master_plus": 4,
+      "most_common_country": "Hungary",
+      "is_reportable": true
+    },
+    {
+      "organization": "FAST NUCES Islamabad",
+      "cohort_users": 6,
+      "mean_rating": 912.8,
+      "median_rating": 920.0,
+      "max_rating": 1389,
+      "candidate_master_plus": 0,
+      "most_common_country": "Pakistan",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCI Assuit University",
+      "cohort_users": 6,
+      "mean_rating": 1071.0,
+      "median_rating": 1076.5,
+      "max_rating": 1546,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCI TANTA UNIVERSITY",
+      "cohort_users": 6,
+      "mean_rating": 950.5,
+      "median_rating": 912.5,
+      "max_rating": 1351,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCI_Zagazig University",
+      "cohort_users": 6,
+      "mean_rating": 1166.3,
+      "median_rating": 1088.5,
+      "max_rating": 1465,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Galgotias University (GU) Noida",
+      "cohort_users": 6,
+      "mean_rating": 905.7,
+      "median_rating": 994.0,
+      "max_rating": 1256,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "HCMUS - University of Science",
+      "cohort_users": 6,
+      "mean_rating": 1584.2,
+      "median_rating": 1512.5,
+      "max_rating": 2311,
+      "candidate_master_plus": 1,
+      "most_common_country": "Vietnam",
+      "is_reportable": true
+    },
+    {
+      "organization": "Hainan university",
+      "cohort_users": 6,
+      "mean_rating": 1349.2,
+      "median_rating": 1477.5,
+      "max_rating": 1807,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Hunan University of Technology",
+      "cohort_users": 6,
+      "mean_rating": 1336.2,
+      "median_rating": 1357.5,
+      "max_rating": 1432,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIEST, Shibpur",
+      "cohort_users": 6,
+      "mean_rating": 1173.3,
+      "median_rating": 1152.5,
+      "max_rating": 1419,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Ranchi",
+      "cohort_users": 6,
+      "mean_rating": 1226.7,
+      "median_rating": 1233.0,
+      "max_rating": 1399,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIITA",
+      "cohort_users": 6,
+      "mean_rating": 1231.7,
+      "median_rating": 1215.5,
+      "max_rating": 1395,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT ISM , Dhanbad",
+      "cohort_users": 6,
+      "mean_rating": 1114.5,
+      "median_rating": 1099.0,
+      "max_rating": 1343,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IOI 2029 Legends",
+      "cohort_users": 6,
+      "mean_rating": 1182.5,
+      "median_rating": 1216.0,
+      "max_rating": 1555,
+      "candidate_master_plus": 0,
+      "most_common_country": "Kazakhstan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Technology Bombay",
+      "cohort_users": 6,
+      "mean_rating": 1295.8,
+      "median_rating": 1486.0,
+      "max_rating": 1561,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Technology Hyderabad",
+      "cohort_users": 6,
+      "mean_rating": 1089.3,
+      "median_rating": 1181.0,
+      "max_rating": 1451,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Institute of Science Tokyo",
+      "cohort_users": 6,
+      "mean_rating": 1809.5,
+      "median_rating": 1735.5,
+      "max_rating": 2213,
+      "candidate_master_plus": 2,
+      "most_common_country": "Japan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Istanbul Technical University",
+      "cohort_users": 6,
+      "mean_rating": 1373.0,
+      "median_rating": 1319.0,
+      "max_rating": 1820,
+      "candidate_master_plus": 0,
+      "most_common_country": "Turkey",
+      "is_reportable": true
+    },
+    {
+      "organization": "JC Bose university of science and technology,ymca",
+      "cohort_users": 6,
+      "mean_rating": 1019.3,
+      "median_rating": 1009.0,
+      "max_rating": 1351,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jabalpur Engineering College",
+      "cohort_users": 6,
+      "mean_rating": 1043.7,
+      "median_rating": 1102.5,
+      "max_rating": 1263,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jadavpur University Kolkata",
+      "cohort_users": 6,
+      "mean_rating": 1117.0,
+      "median_rating": 1008.5,
+      "max_rating": 1440,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "KIT",
+      "cohort_users": 6,
+      "mean_rating": 853.3,
+      "median_rating": 843.0,
+      "max_rating": 1107,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Kalyani Government Engineering College",
+      "cohort_users": 6,
+      "mean_rating": 1121.0,
+      "median_rating": 1118.0,
+      "max_rating": 1483,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Korea Digital Media High School",
+      "cohort_users": 6,
+      "mean_rating": 1509.2,
+      "median_rating": 1355.5,
+      "max_rating": 2129,
+      "candidate_master_plus": 1,
+      "most_common_country": "South Korea",
+      "is_reportable": true
+    },
+    {
+      "organization": "Kyoto University",
+      "cohort_users": 6,
+      "mean_rating": 1689.7,
+      "median_rating": 1884.5,
+      "max_rating": 2197,
+      "candidate_master_plus": 3,
+      "most_common_country": "Japan",
+      "is_reportable": true
+    },
+    {
+      "organization": "MAI",
+      "cohort_users": 6,
+      "mean_rating": 1259.0,
+      "median_rating": 1235.0,
+      "max_rating": 1652,
+      "candidate_master_plus": 0,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Minya University",
+      "cohort_users": 6,
+      "mean_rating": 1251.0,
+      "median_rating": 1351.0,
+      "max_rating": 1414,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Moroccan Olympiads in informatics",
+      "cohort_users": 6,
+      "mean_rating": 1269.3,
+      "median_rating": 1210.5,
+      "max_rating": 1670,
+      "candidate_master_plus": 0,
+      "most_common_country": "Morocco",
+      "is_reportable": true
+    },
+    {
+      "organization": "NSUT - Delhi",
+      "cohort_users": 6,
+      "mean_rating": 1019.2,
+      "median_rating": 941.5,
+      "max_rating": 1485,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "National Institute of Technology karnataka",
+      "cohort_users": 6,
+      "mean_rating": 1132.0,
+      "median_rating": 1108.0,
+      "max_rating": 1575,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Northern University of Business and Technology",
+      "cohort_users": 6,
+      "mean_rating": 965.5,
+      "median_rating": 904.5,
+      "max_rating": 1383,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Northwest University",
+      "cohort_users": 6,
+      "mean_rating": 1608.0,
+      "median_rating": 1560.0,
+      "max_rating": 2049,
+      "candidate_master_plus": 1,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Northwestern Polytechnical University",
+      "cohort_users": 6,
+      "mean_rating": 1490.5,
+      "median_rating": 1641.0,
+      "max_rating": 1743,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "PCU Pune",
+      "cohort_users": 6,
+      "mean_rating": 861.3,
+      "median_rating": 824.0,
+      "max_rating": 1149,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "PTIT Vietnam",
+      "cohort_users": 6,
+      "mean_rating": 1536.0,
+      "median_rating": 1600.5,
+      "max_rating": 1776,
+      "candidate_master_plus": 0,
+      "most_common_country": "Vietnam",
+      "is_reportable": true
+    },
+    {
+      "organization": "Peking University",
+      "cohort_users": 6,
+      "mean_rating": 1596.7,
+      "median_rating": 1505.5,
+      "max_rating": 2564,
+      "candidate_master_plus": 2,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Port Said University",
+      "cohort_users": 6,
+      "mean_rating": 1280.5,
+      "median_rating": 1323.5,
+      "max_rating": 2102,
+      "candidate_master_plus": 1,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Rutgers University",
+      "cohort_users": 6,
+      "mean_rating": 1535.5,
+      "median_rating": 1724.5,
+      "max_rating": 2101,
+      "candidate_master_plus": 2,
+      "most_common_country": "United States",
+      "is_reportable": true
+    },
+    {
+      "organization": "Shanghai Maritime University",
+      "cohort_users": 6,
+      "mean_rating": 1526.8,
+      "median_rating": 1428.5,
+      "max_rating": 2050,
+      "candidate_master_plus": 1,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Siddaganga Institute of Technology",
+      "cohort_users": 6,
+      "mean_rating": 1104.8,
+      "median_rating": 1067.5,
+      "max_rating": 1290,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "South China Normal University",
+      "cohort_users": 6,
+      "mean_rating": 1560.2,
+      "median_rating": 1595.5,
+      "max_rating": 2023,
+      "candidate_master_plus": 1,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Sri Eshwar college",
+      "cohort_users": 6,
+      "mean_rating": 1031.0,
+      "median_rating": 1130.5,
+      "max_rating": 1262,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Taylor Swift Fan Club",
+      "cohort_users": 6,
+      "mean_rating": 1369.3,
+      "median_rating": 1343.5,
+      "max_rating": 1986,
+      "candidate_master_plus": 1,
+      "most_common_country": "Vietnam",
+      "is_reportable": true
+    },
+    {
+      "organization": "Tejgaon College, Dhaka",
+      "cohort_users": 6,
+      "mean_rating": 766.2,
+      "median_rating": 793.0,
+      "max_rating": 976,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "The American University in Cairo",
+      "cohort_users": 6,
+      "mean_rating": 1347.3,
+      "median_rating": 1472.5,
+      "max_rating": 1843,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "The Experimental High School Attached to BNU",
+      "cohort_users": 6,
+      "mean_rating": 1576.0,
+      "median_rating": 1739.5,
+      "max_rating": 1975,
+      "candidate_master_plus": 2,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Tsinghua University",
+      "cohort_users": 6,
+      "mean_rating": 2143.7,
+      "median_rating": 2413.5,
+      "max_rating": 2998,
+      "candidate_master_plus": 4,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "UAIC",
+      "cohort_users": 6,
+      "mean_rating": 1611.2,
+      "median_rating": 1585.0,
+      "max_rating": 2398,
+      "candidate_master_plus": 1,
+      "most_common_country": "Romania",
+      "is_reportable": true
+    },
+    {
+      "organization": "UNICAMP",
+      "cohort_users": 6,
+      "mean_rating": 1127.0,
+      "median_rating": 1056.5,
+      "max_rating": 1735,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "Universidad Nacional de Ingeniería",
+      "cohort_users": 6,
+      "mean_rating": 1247.0,
+      "median_rating": 1403.5,
+      "max_rating": 1772,
+      "candidate_master_plus": 0,
+      "most_common_country": "Peru",
+      "is_reportable": true
+    },
+    {
+      "organization": "VIT VELLORE",
+      "cohort_users": 6,
+      "mean_rating": 1051.0,
+      "median_rating": 1048.0,
+      "max_rating": 1134,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "VNRVJIET",
+      "cohort_users": 6,
+      "mean_rating": 933.8,
+      "median_rating": 960.0,
+      "max_rating": 1119,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Vivekanand Education Society of Technology,Chembur",
+      "cohort_users": 6,
+      "mean_rating": 1074.2,
+      "median_rating": 1038.5,
+      "max_rating": 1316,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Wuhan Foreign Language School",
+      "cohort_users": 6,
+      "mean_rating": 1678.7,
+      "median_rating": 1720.5,
+      "max_rating": 2011,
+      "candidate_master_plus": 1,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Wuhan University",
+      "cohort_users": 6,
+      "mean_rating": 1629.2,
+      "median_rating": 1640.5,
+      "max_rating": 2136,
+      "candidate_master_plus": 1,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Wuhan University of Technology",
+      "cohort_users": 6,
+      "mean_rating": 1667.0,
+      "median_rating": 1567.5,
+      "max_rating": 2172,
+      "candidate_master_plus": 1,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "dhirubhai ambani university",
+      "cohort_users": 6,
+      "mean_rating": 960.0,
+      "median_rating": 934.0,
+      "max_rating": 1226,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "maharaja surajmal institute of technology",
+      "cohort_users": 6,
+      "mean_rating": 1310.8,
+      "median_rating": 1222.0,
+      "max_rating": 1977,
+      "candidate_master_plus": 1,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "none",
+      "cohort_users": 6,
+      "mean_rating": 1064.7,
+      "median_rating": 930.0,
+      "max_rating": 1466,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "#IIT ISM Dhanbad",
+      "cohort_users": 5,
+      "mean_rating": 996.0,
+      "median_rating": 1089.0,
+      "max_rating": 1286,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Alborz high school",
+      "cohort_users": 5,
+      "mean_rating": 1203.0,
+      "median_rating": 1259.0,
+      "max_rating": 1383,
+      "candidate_master_plus": 0,
+      "most_common_country": "Iran",
+      "is_reportable": true
+    },
+    {
+      "organization": "Arab open university(Egypt)",
+      "cohort_users": 5,
+      "mean_rating": 1072.2,
+      "median_rating": 1122.0,
+      "max_rating": 1385,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Ashgabat, 86th High school",
+      "cohort_users": 5,
+      "mean_rating": 1116.8,
+      "median_rating": 1183.0,
+      "max_rating": 1582,
+      "candidate_master_plus": 0,
+      "most_common_country": "Turkmenistan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Atbasar NIS",
+      "cohort_users": 5,
+      "mean_rating": 1786.6,
+      "median_rating": 1698.0,
+      "max_rating": 2112,
+      "candidate_master_plus": 1,
+      "most_common_country": "Kazakhstan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Azhar University",
+      "cohort_users": 5,
+      "mean_rating": 1176.6,
+      "median_rating": 1190.0,
+      "max_rating": 1542,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "BIT Mesra",
+      "cohort_users": 5,
+      "mean_rating": 850.2,
+      "median_rating": 843.0,
+      "max_rating": 1122,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "BITS Goa",
+      "cohort_users": 5,
+      "mean_rating": 1236.0,
+      "median_rating": 1294.0,
+      "max_rating": 1410,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "BJFU",
+      "cohort_users": 5,
+      "mean_rating": 1576.4,
+      "median_rating": 1623.0,
+      "max_rating": 1665,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "BMS college of engineering",
+      "cohort_users": 5,
+      "mean_rating": 970.2,
+      "median_rating": 878.0,
+      "max_rating": 1396,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Bangladesh University of Business and Technology.",
+      "cohort_users": 5,
+      "mean_rating": 1007.6,
+      "median_rating": 881.0,
+      "max_rating": 1623,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Benedykt Kvasnitsa hate club",
+      "cohort_users": 5,
+      "mean_rating": 1590.8,
+      "median_rating": 1589.0,
+      "max_rating": 2014,
+      "candidate_master_plus": 1,
+      "most_common_country": "Ukraine",
+      "is_reportable": true
+    },
+    {
+      "organization": "COESI - Colégio de Orientação e Estudos Integrados",
+      "cohort_users": 5,
+      "mean_rating": 1144.2,
+      "median_rating": 1048.0,
+      "max_rating": 1607,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "CRDO",
+      "cohort_users": 5,
+      "mean_rating": 1276.2,
+      "median_rating": 1116.0,
+      "max_rating": 1924,
+      "candidate_master_plus": 1,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "CSE, KUET",
+      "cohort_users": 5,
+      "mean_rating": 935.6,
+      "median_rating": 878.0,
+      "max_rating": 1277,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "CSE, RUET",
+      "cohort_users": 5,
+      "mean_rating": 919.2,
+      "median_rating": 964.0,
+      "max_rating": 1123,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "CVR College Of Engineering",
+      "cohort_users": 5,
+      "mean_rating": 987.6,
+      "median_rating": 994.0,
+      "max_rating": 1181,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Cairo University - FCAI_CU",
+      "cohort_users": 5,
+      "mean_rating": 702.8,
+      "median_rating": 722.0,
+      "max_rating": 1086,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Chengdu University of Information Technology",
+      "cohort_users": 5,
+      "mean_rating": 1382.2,
+      "median_rating": 1381.0,
+      "max_rating": 1540,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "ChongQing No.8 Secondary School",
+      "cohort_users": 5,
+      "mean_rating": 2064.8,
+      "median_rating": 1956.0,
+      "max_rating": 2571,
+      "candidate_master_plus": 4,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Chongqing Nankai Secondary School",
+      "cohort_users": 5,
+      "mean_rating": 2201.8,
+      "median_rating": 2043.0,
+      "max_rating": 2882,
+      "candidate_master_plus": 5,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Chulalongkorn University",
+      "cohort_users": 5,
+      "mean_rating": 1674.0,
+      "median_rating": 1670.0,
+      "max_rating": 2471,
+      "candidate_master_plus": 1,
+      "most_common_country": "Thailand",
+      "is_reportable": true
+    },
+    {
+      "organization": "City University of Hong Kong",
+      "cohort_users": 5,
+      "mean_rating": 1435.0,
+      "median_rating": 1857.0,
+      "max_rating": 2077,
+      "candidate_master_plus": 2,
+      "most_common_country": "Hong Kong",
+      "is_reportable": true
+    },
+    {
+      "organization": "College",
+      "cohort_users": 5,
+      "mean_rating": 800.8,
+      "median_rating": 772.0,
+      "max_rating": 1164,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "College - VNRVJIET",
+      "cohort_users": 5,
+      "mean_rating": 726.2,
+      "median_rating": 773.0,
+      "max_rating": 885,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "DA-IICT , Gandhinagar",
+      "cohort_users": 5,
+      "mean_rating": 1051.4,
+      "median_rating": 1084.0,
+      "max_rating": 1232,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "DY Patil Institute of Technology",
+      "cohort_users": 5,
+      "mean_rating": 880.6,
+      "median_rating": 906.0,
+      "max_rating": 1400,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Dalian Maritime University",
+      "cohort_users": 5,
+      "mean_rating": 1245.6,
+      "median_rating": 1236.0,
+      "max_rating": 2039,
+      "candidate_master_plus": 1,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Damacuses University ITE",
+      "cohort_users": 5,
+      "mean_rating": 1081.0,
+      "median_rating": 1052.0,
+      "max_rating": 1439,
+      "candidate_master_plus": 0,
+      "most_common_country": "Syria",
+      "is_reportable": true
+    },
+    {
+      "organization": "Dhaka International University",
+      "cohort_users": 5,
+      "mean_rating": 902.0,
+      "median_rating": 887.0,
+      "max_rating": 1068,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Dongguan Middle School · SSL School",
+      "cohort_users": 5,
+      "mean_rating": 1704.6,
+      "median_rating": 1872.0,
+      "max_rating": 2025,
+      "candidate_master_plus": 2,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Egyptian E-Learning University",
+      "cohort_users": 5,
+      "mean_rating": 928.2,
+      "median_rating": 934.0,
+      "max_rating": 1392,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCAI - Sadat City",
+      "cohort_users": 5,
+      "mean_rating": 925.0,
+      "median_rating": 1006.0,
+      "max_rating": 1157,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "FCI South Valley University",
+      "cohort_users": 5,
+      "mean_rating": 1019.8,
+      "median_rating": 853.0,
+      "max_rating": 1647,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Faculty of Engineering - Mansoura University",
+      "cohort_users": 5,
+      "mean_rating": 981.8,
+      "median_rating": 1090.0,
+      "max_rating": 1433,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Faculty of Engineering, Cairo University",
+      "cohort_users": 5,
+      "mean_rating": 1399.2,
+      "median_rating": 1367.0,
+      "max_rating": 1608,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Faculty of Engineering, Tanta University",
+      "cohort_users": 5,
+      "mean_rating": 1132.4,
+      "median_rating": 1065.0,
+      "max_rating": 1535,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Foshan, Shimen Middle School",
+      "cohort_users": 5,
+      "mean_rating": 1989.2,
+      "median_rating": 1777.0,
+      "max_rating": 2675,
+      "candidate_master_plus": 2,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "France-IOI",
+      "cohort_users": 5,
+      "mean_rating": 1783.6,
+      "median_rating": 1742.0,
+      "max_rating": 2178,
+      "candidate_master_plus": 1,
+      "most_common_country": "France",
+      "is_reportable": true
+    },
+    {
+      "organization": "GAOU TO PhMS",
+      "cohort_users": 5,
+      "mean_rating": 1284.8,
+      "median_rating": 1398.0,
+      "max_rating": 1445,
+      "candidate_master_plus": 0,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Guangzhou No.6 Middle School",
+      "cohort_users": 5,
+      "mean_rating": 1872.2,
+      "median_rating": 1977.0,
+      "max_rating": 2768,
+      "candidate_master_plus": 3,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Ho Chi Minh City University of Technology",
+      "cohort_users": 5,
+      "mean_rating": 1359.8,
+      "median_rating": 1424.0,
+      "max_rating": 1821,
+      "candidate_master_plus": 0,
+      "most_common_country": "Vietnam",
+      "is_reportable": true
+    },
+    {
+      "organization": "ICHB",
+      "cohort_users": 5,
+      "mean_rating": 1355.4,
+      "median_rating": 1536.0,
+      "max_rating": 1673,
+      "candidate_master_plus": 0,
+      "most_common_country": "Romania",
+      "is_reportable": true
+    },
+    {
+      "organization": "IFAM",
+      "cohort_users": 5,
+      "mean_rating": 881.0,
+      "median_rating": 793.0,
+      "max_rating": 1369,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "IFPB João Pessoa",
+      "cohort_users": 5,
+      "mean_rating": 1136.6,
+      "median_rating": 1120.0,
+      "max_rating": 1360,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT BHUBANESHWAR",
+      "cohort_users": 5,
+      "mean_rating": 1038.8,
+      "median_rating": 1130.0,
+      "max_rating": 1211,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIIT Kalyani",
+      "cohort_users": 5,
+      "mean_rating": 973.2,
+      "median_rating": 921.0,
+      "max_rating": 1197,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT ISM, Dhanbad",
+      "cohort_users": 5,
+      "mean_rating": 1261.8,
+      "median_rating": 1328.0,
+      "max_rating": 1507,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT KGP",
+      "cohort_users": 5,
+      "mean_rating": 1133.2,
+      "median_rating": 1010.0,
+      "max_rating": 1611,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IIT Kanpur, India",
+      "cohort_users": 5,
+      "mean_rating": 1132.8,
+      "median_rating": 1273.0,
+      "max_rating": 1449,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IITH, Hyderabad",
+      "cohort_users": 5,
+      "mean_rating": 1326.6,
+      "median_rating": 1395.0,
+      "max_rating": 1692,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "IUT(Islamic university of technology)",
+      "cohort_users": 5,
+      "mean_rating": 817.2,
+      "median_rating": 829.0,
+      "max_rating": 1553,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Imperial College London",
+      "cohort_users": 5,
+      "mean_rating": 1197.6,
+      "median_rating": 1326.0,
+      "max_rating": 1630,
+      "candidate_master_plus": 0,
+      "most_common_country": "United Kingdom",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute Of Technology (BHU) Varanasi",
+      "cohort_users": 5,
+      "mean_rating": 1290.4,
+      "median_rating": 1337.0,
+      "max_rating": 1432,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Indian Institute of Information Technology Pune",
+      "cohort_users": 5,
+      "mean_rating": 733.2,
+      "median_rating": 683.0,
+      "max_rating": 1083,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "J.C.BOSEUST, YMCA Faridabad",
+      "cohort_users": 5,
+      "mean_rating": 993.4,
+      "median_rating": 1006.0,
+      "max_rating": 1161,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Jaypee University of Eng and Tech, Guna",
+      "cohort_users": 5,
+      "mean_rating": 1023.4,
+      "median_rating": 1136.0,
+      "max_rating": 1251,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "KIET Deemed to be University",
+      "cohort_users": 5,
+      "mean_rating": 940.0,
+      "median_rating": 936.0,
+      "max_rating": 1128,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "KIT - Coimbatore",
+      "cohort_users": 5,
+      "mean_rating": 1074.4,
+      "median_rating": 1053.0,
+      "max_rating": 1522,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "KUTBILIM",
+      "cohort_users": 5,
+      "mean_rating": 915.4,
+      "median_rating": 905.0,
+      "max_rating": 1186,
+      "candidate_master_plus": 0,
+      "most_common_country": "Kyrgyzstan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Kim Il Sung University",
+      "cohort_users": 5,
+      "mean_rating": 1400.0,
+      "median_rating": 1183.0,
+      "max_rating": 1975,
+      "candidate_master_plus": 1,
+      "most_common_country": "North Korea",
+      "is_reportable": true
+    },
+    {
+      "organization": "Koneru Lakshmaiah Education Foundation",
+      "cohort_users": 5,
+      "mean_rating": 816.0,
+      "median_rating": 771.0,
+      "max_rating": 1181,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "MMCOE",
+      "cohort_users": 5,
+      "mean_rating": 768.2,
+      "median_rating": 745.0,
+      "max_rating": 1394,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "MNU, Computer Science and AI",
+      "cohort_users": 5,
+      "mean_rating": 994.2,
+      "median_rating": 894.0,
+      "max_rating": 1466,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Muhammadjon Hamitov's Fun-club",
+      "cohort_users": 5,
+      "mean_rating": 1259.8,
+      "median_rating": 1350.0,
+      "max_rating": 1635,
+      "candidate_master_plus": 0,
+      "most_common_country": "Tajikistan",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIAT HYD",
+      "cohort_users": 5,
+      "mean_rating": 921.8,
+      "median_rating": 951.0,
+      "max_rating": 1070,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Calicut",
+      "cohort_users": 5,
+      "mean_rating": 1168.0,
+      "median_rating": 1208.0,
+      "max_rating": 1504,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Karnataka, Surathkal",
+      "cohort_users": 5,
+      "mean_rating": 895.6,
+      "median_rating": 820.0,
+      "max_rating": 1231,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Meghalaya",
+      "cohort_users": 5,
+      "mean_rating": 1113.0,
+      "median_rating": 911.0,
+      "max_rating": 1605,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NIT Silchar,Assam",
+      "cohort_users": 5,
+      "mean_rating": 1090.6,
+      "median_rating": 1048.0,
+      "max_rating": 1203,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "NSUT Delhi",
+      "cohort_users": 5,
+      "mean_rating": 829.8,
+      "median_rating": 851.0,
+      "max_rating": 1229,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "National Institute of Technology, Kurukshetra",
+      "cohort_users": 5,
+      "mean_rating": 1259.6,
+      "median_rating": 1344.0,
+      "max_rating": 1567,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Northeast Normal University",
+      "cohort_users": 5,
+      "mean_rating": 1655.0,
+      "median_rating": 1757.0,
+      "max_rating": 1925,
+      "candidate_master_plus": 1,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Obour Institutes",
+      "cohort_users": 5,
+      "mean_rating": 1133.8,
+      "median_rating": 1216.0,
+      "max_rating": 1273,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Parul Institute of Technology",
+      "cohort_users": 5,
+      "mean_rating": 858.4,
+      "median_rating": 921.0,
+      "max_rating": 1536,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Pimpri Chinchwad College of Engineering",
+      "cohort_users": 5,
+      "mean_rating": 966.8,
+      "median_rating": 991.0,
+      "max_rating": 1162,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Port City International University",
+      "cohort_users": 5,
+      "mean_rating": 1112.6,
+      "median_rating": 1143.0,
+      "max_rating": 1327,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Prime University",
+      "cohort_users": 5,
+      "mean_rating": 898.6,
+      "median_rating": 814.0,
+      "max_rating": 1415,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "SGSITS,Indore",
+      "cohort_users": 5,
+      "mean_rating": 1338.2,
+      "median_rating": 1469.0,
+      "max_rating": 1644,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "SLIET, Longowal",
+      "cohort_users": 5,
+      "mean_rating": 1087.4,
+      "median_rating": 1046.0,
+      "max_rating": 1578,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Sant'Anna School of Advanced Studies",
+      "cohort_users": 5,
+      "mean_rating": 1606.2,
+      "median_rating": 1649.0,
+      "max_rating": 1810,
+      "candidate_master_plus": 0,
+      "most_common_country": "Italy",
+      "is_reportable": true
+    },
+    {
+      "organization": "Shahid Ezheie 1",
+      "cohort_users": 5,
+      "mean_rating": 1452.0,
+      "median_rating": 1485.0,
+      "max_rating": 1829,
+      "candidate_master_plus": 0,
+      "most_common_country": "Iran",
+      "is_reportable": true
+    },
+    {
+      "organization": "Shahjalal University Of Science and Technology,",
+      "cohort_users": 5,
+      "mean_rating": 822.6,
+      "median_rating": 766.0,
+      "max_rating": 1057,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "Shanghai University",
+      "cohort_users": 5,
+      "mean_rating": 1406.6,
+      "median_rating": 1286.0,
+      "max_rating": 1673,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Sharda University",
+      "cohort_users": 5,
+      "mean_rating": 1032.6,
+      "median_rating": 953.0,
+      "max_rating": 1290,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Sphinx University",
+      "cohort_users": 5,
+      "mean_rating": 974.6,
+      "median_rating": 988.0,
+      "max_rating": 1165,
+      "candidate_master_plus": 0,
+      "most_common_country": "Egypt",
+      "is_reportable": true
+    },
+    {
+      "organization": "Sreenidhi Institute(JNTU)",
+      "cohort_users": 5,
+      "mean_rating": 1147.0,
+      "median_rating": 1224.0,
+      "max_rating": 1579,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Syrian Virtual University",
+      "cohort_users": 5,
+      "mean_rating": 1156.8,
+      "median_rating": 1139.0,
+      "max_rating": 1544,
+      "candidate_master_plus": 0,
+      "most_common_country": "Syria",
+      "is_reportable": true
+    },
+    {
+      "organization": "TRLI Hotam and PV",
+      "cohort_users": 5,
+      "mean_rating": 1434.4,
+      "median_rating": 1321.0,
+      "max_rating": 1704,
+      "candidate_master_plus": 0,
+      "most_common_country": "Tajikistan",
+      "is_reportable": true
+    },
+    {
+      "organization": "Trường THPT Chuyên Vĩnh Phúc",
+      "cohort_users": 5,
+      "mean_rating": 1669.4,
+      "median_rating": 1637.0,
+      "max_rating": 2073,
+      "candidate_master_plus": 2,
+      "most_common_country": "Vietnam",
+      "is_reportable": true
+    },
+    {
+      "organization": "UDESC",
+      "cohort_users": 5,
+      "mean_rating": 1464.8,
+      "median_rating": 1628.0,
+      "max_rating": 1786,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "UFSC - Universidade Federal de Santa Catarina",
+      "cohort_users": 5,
+      "mean_rating": 1193.0,
+      "median_rating": 1141.0,
+      "max_rating": 1767,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "UIET ,CSJM University Kanpur ,India",
+      "cohort_users": 5,
+      "mean_rating": 1226.0,
+      "median_rating": 1246.0,
+      "max_rating": 1859,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Ulianovsk, Kod Uspeha",
+      "cohort_users": 5,
+      "mean_rating": 977.4,
+      "median_rating": 893.0,
+      "max_rating": 1240,
+      "candidate_master_plus": 0,
+      "most_common_country": "Russia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Unioeste",
+      "cohort_users": 5,
+      "mean_rating": 752.0,
+      "median_rating": 741.0,
+      "max_rating": 843,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "Universidad Católica del Norte",
+      "cohort_users": 5,
+      "mean_rating": 839.8,
+      "median_rating": 875.0,
+      "max_rating": 1092,
+      "candidate_master_plus": 0,
+      "most_common_country": "Chile",
+      "is_reportable": true
+    },
+    {
+      "organization": "Universidad Nacional de Colombia",
+      "cohort_users": 5,
+      "mean_rating": 1272.6,
+      "median_rating": 1318.0,
+      "max_rating": 1402,
+      "candidate_master_plus": 0,
+      "most_common_country": "Colombia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Universidade Federal de Minas Gerais",
+      "cohort_users": 5,
+      "mean_rating": 1716.8,
+      "median_rating": 1642.0,
+      "max_rating": 2188,
+      "candidate_master_plus": 2,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "Universitat Politecnica de Valencia",
+      "cohort_users": 5,
+      "mean_rating": 1111.6,
+      "median_rating": 1071.0,
+      "max_rating": 1597,
+      "candidate_master_plus": 0,
+      "most_common_country": "Spain",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of Asia Pacific",
+      "cohort_users": 5,
+      "mean_rating": 976.0,
+      "median_rating": 892.0,
+      "max_rating": 1662,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of Barisal",
+      "cohort_users": 5,
+      "mean_rating": 1287.2,
+      "median_rating": 1257.0,
+      "max_rating": 1502,
+      "candidate_master_plus": 0,
+      "most_common_country": "Bangladesh",
+      "is_reportable": true
+    },
+    {
+      "organization": "University of São Paulo",
+      "cohort_users": 5,
+      "mean_rating": 1196.8,
+      "median_rating": 1237.0,
+      "max_rating": 1665,
+      "candidate_master_plus": 0,
+      "most_common_country": "Brazil",
+      "is_reportable": true
+    },
+    {
+      "organization": "VIII LO w Poznaniu",
+      "cohort_users": 5,
+      "mean_rating": 1446.4,
+      "median_rating": 1512.0,
+      "max_rating": 1810,
+      "candidate_master_plus": 0,
+      "most_common_country": "Poland",
+      "is_reportable": true
+    },
+    {
+      "organization": "VNIT Nagpur",
+      "cohort_users": 5,
+      "mean_rating": 1187.4,
+      "median_rating": 1109.0,
+      "max_rating": 1442,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Vellore Institute of Technology, Amaravati",
+      "cohort_users": 5,
+      "mean_rating": 1237.6,
+      "median_rating": 1149.0,
+      "max_rating": 1648,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Vellore Institute of Technology, Vellore",
+      "cohort_users": 5,
+      "mean_rating": 917.8,
+      "median_rating": 890.0,
+      "max_rating": 1160,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Vellore Institute of Technology,Vellore",
+      "cohort_users": 5,
+      "mean_rating": 1067.2,
+      "median_rating": 1111.0,
+      "max_rating": 1210,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Vidyalankar Institute of Technology",
+      "cohort_users": 5,
+      "mean_rating": 1049.2,
+      "median_rating": 1045.0,
+      "max_rating": 1133,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "Wuhan University of Science and Technology",
+      "cohort_users": 5,
+      "mean_rating": 1285.8,
+      "median_rating": 1361.0,
+      "max_rating": 1475,
+      "candidate_master_plus": 0,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Xi'an Jiaotong University",
+      "cohort_users": 5,
+      "mean_rating": 1466.0,
+      "median_rating": 1509.0,
+      "max_rating": 1922,
+      "candidate_master_plus": 1,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "Yandex",
+      "cohort_users": 5,
+      "mean_rating": 1913.8,
+      "median_rating": 1890.0,
+      "max_rating": 2487,
+      "candidate_master_plus": 2,
+      "most_common_country": "Serbia",
+      "is_reportable": true
+    },
+    {
+      "organization": "Zhejiang University of Technology",
+      "cohort_users": 5,
+      "mean_rating": 1924.8,
+      "median_rating": 1892.0,
+      "max_rating": 2584,
+      "candidate_master_plus": 2,
+      "most_common_country": "China",
+      "is_reportable": true
+    },
+    {
+      "organization": "bullnob FC",
+      "cohort_users": 5,
+      "mean_rating": 1320.0,
+      "median_rating": 1381.0,
+      "max_rating": 1457,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "gregson fanclub",
+      "cohort_users": 5,
+      "mean_rating": 1583.4,
+      "median_rating": 1694.0,
+      "max_rating": 1975,
+      "candidate_master_plus": 1,
+      "most_common_country": "Vietnam",
+      "is_reportable": true
+    },
+    {
+      "organization": "indian institute of information technology lucknow",
+      "cohort_users": 5,
+      "mean_rating": 1015.6,
+      "median_rating": 810.0,
+      "max_rating": 1500,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "potty boys",
+      "cohort_users": 5,
+      "mean_rating": 1327.4,
+      "median_rating": 1321.0,
+      "max_rating": 1540,
+      "candidate_master_plus": 0,
+      "most_common_country": "India",
+      "is_reportable": true
+    },
+    {
+      "organization": "(below reporting threshold)",
+      "cohort_users": 4973,
+      "mean_rating": null,
+      "median_rating": null,
+      "max_rating": null,
+      "candidate_master_plus": null,
+      "most_common_country": null,
+      "is_reportable": false
+    }
+  ]
+}
