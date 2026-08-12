@@ -46,6 +46,7 @@ import argparse
 import json
 import pathlib
 import sys
+import tempfile
 from decimal import Decimal
 from typing import Any
 
@@ -336,6 +337,33 @@ def verify_export(out_dir: pathlib.Path) -> list[str]:
     return problems
 
 
+def compare_current(
+    database: pathlib.Path, out_dir: pathlib.Path, schema_path: pathlib.Path
+) -> list[str]:
+    """Regenerate into a scratch directory and report files that differ.
+
+    The gate in verify_export proves the committed files are internally
+    consistent and carry nothing identifying. It cannot prove they still match
+    the warehouse: edit a model, rebuild, forget to re-export, and every test
+    stays green while the artefact describes the previous warehouse. This is the
+    comparison that catches that, and it is only possible where the warehouse
+    exists - which is why the caller treats an absent one as unverifiable rather
+    than as a pass or a failure.
+    """
+    with tempfile.TemporaryDirectory() as scratch:
+        fresh = pathlib.Path(scratch)
+        write_export(database, fresh, schema_path)
+        names = [f"{table}.json" for table in ALLOWLIST] + ["manifest.json"]
+        differing: list[str] = []
+        for name in names:
+            committed = out_dir / name
+            if not committed.exists():
+                differing.append(f"{name}: missing from {out_dir}")
+            elif committed.read_bytes() != (fresh / name).read_bytes():
+                differing.append(f"{name}: differs from the warehouse")
+    return differing
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Export the observatory aggregates to JSON.")
     parser.add_argument("--database", type=pathlib.Path, default=None)
@@ -346,12 +374,37 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="verify the export after writing it, and fail on any problem",
     )
+    parser.add_argument(
+        "--verify-current",
+        action="store_true",
+        help="do not write; fail if the committed export differs from the warehouse",
+    )
     args = parser.parse_args(argv)
 
     root = repo_root()
     database = args.database or default_database()
     out_dir = args.out or root / "exports" / "observatory"
     schema_path = args.schema or root / "models" / "marts" / "observatory" / "_schema.yml"
+
+    if args.verify_current:
+        if not database.exists():
+            # A contributor without the warehouse genuinely cannot regenerate
+            # this, so blocking their commit would be wrong. Said out loud
+            # rather than passing quietly: this is a maintainer gate.
+            print(f"no warehouse at {database} - export freshness NOT verified")
+            return 0
+        differing = compare_current(database, out_dir, schema_path)
+        if differing:
+            print(f"{len(differing)} file(s) stale:", file=sys.stderr)
+            for name in differing:
+                print(f"  {name}", file=sys.stderr)
+            print(
+                "run: python3 -m codrona_lens.observatory.export --check",
+                file=sys.stderr,
+            )
+            return 1
+        print("export is current with the warehouse")
+        return 0
 
     if not database.exists():
         print(f"no warehouse at {database}", file=sys.stderr)

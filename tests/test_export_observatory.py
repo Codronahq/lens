@@ -219,6 +219,52 @@ def test_gate_reports_a_missing_export(tmp_path: pathlib.Path) -> None:
     assert export.verify_export(tmp_path / "nothing") != []
 
 
+def test_freshness_check_passes_when_nothing_moved(
+    tmp_path: pathlib.Path, written: pathlib.Path
+) -> None:
+    database = tmp_path / "fixture.duckdb"
+    schema = tmp_path / "_schema.yml"
+    assert export.compare_current(database, written, schema) == []
+
+
+def test_freshness_check_catches_a_stale_file(
+    tmp_path: pathlib.Path, written: pathlib.Path
+) -> None:
+    """The failure this closes: warehouse rebuilt, export not regenerated."""
+    database = tmp_path / "fixture.duckdb"
+    schema = tmp_path / "_schema.yml"
+    payload = _load(written, "obs_tag_landscape")
+    payload["rows"][0]["problems_with_tag"] = 999
+    _save(written, "obs_tag_landscape", payload)
+    differing = export.compare_current(database, written, schema)
+    assert any("obs_tag_landscape.json" in name for name in differing)
+
+
+def test_freshness_check_catches_a_missing_file(
+    tmp_path: pathlib.Path, written: pathlib.Path
+) -> None:
+    database = tmp_path / "fixture.duckdb"
+    schema = tmp_path / "_schema.yml"
+    (written / "manifest.json").unlink()
+    assert any(
+        "manifest.json" in name for name in export.compare_current(database, written, schema)
+    )
+
+
+def test_verify_current_does_not_block_without_a_warehouse(tmp_path: pathlib.Path) -> None:
+    """A contributor cannot regenerate this; the hook must say so, not fail them."""
+    code = export.main(
+        [
+            "--verify-current",
+            "--database",
+            str(tmp_path / "absent.duckdb"),
+            "--out",
+            str(tmp_path / "out"),
+        ]
+    )
+    assert code == 0
+
+
 def test_committed_export_passes_the_gate() -> None:
     """The artefact actually in the repository, checked without touching a warehouse."""
     out = export.repo_root() / "exports" / "observatory"

@@ -42,6 +42,19 @@ repos:
         language: system
         pass_filenames: false
         files: '(\.sql|\.yml|\.yaml)$'
+      # Freshness, not correctness. The pytest gate proves the committed export
+      # is internally consistent; only a regeneration proves it still matches
+      # the warehouse. Scoped to the models and the exporter, because nothing
+      # else can make it stale. Exits 0 with a message where no warehouse
+      # exists, since a contributor cannot regenerate it and must not be blocked.
+      - id: observatory-export-current
+        name: observatory export is current
+        entry: .venv/bin/python
+        args: [-m, codrona_lens.observatory.export, --verify-current]
+        language: system
+        pass_filenames: false
+        files: '^(models/marts/observatory/|src/codrona_lens/observatory/)'
+
       - id: repo-checks
         name: repository hygiene
         entry: .venv/bin/python
