@@ -1,3 +1,9 @@
+-- TAGGED real_data. This pins a count of the REAL world, so it cannot pass
+-- against CI's synthetic fixtures and CI excludes it by tag. That exclusion
+-- is the honest boundary of what CI proves: 4 tests of 121. Everything
+-- structural still runs there for real.
+{{ config(tags = ['real_data']) }}
+
 -- The staging model must carry exactly the published CodeNet corpus count.
 --
 -- 13,916,868 is IBM's own figure and was confirmed against the actual files by

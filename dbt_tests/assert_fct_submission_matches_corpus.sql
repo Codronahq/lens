@@ -1,3 +1,9 @@
+-- TAGGED real_data. This pins a count of the REAL world, so it cannot pass
+-- against CI's synthetic fixtures and CI excludes it by tag. That exclusion
+-- is the honest boundary of what CI proves: 4 tests of 121. Everything
+-- structural still runs there for real.
+{{ config(tags = ['real_data']) }}
+
 -- The fact table must carry exactly the canonical corpus count.
 --
 -- This is the pair-that-must-match discipline applied to the mart: both provenance

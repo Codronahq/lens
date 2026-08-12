@@ -33,11 +33,20 @@ jobs:
       - name: Tests
         run: pytest -q
 
-      - name: dbt parse
+      - name: dbt build against synthetic fixtures
         env:
           CODRONA_DUCKDB: target/ci.duckdb
+          CODRONA_SILVER_CF: target/fixtures/lake/silver/cf_submissions
+          CODRONA_SILVER_CODENET: target/fixtures/lake/silver/codenet_submissions
+          CODRONA_CODENET_METADATA: target/fixtures/raw/codenet/Project_CodeNet/metadata
+          CODRONA_CF_RATED_LIST: target/fixtures/raw/codeforces/ratedList/ratedList_activeOnly_20260806.json
+          CODRONA_CF_PROBLEMSET: target/fixtures/raw/codeforces/problemset/problemset_20260812T004059.jsonl
+          CODRONA_ZEROTRAC_JSON: target/fixtures/raw/zerotrac/data_881a239306ce7a339e32e7825cdb9c00fead00f1.json
+          CODRONA_CODECONTESTS_PARQUET: target/fixtures/raw/codecontests/codecontests_codenet_802411c3010cb00d1b05bad57ca77365a3c699d6.parquet
         run: |
           dbt deps
           dbt parse --target ci
+          python3 scripts/make_ci_fixtures.py --root target/fixtures
+          dbt build --target ci --exclude tag:real_data
       - name: Repository hygiene
         run: python3 scripts/repo_checks.py
