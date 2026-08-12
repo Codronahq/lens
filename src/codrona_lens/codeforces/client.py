@@ -147,3 +147,22 @@ class CodeforcesClient:
             {"handle": handle, "from": from_, "count": count},
         )
         return list(result)
+
+    def problemset_problems(
+        self,
+        *,
+        problemset_name: str | None = None,
+    ) -> dict[str, Any]:
+        """The whole problemset in one response: problems plus their statistics.
+
+        ``problemset_name`` selects a custom archive. The default (None) returns
+        the mainline contest problemset, which does NOT include acmsguru - that
+        archive is reachable only by naming it.
+        """
+        params: dict[str, Any] = {}
+        if problemset_name is not None:
+            params["problemsetName"] = problemset_name
+        result = self._get("problemset.problems", params)
+        if not isinstance(result, dict):
+            raise ApiFailed(f"problemset.problems returned {type(result).__name__}")
+        return result
