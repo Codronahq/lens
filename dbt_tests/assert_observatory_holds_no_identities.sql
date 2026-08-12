@@ -14,6 +14,15 @@
 -- accident; making it deliberate means editing this test, which is a decision
 -- with a reviewer.
 
+-- This test reads the catalog, not a model, so dbt cannot infer what it
+-- depends on and would leave it out of any observatory-scoped selection
+-- while the run still reported success. The edge is declared explicitly.
+-- depends_on: {{ ref('obs_country_participation') }}
+-- depends_on: {{ ref('obs_organization_participation') }}
+-- depends_on: {{ ref('obs_rating_distribution') }}
+-- depends_on: {{ ref('obs_activity_by_year') }}
+-- depends_on: {{ ref('obs_tag_landscape') }}
+
 with observatory_columns as (
 
     select table_name, column_name
