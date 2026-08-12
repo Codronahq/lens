@@ -1,0 +1,36 @@
+version: 2
+sources:
+  - name: cf_problemset
+    description: >
+      A single-instant read of the whole Codeforces problemset, taken through
+      problemset.problems at the documented 1 request / 2 seconds. This is the
+      only view of problem attributes that is not reconstructed from submission
+      rows, which matters for two things the submission side cannot give.
+
+      Tags here need no tiebreak. dim_problem resolves 7 problems whose tags
+      differ between collected files by a deterministic richest-then-lexicographic
+      rule; one response at one instant has nothing to break a tie between, and
+      it disagrees with that rule on 2 of the 7.
+
+      solvedCount is population-level difficulty measured over every Codeforces
+      user rather than over our 55,484-user cohort, which makes it an independent
+      check on cohort sampling bias rather than another view of the same evidence.
+
+      Pinned by timestamp in the filename, in a column on every row, and in a
+      test asserting the record count - the same three-way pin zerotrac uses.
+      Coverage is the public problemset only: gym contests and mirror, practice
+      and special-format rounds are absent by the archive's own scope, so this
+      is always a LEFT enrichment and never a spine or a filter.
+    tables:
+      - name: problems
+        description: >
+          11,809 problems as published on 2026-08-12, one JSON object per line.
+          Every row carries solved_count; 11,051 carry a rating. 453 come from
+          the acmsguru archive, which is reachable only by naming it and which
+          carries no rating field at all.
+        meta:
+          external_location: >-
+            read_json_auto('{{ env_var("CODRONA_CF_PROBLEMSET", env_var("HOME") ~
+            "/codrona-data/raw/codeforces/problemset/problemset_" ~
+            env_var("CODRONA_CF_PROBLEMSET_STAMP", "20260812T004059") ~
+            ".jsonl") }}', sample_size=-1)

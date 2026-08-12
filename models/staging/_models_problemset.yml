@@ -1,0 +1,42 @@
+version: 2
+models:
+  - name: stg_cf_problemset
+    description: >
+      The pinned Codeforces problemset snapshot. Enrichment only - contributes
+      zero submission rows and never filters the problem dimension.
+    columns:
+      - name: problem_id
+        description: >
+          Built by the same rule as the submission corpus: contestId + index,
+          falling back to problemsetName + index for the acmsguru archive, which
+          carries no contestId. A parity test asserts the Python implementation
+          agrees with the Spark one that built the corpus key.
+        tests: [unique, not_null]
+      - name: problemset_source
+        description: main for the public problemset, acmsguru for the SGU archive.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [main, acmsguru]
+      - name: solved_count
+        description: >
+          Accepted solutions across ALL Codeforces users, not our cohort. Present
+          on every row of the snapshot. The upper bound is a garbage check that
+          warns rather than errors, so a genuinely popular problem is never
+          clamped out of the data.
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 5000000
+              config:
+                severity: warn
+      - name: problem_index
+        tests: [not_null]
+      - name: fetched_at
+        description: The pin, carried on every row so a moved snapshot is visible.
+        tests: [not_null]
+      - name: is_unrated
+        tests: [not_null]
