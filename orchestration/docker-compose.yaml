@@ -1,0 +1,198 @@
+# Airflow 3.3.0, LocalExecutor, for the Codrona Lens pipeline.
+#
+# Derived from the official compose file at the 3.3.0 tag, not copied. Upstream
+# ships a CeleryExecutor stack - redis, a celery worker, flower - which is eight
+# services to run four tasks on one machine, and roughly half its comments
+# describe that architecture. Deleting the services and keeping the prose would
+# leave a file that lies about itself, so this is written for what it is.
+#
+# Two upstream details worth recording. The compose file in the repository is a
+# docs TEMPLATE: its image line reads `apache/airflow:|version|` literally, and
+# only the copy rendered onto the documentation site has that substituted, so
+# pulling it from GitHub and running it fails on an invalid image name. And the
+# path moved in Airflow 3 - it now lives under `airflow-core/docs/`, so every
+# 2.x-era instruction pointing at `docs/apache-airflow/howto/` returns a 404.
+#
+# THE API SERVER IS ON 8081, DELIBERATELY. Airflow's default is 8080 and this
+# host runs a sentinelops kind cluster that publishes 8080. Remapping ours is
+# the standing rule: never reconfigure another project's ports. 8080 happened to
+# be free when this was written, which is exactly why the choice is made here
+# rather than left to whatever is running on the day.
+#
+# This is a Tier 2 artefact. Nothing in the free-stack ledger hosts a scheduler,
+# so this runs on a laptop and in a demo, never on the hot path.
+#
+#   cd orchestration
+#   echo "AIRFLOW_UID=$(id -u)" > .env
+#   docker compose build
+#   docker compose up -d
+#   # http://localhost:8081   airflow / airflow
+#   docker compose down -v      # -v also drops the metadata database
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+---
+x-airflow-common: &airflow-common
+  build: .
+  image: codrona/airflow:3.3.0
+  environment: &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__CORE__AUTH_MANAGER: airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+    AIRFLOW__CORE__FERNET_KEY: ''
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+    # Upstream defaults this to true. The example DAGs are noise next to one
+    # real pipeline, and they make "is anything failing" a harder question.
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow-apiserver:8080/execution/'
+    AIRFLOW__API_AUTH__JWT_SECRET: ${AIRFLOW__API_AUTH__JWT_SECRET:-codrona_local_only_jwt_secret}
+    AIRFLOW__API_AUTH__JWT_ISSUER: ${AIRFLOW__API_AUTH__JWT_ISSUER:-airflow}
+    AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
+    # The pipeline's own paths. Every one of these is env-driven in the code
+    # already, which is the only reason it runs unchanged inside a container.
+    CODRONA_DUCKDB: /opt/codrona-data/warehouse/codrona.duckdb
+    CODRONA_LENS_REPO: /opt/codrona-lens
+    CODRONA_DATA: /opt/codrona-data
+    # Every source path too, not just the warehouse. These default to ~/codrona-data,
+    # and $HOME in the container is /home/airflow - so an unset source variable
+    # resolves to a path that does not exist while the warehouse resolves fine,
+    # which reads as a broken model rather than as a missing mount.
+    CODRONA_SILVER_CF: /opt/codrona-data/lake/silver/cf_submissions
+    CODRONA_SILVER_CODENET: /opt/codrona-data/lake/silver/codenet_submissions
+    CODRONA_CODENET_METADATA: /opt/codrona-data/raw/codenet/Project_CodeNet/metadata
+    CODRONA_CF_RATED_LIST: /opt/codrona-data/raw/codeforces/ratedList/ratedList_activeOnly_20260806.json
+    CODRONA_CF_PROBLEMSET: /opt/codrona-data/raw/codeforces/problemset/problemset_20260812T004059.jsonl
+    CODRONA_ZEROTRAC_JSON: /opt/codrona-data/raw/zerotrac/data_881a239306ce7a339e32e7825cdb9c00fead00f1.json
+    CODRONA_CODECONTESTS_PARQUET: /opt/codrona-data/raw/codecontests/codecontests_codenet_802411c3010cb00d1b05bad57ca77365a3c699d6.parquet
+    PYTHONPATH: /opt/codrona-lens/src
+    # Spark in local mode: the hostname resolves to a 127.0.1.1 alias, and the
+    # session timezone must be pinned or a year-derived partition column puts
+    # the same row in different partitions on different hosts.
+    SPARK_LOCAL_IP: 127.0.0.1
+    TZ: UTC
+    JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+  volumes:
+    - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
+    - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
+    - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
+    - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
+    # The repository, so dbt models and the exporter are the ones under version
+    # control rather than a copy baked into an image that drifts on first edit.
+    - ${CODRONA_REPO:-..}:/opt/codrona-lens
+    # The lake and the warehouse. 14 GB and never committed, so mounted.
+    - ${CODRONA_DATA_DIR:-${HOME}/codrona-data}:/opt/codrona-data
+  user: "${AIRFLOW_UID:-50000}:0"
+  depends_on: &airflow-common-depends-on
+    postgres:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    restart: always
+
+  airflow-apiserver:
+    <<: *airflow-common
+    command: api-server
+    ports:
+      - "8081:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/api/v2/monitor/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-dag-processor:
+    <<: *airflow-common
+    command: dag-processor
+    healthcheck:
+      test: ["CMD", "airflow", "jobs", "check", "--job-type", "DagProcessorJob", "--hostname", "$${HOSTNAME}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-triggerer:
+    <<: *airflow-common
+    command: triggerer
+    healthcheck:
+      test: ["CMD", "airflow", "jobs", "check", "--job-type", "TriggererJob", "--hostname", "$${HOSTNAME}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-init:
+    <<: *airflow-common
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        mkdir -p /opt/airflow/logs /opt/airflow/dags /opt/airflow/plugins /opt/airflow/config
+        chown -R "${AIRFLOW_UID:-50000}:0" /opt/airflow/logs /opt/airflow/dags /opt/airflow/plugins /opt/airflow/config
+        exec /entrypoint airflow version
+    environment:
+      <<: *airflow-common-env
+      _AIRFLOW_DB_MIGRATE: 'true'
+      _AIRFLOW_WWW_USER_CREATE: 'true'
+      _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
+      _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
+    user: "0:0"
+
+  # One-off commands without a second stack:
+  #   docker compose run --rm airflow-cli airflow dags list
+  airflow-cli:
+    <<: *airflow-common
+    profiles:
+      - debug
+    environment:
+      <<: *airflow-common-env
+      CONNECTION_CHECK_MAX_COUNT: "0"
+    command:
+      - bash
+      - -c
+      - airflow
+
+volumes:
+  postgres-db-volume:

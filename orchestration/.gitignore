@@ -1,0 +1,5 @@
+# Airflow writes these at run time; none of it belongs in git.
+logs/
+plugins/
+config/
+.env

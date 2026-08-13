@@ -1,0 +1,21 @@
+# Runtime dependencies for the orchestration image.
+#
+# These mirror the `spark` and `dev` extras in the repository's pyproject.toml.
+# They are restated rather than installed from the package because the package
+# is bind-mounted at run time, not present at build time - and a `pip install
+# -e` against a mount would make the image depend on a directory that does not
+# exist while it is being built.
+#
+# Ranges match pyproject exactly. Narrowing them here would mean the container
+# and the laptop could resolve different versions of dbt against the same
+# models, which is the sort of divergence that shows up as a test failure that
+# reproduces nowhere.
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+pyspark==4.0.1
+pyarrow>=17
+duckdb>=1.1
+dbt-core>=1.12,<2.0
+dbt-duckdb>=1.10,<2.0
+pyyaml
