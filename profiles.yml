@@ -8,6 +8,16 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+# THE SESSION TIMEZONE IS PINNED, AND THIS WAS MEASURED RATHER THAN ASSUMED.
+# dim_user.registered_at is TIMESTAMP WITH TIME ZONE, so year() resolves against
+# the session zone: two users who registered in the last hours of 2019 UTC count
+# as 2020 under Asia/Kolkata. Measured on the real warehouse, 2020 reads 814
+# under UTC and 812 under IST, and obs_activity_by_year's cumulative
+# registered_by_then carries that shift into every later year. A laptop in IST
+# and a container or CI runner in UTC therefore produced different published
+# figures from identical inputs. Pinned on both targets: CI runs in UTC and
+# would otherwise disagree with the machine that generated the committed export.
+#
 codrona_lens:
   target: dev
   outputs:
@@ -15,11 +25,15 @@ codrona_lens:
       type: duckdb
       path: "{{ env_var('CODRONA_DUCKDB', '~/codrona-data/warehouse/codrona.duckdb') }}"
       threads: 4
+      settings:
+        TimeZone: 'UTC'
       extensions:
         - parquet
     ci:
       type: duckdb
       path: "{{ env_var('CODRONA_DUCKDB', 'target/ci.duckdb') }}"
       threads: 2
+      settings:
+        TimeZone: 'UTC'
       extensions:
         - parquet

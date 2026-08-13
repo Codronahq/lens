@@ -44,6 +44,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import pathlib
 import sys
 import tempfile
@@ -169,6 +170,17 @@ PARTITION_TABLES = ("obs_rating_distribution", "obs_country_participation")
 
 
 def default_database() -> pathlib.Path:
+    """The warehouse, from the environment first and only then from $HOME.
+
+    dbt reads this path through profiles.yml, so a container with CODRONA_DUCKDB
+    set built the warehouse correctly while this module still looked under
+    $HOME - which inside the Airflow image is /home/airflow, a directory holding
+    nothing. The export failed on a missing warehouse while every model had just
+    succeeded against the real one, and the two facts looked unrelated.
+    """
+    from_env = os.environ.get("CODRONA_DUCKDB")
+    if from_env:
+        return pathlib.Path(from_env).expanduser()
     return pathlib.Path.home() / "codrona-data" / "warehouse" / "codrona.duckdb"
 
 
