@@ -12,7 +12,8 @@
 -- today's-active users who had already registered: 352 of them in 2019 against
 -- 21,921 registering in 2025. Both figures are read under a pinned UTC session:
 -- registered_at is TIMESTAMP WITH TIME ZONE, so year() resolves against the
--- session zone and this number was 21,916 on a machine in Asia/Kolkata. So submissions rising from 196,625 in 2019 to
+-- session zone and this number was 21,916 on a machine in Asia/Kolkata.
+-- So submissions rising from 196,625 in 2019 to
 -- 8,711,676 in 2026 measures our cohort's registration dates, not the growth of
 -- competitive programming, and publishing it as a trend would be a false claim.
 --
