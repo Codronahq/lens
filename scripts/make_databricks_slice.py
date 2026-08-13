@@ -56,11 +56,9 @@ from typing import Any
 
 import duckdb
 
+from codrona_lens import warehouse
+
 DEFAULT_YEAR = 2025
-
-
-def default_database() -> pathlib.Path:
-    return pathlib.Path.home() / "codrona-data" / "warehouse" / "codrona.duckdb"
 
 
 def default_out() -> pathlib.Path:
@@ -166,14 +164,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", type=pathlib.Path, default=None)
     args = parser.parse_args(argv)
 
-    database = args.database or default_database()
+    database = args.database or warehouse.default_database()
     out_dir = args.out or default_out()
     if not database.exists():
         print(f"no warehouse at {database}", file=sys.stderr)
         return 1
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    con = duckdb.connect(str(database), read_only=True)
+    con = warehouse.connect(database)
     try:
         targets = expected_activity_rows(con, args.year)
         if args.year is not None and targets[0]["is_partial_year"]:

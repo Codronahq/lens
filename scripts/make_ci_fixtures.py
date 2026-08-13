@@ -59,6 +59,8 @@ from typing import Any
 
 import duckdb
 
+from codrona_lens import warehouse
+
 SNAPSHOT_DATE = "2026-08-06"
 PROBLEMSET_STAMP = "20260812T004059"
 ZEROTRAC_SHA = "881a239306ce7a339e32e7825cdb9c00fead00f1"
@@ -383,7 +385,7 @@ def main(argv: list[str] | None = None) -> int:
     root.mkdir(parents=True, exist_ok=True)
     (root / "lake" / "silver").mkdir(parents=True, exist_ok=True)
 
-    con = duckdb.connect()
+    con = warehouse.connect_memory()
     try:
         cf_rows = write_cf_silver(con, root)
         codenet_rows = write_codenet_silver(con, root)

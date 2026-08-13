@@ -31,6 +31,7 @@ from __future__ import annotations
 import pathlib
 import shutil
 from collections.abc import Iterator
+from typing import Any
 
 import pytest
 import yaml
@@ -148,3 +149,84 @@ def test_codenet_build_session_pins_utc(poisoned_session: object) -> None:
 
     assert built.conf.get(TZ_KEY) == "UTC"
     assert year_of_boundary(built) == YEAR_IN_UTC
+
+
+def test_default_database_honours_the_env_var(monkeypatch: pytest.MonkeyPatch) -> None:
+    """CODRONA_DUCKDB wins over $HOME, which in a container is the service user."""
+    from codrona_lens import warehouse
+
+    monkeypatch.setenv("CODRONA_DUCKDB", "/tmp/somewhere/codrona.duckdb")
+    assert warehouse.default_database() == pathlib.Path("/tmp/somewhere/codrona.duckdb")
+
+    monkeypatch.delenv("CODRONA_DUCKDB")
+    assert warehouse.default_database().is_relative_to(pathlib.Path.home())
+
+
+def duckdb_row(con: object, sql: str) -> tuple[Any, ...]:
+    row: tuple[Any, ...] | None = con.execute(sql).fetchone()  # type: ignore[attr-defined]
+    assert row is not None, f"no row from: {sql}"
+    return row
+
+
+def duckdb_year_of_boundary(con: object) -> int:
+    return int(duckdb_row(con, f"select year(to_timestamp({BOUNDARY_EPOCH}))")[0])
+
+
+def duckdb_zone(con: object) -> str:
+    return str(duckdb_row(con, "select current_setting('TimeZone')")[0])
+
+
+def test_apply_session_settings_clears_a_wrong_zone() -> None:
+    """The helper must reset a zone, not merely set one on a fresh connection.
+
+    A connection opened on a UTC runner is already UTC, so a test that only
+    opened one would pass with the pin deleted. This one poisons first.
+    """
+    import duckdb
+
+    from codrona_lens import warehouse
+
+    con = duckdb.connect()
+    try:
+        con.execute(f"SET TimeZone='{POISON}'")
+        assert duckdb_year_of_boundary(con) == YEAR_IN_POISON
+
+        warehouse.apply_session_settings(con)
+
+        assert duckdb_zone(con) == "UTC"
+        assert duckdb_year_of_boundary(con) == YEAR_IN_UTC
+    finally:
+        con.close()
+
+
+def test_warehouse_connect_pins_utc(tmp_path: pathlib.Path) -> None:
+    """Read-only is the mode both callers use, and SET works in it."""
+    from codrona_lens import warehouse
+
+    database = tmp_path / "probe.duckdb"
+    seed = warehouse.connect(database, read_only=False)
+    seed.close()
+
+    con = warehouse.connect(database)
+    try:
+        assert duckdb_zone(con) == "UTC"
+        assert duckdb_year_of_boundary(con) == YEAR_IN_UTC
+    finally:
+        con.close()
+
+
+def test_no_module_opens_duckdb_outside_the_helper() -> None:
+    """A new caller that connects directly would be unpinned and unnoticed.
+
+    Structural, because the two rules above gate the helper and nothing gates
+    whether anything uses it. Tests are excluded deliberately: a test that builds
+    a fixture warehouse has no session settings to protect.
+    """
+    helper = REPO_ROOT / "src" / "codrona_lens" / "warehouse.py"
+    offenders = [
+        path.relative_to(REPO_ROOT)
+        for directory in ("src", "scripts")
+        for path in sorted((REPO_ROOT / directory).rglob("*.py"))
+        if path != helper and "duckdb.connect(" in path.read_text(encoding="utf-8")
+    ]
+    assert not offenders, f"these open DuckDB without the session pin: {offenders}"

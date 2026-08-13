@@ -25,6 +25,7 @@ from typing import Any, TypeAlias
 
 import duckdb
 
+from codrona_lens import warehouse
 from codrona_lens.codeforces.migrate import DEFAULT_USER_STATUS_DIR, SUFFIX
 
 # codrona.md §6: CodeNet person-level submissions, licence verified 2026-08-03.
@@ -116,7 +117,7 @@ def encoded_files(files: list[pathlib.Path]) -> list[pathlib.Path]:
 
 
 def _connect(memory_limit: str, temp_dir: pathlib.Path | None) -> Connection:
-    con = duckdb.connect()
+    con = warehouse.connect_memory()
     con.execute(f"SET memory_limit = '{memory_limit}'")
     if temp_dir is not None:
         temp_dir.mkdir(parents=True, exist_ok=True)

@@ -44,7 +44,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import pathlib
 import sys
 import tempfile
@@ -53,6 +52,8 @@ from typing import Any
 
 import duckdb
 import yaml
+
+from codrona_lens import warehouse
 
 SCHEMA_NAME = "main_marts"
 
@@ -169,21 +170,6 @@ STATISTIC_KEYS = frozenset(
 PARTITION_TABLES = ("obs_rating_distribution", "obs_country_participation")
 
 
-def default_database() -> pathlib.Path:
-    """The warehouse, from the environment first and only then from $HOME.
-
-    dbt reads this path through profiles.yml, so a container with CODRONA_DUCKDB
-    set built the warehouse correctly while this module still looked under
-    $HOME - which inside the Airflow image is /home/airflow, a directory holding
-    nothing. The export failed on a missing warehouse while every model had just
-    succeeded against the real one, and the two facts looked unrelated.
-    """
-    from_env = os.environ.get("CODRONA_DUCKDB")
-    if from_env:
-        return pathlib.Path(from_env).expanduser()
-    return pathlib.Path.home() / "codrona-data" / "warehouse" / "codrona.duckdb"
-
-
 def repo_root() -> pathlib.Path:
     return pathlib.Path(__file__).resolve().parents[3]
 
@@ -255,7 +241,7 @@ def build_payload(table: str, rows: list[dict[str, Any]], caveat: str) -> dict[s
 def write_export(database: pathlib.Path, out_dir: pathlib.Path, schema_path: pathlib.Path) -> int:
     descriptions = load_descriptions(schema_path)
     out_dir.mkdir(parents=True, exist_ok=True)
-    con = duckdb.connect(str(database), read_only=True)
+    con = warehouse.connect(database)
     try:
         written: dict[str, int] = {}
         for table in ALLOWLIST:
@@ -394,7 +380,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     root = repo_root()
-    database = args.database or default_database()
+    database = args.database or warehouse.default_database()
     out_dir = args.out or root / "exports" / "observatory"
     schema_path = args.schema or root / "models" / "marts" / "observatory" / "_schema.yml"
 

@@ -34,6 +34,7 @@ from typing import Any
 
 import duckdb
 
+from codrona_lens import warehouse
 from codrona_lens.codeforces.count import CODENET_PERSON_LEVEL
 
 PROBLEM_LIST = "problem_list.csv"
@@ -141,7 +142,7 @@ def run_census(metadata_dir: Path) -> Census:
         msg = f"no per-problem metadata CSVs found in {metadata_dir}"
         raise FileNotFoundError(msg)
 
-    con = duckdb.connect()
+    con = warehouse.connect_memory()
     paths = [str(path) for path in files]
 
     # The relation API rather than a parameterised CREATE VIEW: DuckDB cannot
