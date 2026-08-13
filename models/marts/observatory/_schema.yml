@@ -19,7 +19,12 @@ models:
     description: >
       Submissions, active users and problems attempted per year. The final year
       is truncated by the collection window and flags itself, so a chart cannot
-      imply a collapse that is really a partial year.
+      imply a collapse that is really a partial year. The participation rate is
+      not bounded by 100: four users of the 55,484 have submissions predating
+      the registration time Codeforces reports for them, which is enough to put
+      2010 at 103.23% on 32 active users against 31 registered by then. The
+      figure is published unclamped, because the inconsistency is in the source
+      and clamping it would hide real signal rather than correct anything.
     columns:
       - name: submitted_year
         tests: [unique, not_null]
@@ -35,6 +40,22 @@ models:
               arguments:
                 min_value: 0
                 max_value: 100
+      - name: registered_by_then
+        description: >
+          Cohort registrations up to and including this year, resolved as-of
+          rather than by an equality join on the year. The join it replaced
+          emitted NULL for any year in which nobody registered, even though the
+          count is well defined for that year; every real year carries
+          registrations, so only the synthetic fixtures ever showed it.
+        tests: [not_null]
+      - name: active_share_pct
+        description: >
+          Active users in the year over registered_by_then. Deliberately NOT
+          range-tested to 100, unlike accepted_pct - see the table description.
+          A NULL here would mean the denominator was zero, which is why the test
+          is not_null rather than a range: that case must fail loudly rather
+          than publish a blank cell.
+        tests: [not_null]
 
   - name: obs_tag_landscape
     description: >

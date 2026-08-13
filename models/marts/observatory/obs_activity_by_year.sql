@@ -51,12 +51,28 @@ registered as (
 
 ),
 
-cumulative as (
+years as (
 
+    select distinct submitted_year from facts
+
+),
+
+by_then as (
+
+    -- AS-OF, NOT an equality join on the year. Joining
+    -- registration_year = submitted_year publishes NULL for any year in which
+    -- nobody in the cohort happened to register, even though the cumulative
+    -- count is perfectly well defined for that year. Every year from 2010
+    -- onward has registrations in the real cohort, so the defect was invisible
+    -- there - and visible only against CI's synthetic fixtures, where both
+    -- columns were NULL on every row while the build reported success.
     select
-        registration_year,
-        sum(users) over (order by registration_year) as registered_by_then
-    from registered
+        years.submitted_year,
+        coalesce(sum(registered.users), 0) as registered_by_then
+    from years
+    left join registered
+        on registered.registration_year <= years.submitted_year
+    group by years.submitted_year
 
 )
 
@@ -72,15 +88,15 @@ select
     ) as accepted_pct,
     count(*) filter (where facts.is_contest) as in_contest,
     facts.submitted_year = latest.final_year as is_partial_year,
-    max(cumulative.registered_by_then) as registered_by_then,
+    max(by_then.registered_by_then) as registered_by_then,
     round(
         100.0 * count(distinct facts.user_key)
-        / nullif(max(cumulative.registered_by_then), 0),
+        / nullif(max(by_then.registered_by_then), 0),
         2
     ) as active_share_pct
 from facts
 cross join latest
-left join cumulative
-    on cumulative.registration_year = facts.submitted_year
+left join by_then
+    on by_then.submitted_year = facts.submitted_year
 group by facts.submitted_year, latest.final_year
 order by facts.submitted_year

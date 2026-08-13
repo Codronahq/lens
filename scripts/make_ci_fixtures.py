@@ -69,6 +69,22 @@ CODECONTESTS_SHA = "802411c3010cb00d1b05bad57ca77365a3c699d6"
 # Invented handles. Deliberately unlike real Codeforces handles.
 HANDLES = ["fixture_alpha", "fixture_beta", "fixture_gamma", "fixture_delta"]
 
+# Registration years are SPREAD ACROSS the submission years on purpose. With all
+# four users registered in one year long before any submission, the observatory's
+# cumulative registered_by_then was constant, so nothing exercised the as-of
+# boundary - and under the equality join it replaced, both that column and
+# active_share_pct were NULL on every fixture row while the build passed. These
+# four dates put one registration inside each submitted year, which makes the
+# cumulative rise, tests that a registration in year Y counts toward year Y, and
+# reproduces in CI the real cohort's case where active users outnumber the
+# registrations recorded by then.
+REGISTRATION_EPOCHS = [
+    1300000000,  # 2011-03-13, before every fixture submission
+    1560000000,  # 2019-06-08
+    1590000000,  # 2020-05-20
+    1620000000,  # 2021-05-03
+]
+
 # (contest_id, index, name, rating, tags). Chosen so no two rows collide when
 # contest_id and index are concatenated without a separator.
 PROBLEMS: list[tuple[int, str, str, int | None, list[str]]] = [
@@ -103,7 +119,7 @@ def _rated_list() -> dict[str, Any]:
                 "lastName": f"User {position}",
                 "contribution": 0,
                 "friendOfCount": position,
-                "registrationTimeSeconds": 1300000000 + position,
+                "registrationTimeSeconds": REGISTRATION_EPOCHS[position],
                 "lastOnlineTimeSeconds": 1700000000 + position,
                 "avatar": "https://example.invalid/avatar.png",
                 "titlePhoto": "https://example.invalid/photo.png",

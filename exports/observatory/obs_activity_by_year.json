@@ -1,6 +1,6 @@
 {
   "table": "obs_activity_by_year",
-  "caveat": "Submissions, active users and problems attempted per year. The final year is truncated by the collection window and flags itself, so a chart cannot imply a collapse that is really a partial year.",
+  "caveat": "Submissions, active users and problems attempted per year. The final year is truncated by the collection window and flags itself, so a chart cannot imply a collapse that is really a partial year. The participation rate is not bounded by 100: four users of the 55,484 have submissions predating the registration time Codeforces reports for them, which is enough to put 2010 at 103.23% on 32 active users against 31 registered by then. The figure is published unclamped, because the inconsistency is in the source and clamping it would hide real signal rather than correct anything.",
   "columns": [
     "submitted_year",
     "submissions",
