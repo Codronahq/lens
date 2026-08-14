@@ -19,12 +19,19 @@ repos:
         language: system
         types_or: [python, pyi, jupyter]
 
+      # pyproject is in types_or because a commit touching only pyproject.toml
+      # otherwise skips both of these entirely - and that file holds the
+      # dependency pins as well as the ruff, mypy and pytest configuration, so
+      # it is the file where "no Python changed" is least true. types_or and
+      # files are ANDed, not ORed, so the tag is the mechanism rather than a
+      # regex. identify emits a dedicated `pyproject` tag; `toml` would be
+      # wider than intended and `yaml` would pull in all nineteen .yml files.
       - id: mypy
         name: mypy (src scripts tests)
         entry: .venv/bin/mypy
         args: [src, scripts, tests]
         language: system
-        types_or: [python, pyi]
+        types_or: [python, pyi, pyproject]
         pass_filenames: false
 
       - id: pytest
@@ -32,7 +39,7 @@ repos:
         entry: .venv/bin/pytest
         args: [-q]
         language: system
-        types_or: [python, pyi]
+        types_or: [python, pyi, pyproject]
         pass_filenames: false
 
       - id: dbt-parse
