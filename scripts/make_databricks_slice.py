@@ -7,13 +7,23 @@ for the rest of the day. The notebook's purpose - recomputing the observatory
 aggregates on a third engine and comparing them to the committed export - needs
 the fact columns those aggregates read and nothing else.
 
-That turns out to be almost free. Six columns, one of them constant within a
-year, two dense small integers and three booleans, compress to roughly 2.2 bytes
-per row under parquet encoding plus zstd: 7.4M rows land in 15.7 MiB against a
-scaled-from-silver estimate of 380 MB, because silver carries 22 columns
+That turns out to be cheap. Six columns - one constant within a year, two dense
+small integers and three booleans - compress under parquet plus zstd to
+36,512,435 B for all 23,607,105 rows, about 1.55 bytes each, against a
+scaled-from-silver estimate of 380 MB because silver carries 22 columns
 including handles, verdicts and timestamps. So the default is the whole corpus
 rather than one year, and every row of obs_activity_by_year can be reproduced
 instead of one.
+
+THE FACT SLICE IS ORDERED, AND THE REASON IS SIZE, NOT REPRODUCIBILITY. Sorting
+on the output columns lets zstd exploit runs across six low-cardinality fields.
+Measured on the real warehouse, the same rows write 63,045,032 B unordered
+against 36,512,435 B ordered - 42% smaller, and 0.4s faster, because the two
+dense_rank windows have already sorted the data. That matters because the
+destination is a quota-limited Databricks Free workspace. Byte-reproducibility
+is a side effect rather than the motive: nothing in this repo consumes a
+checksum of this file, and a parquet md5 would move on a DuckDB or zstd upgrade
+without the data changing at all.
 
 SINGLE-YEAR MODE REFUSES A PARTIAL YEAR; ALL-YEARS MODE DOES NOT. Collection ran
 2026-08-06 to 2026-08-09, so 2026 is right-truncated and its counts are an
@@ -110,6 +120,9 @@ def write_fact_slice(
                 is_contest
             from main_marts.fct_submission
             {predicate}
+            order by
+                submitted_year, is_person_level, is_accepted,
+                is_contest, user_ref, problem_ref
         ) to '{path}' (format parquet, compression zstd)
         """
     )
