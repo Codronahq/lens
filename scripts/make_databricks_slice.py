@@ -60,6 +60,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 from __future__ import annotations
 
 import argparse
+import os
 import pathlib
 import sys
 from typing import Any
@@ -72,6 +73,19 @@ DEFAULT_YEAR = 2025
 
 
 def default_out() -> pathlib.Path:
+    """Resolve the export directory from the environment, falling back to $HOME.
+
+    CODRONA_EXPORTS wins, mirroring warehouse.default_database. The fallback is
+    a convenience for an interactive shell on the machine that built the
+    warehouse and is wrong everywhere else, because $HOME in a container is the
+    image's service user. No DAG calls this script today, so this is latent
+    rather than live - but the warehouse path had the identical shape and only
+    became visible when the exporter ran inside the Airflow image and found a
+    home directory holding nothing.
+    """
+    from_env = os.environ.get("CODRONA_EXPORTS")
+    if from_env:
+        return pathlib.Path(from_env).expanduser()
     return pathlib.Path.home() / "codrona-data" / "exports" / "databricks"
 
 
