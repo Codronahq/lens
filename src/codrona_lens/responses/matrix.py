@@ -37,8 +37,9 @@ Stage A draws difficulty from a prior on ``problem_rating`` and
 rating removed as a factor, ``ln(solved_count)`` still correlates with contest
 id at 0.4444 in 1200-1599 and 0.4353 in 1600-1999, and the sign crosses zero
 between rating 2700 and 2800. Contest id is a near-perfect stand-in for
-publication order - it agrees with the earliest observed submission at 0.988 -
-so the covariate carries release date as well as difficulty. Whether that is
+publication order - it agrees with the earliest observed submission at 0.9882
+- so the covariate carries release date as well as difficulty. Derivation and
+reproduction in docs/analysis/solved-count-and-release-date.md. Whether that is
 contamination or genuine drift in Codeforces' own calibration is a question only
 the fitted difficulty can answer, and it cannot be asked at all unless the
 artefact carries the date. It is carried, never filtered on: §14 makes the
