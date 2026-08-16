@@ -1,6 +1,60 @@
 {
   "artefact": "responses.parquet",
-  "note": "Counts describing responses.parquet, which is 235 MB and lives under ~/codrona-data/ rather than in the repository. This file is the committed half: it is what a reviewer can read and what --verify-current compares a fresh build against. No timestamp, because a wall-clock field would make every regeneration a diff and destroy the one property a committed artefact has - that regenerating it and finding no change means nothing moved.",
+  "note": "Counts and shape describing responses.parquet, which is hundreds of megabytes and lives under ~/codrona-data/ rather than in the repository. This file is the committed half: it is what a reviewer can read and what --verify-current compares a fresh build against. The schema block exists because counts alone cannot fail on a column added, dropped, renamed, retyped or reordered - every count stays identical through all five. No timestamp and no byte size, because a field that moves on its own would make every regeneration a diff and destroy the one property a committed artefact has - that regenerating it and finding no change means nothing moved.",
+  "schema": [
+    {
+      "name": "user_key",
+      "type": "VARCHAR"
+    },
+    {
+      "name": "problem_key",
+      "type": "VARCHAR"
+    },
+    {
+      "name": "source_problem_key",
+      "type": "VARCHAR"
+    },
+    {
+      "name": "submission_key",
+      "type": "BIGINT"
+    },
+    {
+      "name": "is_accepted",
+      "type": "BOOLEAN"
+    },
+    {
+      "name": "participant_type",
+      "type": "VARCHAR"
+    },
+    {
+      "name": "submitted_at",
+      "type": "TIMESTAMP"
+    },
+    {
+      "name": "attempts",
+      "type": "BIGINT"
+    },
+    {
+      "name": "ever_accepted",
+      "type": "BOOLEAN"
+    },
+    {
+      "name": "in_public_problemset",
+      "type": "BOOLEAN"
+    },
+    {
+      "name": "problem_rating",
+      "type": "INTEGER"
+    },
+    {
+      "name": "solved_count",
+      "type": "BIGINT"
+    },
+    {
+      "name": "problem_contest_id",
+      "type": "INTEGER"
+    }
+  ],
   "counts": {
     "fact_rows": 23607105,
     "distinct_submission_keys": 23607105,

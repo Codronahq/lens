@@ -31,14 +31,38 @@ count while attempts stay identical. A remap that relabels without collapsing
 first attempts passes the attempt assertion and fails the response one; a remap
 that drops rows does the reverse. Neither is caught by either count alone.
 
+``problem_contest_id`` IS CARRIED BECAUSE THE DIFFICULTY PRIOR NEEDS AUDITING.
+Stage A draws difficulty from a prior on ``problem_rating`` and
+``log(solved_count)``. Measured 16 Aug 2026 over the 11,764-problem bank, with
+rating removed as a factor, ``ln(solved_count)`` still correlates with contest
+id at 0.4444 in 1200-1599 and 0.4353 in 1600-1999, and the sign crosses zero
+between rating 2700 and 2800. Contest id is a near-perfect stand-in for
+publication order - it agrees with the earliest observed submission at 0.988 -
+so the covariate carries release date as well as difficulty. Whether that is
+contamination or genuine drift in Codeforces' own calibration is a question only
+the fitted difficulty can answer, and it cannot be asked at all unless the
+artefact carries the date. It is carried, never filtered on: §14 makes the
+artefact the boundary between repos, so a consumer that had to join
+``dim_problem`` at fit time would be reading the warehouse from outside ``lens``.
+
 THE MATRIX IS NOT BANK-FILTERED. ``in_public_problemset`` is a modelling scope
 applied by Stage A, not a property of the response unit, and it is carried as a
 column so the filter happens where it is decided. Filtering here would bake a
 Stage A choice into the artefact every later stage reads.
 
+THERE ARE THREE ARTEFACTS AND TWO LINKS BETWEEN THEM. The warehouse, the
+committed manifest, and the Parquet Stage A reads. ``--verify-current`` rebuilds
+from the warehouse and closes both links in one pass, at the cost of a full scan;
+it is the maintainer command, run before a fit and before a release.
+``--verify-artefact`` closes only the manifest-to-Parquet link, from the Parquet
+footer and a JSON file, with no warehouse and no scan - cheap enough to hook.
+Neither subsumes the other and running one is not running the other.
+
 Run it:
 
     python3 -m codrona_lens.responses.matrix --real-data
+    python3 -m codrona_lens.responses.matrix --verify-current
+    python3 -m codrona_lens.responses.matrix --verify-artefact
     python3 -m codrona_lens.responses.matrix --database target/ci.duckdb \\
         --out target/responses.parquet
 
@@ -131,7 +155,8 @@ select ranked.user_key,
        ranked.ever_ok = 1 as ever_accepted,
        problems.in_public_problemset,
        problems.problem_rating,
-       problems.solved_count
+       problems.solved_count,
+       problems.problem_contest_id
 from ranked
 join {schema}.dim_problem as problems
   on problems.problem_key = ranked.problem_key
@@ -154,6 +179,11 @@ class BuildReport:
     twin: twins.TwinMap
     bank_responses: int
     bank_accepted: int
+    # (name, DuckDB type) in emission order, read back from the engine rather
+    # than restated here, so the manifest describes what the query produced and
+    # not what somebody believed it produced. No default: an empty schema in a
+    # manifest is a gate that cannot fail, and a default is how one gets there.
+    columns: tuple[tuple[str, str], ...]
 
     @property
     def collapsed(self) -> int:
@@ -200,6 +230,10 @@ def build(
     )
 
     con.execute(f"create or replace temp view response_matrix as {responses}")
+    columns = tuple(
+        (str(row[0]), str(row[1]))
+        for row in con.execute("describe select * from response_matrix").fetchall()
+    )
     merged = _scalar(con, "select count(*) from response_matrix")
     merged_attempts = _scalar(con, "select sum(attempts) from response_matrix")
     # Absent keys carrying at least one evidence row - NOT keys supplying a
@@ -238,6 +272,7 @@ def build(
         twin=twin,
         bank_responses=bank_responses,
         bank_accepted=bank_accepted,
+        columns=columns,
     )
 
 
@@ -308,12 +343,16 @@ def check_real_data(report: BuildReport) -> list[str]:
 
 
 MANIFEST_NOTE = (
-    "Counts describing responses.parquet, which is 235 MB and lives under "
-    "~/codrona-data/ rather than in the repository. This file is the committed "
-    "half: it is what a reviewer can read and what --verify-current compares a "
-    "fresh build against. No timestamp, because a wall-clock field would make "
-    "every regeneration a diff and destroy the one property a committed artefact "
-    "has - that regenerating it and finding no change means nothing moved."
+    "Counts and shape describing responses.parquet, which is hundreds of "
+    "megabytes and lives under ~/codrona-data/ rather than in the repository. "
+    "This file is the committed half: it is what a reviewer can read and what "
+    "--verify-current compares a fresh build against. The schema block exists "
+    "because counts alone cannot fail on a column added, dropped, renamed, "
+    "retyped or reordered - every count stays identical through all five. No "
+    "timestamp and no byte size, because a field that moves on its own would "
+    "make every regeneration a diff and destroy the one property a committed "
+    "artefact has - that regenerating it and finding no change means nothing "
+    "moved."
 )
 
 
@@ -327,6 +366,7 @@ def build_manifest(report: BuildReport) -> dict[str, Any]:
     return {
         "artefact": "responses.parquet",
         "note": MANIFEST_NOTE,
+        "schema": [{"name": name, "type": kind} for name, kind in report.columns],
         "counts": {
             "fact_rows": report.fact_rows,
             "distinct_submission_keys": report.distinct_submission_keys,
@@ -368,13 +408,63 @@ def write_manifest(report: BuildReport, path: pathlib.Path) -> None:
     path.write_text(payload + "\n", encoding="utf-8")
 
 
-def compare_manifest(report: BuildReport, path: pathlib.Path) -> list[str]:
-    """Report every count where a fresh build disagrees with the committed file.
+def manifest_schema(manifest: dict[str, Any]) -> list[tuple[str, str]]:
+    """The schema block as ordered pairs. Absent reads as absent, not as empty."""
+    block = manifest.get("schema")
+    if not isinstance(block, list):
+        return []
+    return [(str(entry["name"]), str(entry["type"])) for entry in block]
 
-    THIS IS THE GATE G12 DOES NOT PROVIDE. G12 checks the build; it says nothing
-    about the file already on disk. Rebuild fct_submission, forget to regenerate,
-    and Stage A fits a stale matrix while every test stays green - the exact
-    failure the observatory export's --verify-current exists for.
+
+def compare_schema(
+    expected: list[tuple[str, str]],
+    actual: list[tuple[str, str]],
+    *,
+    expected_label: str,
+    actual_label: str,
+) -> list[str]:
+    """Name the difference rather than print two lists and leave it to a reader.
+
+    Order is compared, not just membership. A reordering leaves every count
+    identical and every column present, and it is the one shape change a reader
+    scanning a diff is most likely to wave through.
+    """
+    if expected == actual:
+        return []
+    if not expected:
+        return [f"{expected_label} carries no schema block - regenerate the manifest"]
+    problems: list[str] = []
+    expected_types = dict(expected)
+    actual_types = dict(actual)
+    for name in expected_types:
+        if name not in actual_types:
+            problems.append(f"column {name}: in {expected_label}, absent from {actual_label}")
+    for name in actual_types:
+        if name not in expected_types:
+            problems.append(f"column {name}: in {actual_label}, absent from {expected_label}")
+    for name, kind in expected_types.items():
+        other = actual_types.get(name)
+        if other is not None and other != kind:
+            problems.append(f"column {name} type: {expected_label} {kind}, {actual_label} {other}")
+    if not problems:
+        problems.append(
+            f"column ORDER differs: {expected_label} "
+            f"{[name for name, _ in expected]}, {actual_label} "
+            f"{[name for name, _ in actual]}"
+        )
+    return problems
+
+
+def compare_manifest(report: BuildReport, path: pathlib.Path) -> list[str]:
+    """Report every count or column where a fresh build disagrees with the file.
+
+    THIS CLOSES ONE LINK AND NOT THE OTHER, WHICH IS WHY ``verify_artefact``
+    EXISTS BESIDE IT. There are three things in play - the warehouse, the
+    committed manifest, and the Parquet Stage A actually reads - and this
+    function compares the first two. It never opens the artefact. So a build
+    whose write failed, or an artefact deleted, truncated or produced by some
+    other code path, passes here with nothing to show for it. The docstring this
+    replaces claimed to catch that and could not.
 
     IT IS DELIBERATELY NOT A PRE-COMMIT HOOK. Regenerating the observatory means
     five small aggregates; this means a full scan of 23.6 million fact rows with
@@ -392,6 +482,62 @@ def compare_manifest(report: BuildReport, path: pathlib.Path) -> list[str]:
             was = committed.get(section, {}).get(name)
             if was != value:
                 problems.append(f"{section}.{name}: committed {was}, measured {value}")
+    problems += compare_schema(
+        manifest_schema(committed),
+        manifest_schema(fresh),
+        expected_label="committed",
+        actual_label="measured",
+    )
+    return problems
+
+
+def read_artefact(path: pathlib.Path) -> tuple[int, list[tuple[str, str]]]:
+    """Row count and schema of a Parquet file, from its footer.
+
+    Both come out of Parquet metadata rather than a scan, which is what makes
+    this cheap enough to run as a hook while the warehouse rebuild - a full pass
+    over 23.6 million fact rows with two window functions - stays a maintainer
+    command. ``connect_memory`` rather than ``duckdb.connect`` because G10's
+    structural test forbids a second route into DuckDB anywhere under ``src``.
+    """
+    con = warehouse.connect_memory()
+    try:
+        row = con.execute("select count(*) from read_parquet(?)", [str(path)]).fetchone()
+        if row is None or row[0] is None:
+            raise SystemExit(f"could not count rows in {path}")
+        described = con.execute("describe select * from read_parquet(?)", [str(path)]).fetchall()
+    finally:
+        con.close()
+    return int(row[0]), [(str(entry[0]), str(entry[1])) for entry in described]
+
+
+def verify_artefact(path: pathlib.Path, manifest: dict[str, Any]) -> list[str]:
+    """Compare the Parquet on disk against a manifest describing it.
+
+    THIS IS THE LINK ``compare_manifest`` CANNOT SEE. It takes a manifest dict
+    rather than a path so the same code serves both callers: ``--verify-artefact``
+    feeds it the committed file, which is the cheap check a contributor can run,
+    and ``--verify-current`` feeds it a manifest built fresh from the warehouse,
+    which closes warehouse -> manifest -> artefact at both links in one command.
+
+    A missing artefact is NOT decided here. It is a legitimate state on a
+    machine that never built one and a failure on the machine about to fit, and
+    only the caller knows which it is - so this raises the question upward
+    rather than resolving it into a pass.
+    """
+    if not path.exists():
+        return [f"{path}: artefact absent"]
+    rows, columns = read_artefact(path)
+    expected_rows = manifest.get("counts", {}).get("merged_responses")
+    problems: list[str] = []
+    if expected_rows != rows:
+        problems.append(f"artefact rows: manifest {expected_rows}, file {rows}")
+    problems += compare_schema(
+        manifest_schema(manifest),
+        columns,
+        expected_label="manifest",
+        actual_label="artefact",
+    )
     return problems
 
 
@@ -432,10 +578,42 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="do not write; fail if a fresh build disagrees with the manifest",
     )
+    parser.add_argument(
+        "--verify-artefact",
+        action="store_true",
+        help="compare the artefact on disk to the committed manifest; no warehouse",
+    )
     args = parser.parse_args(argv)
 
     database = args.database or warehouse.default_database()
     manifest_path = args.manifest or default_manifest()
+    artefact_path = args.out or default_out()
+
+    if args.verify_artefact:
+        # Reads Parquet metadata and a JSON file. No warehouse, no scan - this
+        # is the half that is cheap enough to hook. A machine with no artefact
+        # skips out loud: the file is uncommitted by design, so failing here
+        # would fail every contributor for a condition none of them can fix.
+        if not artefact_path.exists():
+            print(f"no artefact at {artefact_path} - artefact NOT verified")
+            return 0
+        if not manifest_path.exists():
+            print(f"no manifest at {manifest_path}", file=sys.stderr)
+            return 1
+        committed: Any = json.loads(manifest_path.read_text(encoding="utf-8"))
+        problems = verify_artefact(artefact_path, committed)
+        if problems:
+            print(f"{len(problems)} disagreement(s) with {manifest_path}:", file=sys.stderr)
+            for problem in problems:
+                print(f"  {problem}", file=sys.stderr)
+            print(
+                "run: python3 -m codrona_lens.responses.matrix --real-data",
+                file=sys.stderr,
+            )
+            return 1
+        print(f"artefact matches the committed manifest: {artefact_path}")
+        return 0
+
     if args.verify_current and not database.exists():
         # A contributor without the warehouse genuinely cannot regenerate this,
         # so blocking them would be wrong. Said out loud rather than passing
@@ -465,6 +643,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"bank responses       {report.bank_responses:>12,}")
     print(f"bank base rate       {rate:>12.4f}%")
     print(f"bank baseline Brier  {rate / 100 * (1 - rate / 100):>12.6f}")
+    print(f"artefact columns     {len(report.columns):>12,}")
     print("\nexcluded by the committed twin rule, counted not dropped:")
     for line in report.twin.audit.describe():
         print(f"  {line}")
@@ -475,8 +654,14 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.verify_current:
         stale = compare_manifest(report, manifest_path)
+        # The artefact is compared to the FRESH build, not to the committed
+        # manifest, so this command answers the question a fit actually asks:
+        # is the file I am about to read current with the warehouse? An absent
+        # artefact fails here and skips under --verify-artefact, because this is
+        # the command run before a fit and there is then nothing to fit.
+        stale += verify_artefact(artefact_path, build_manifest(report))
         if stale:
-            print(f"\n{len(stale)} count(s) stale in {manifest_path}:", file=sys.stderr)
+            print(f"\n{len(stale)} disagreement(s) against the warehouse:", file=sys.stderr)
             for line in stale:
                 print(f"  {line}", file=sys.stderr)
             print(
@@ -484,7 +669,7 @@ def main(argv: list[str] | None = None) -> int:
                 file=sys.stderr,
             )
             return 1
-        print(f"\nmanifest is current with the warehouse: {manifest_path}")
+        print(f"\nmanifest and artefact are current with the warehouse: {artefact_path}")
         return 0
 
     problems = check_invariants(report)

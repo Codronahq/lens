@@ -199,6 +199,7 @@ def _base_report() -> matrix.BuildReport:
         twin=twin,
         bank_responses=3,
         bank_accepted=2,
+        columns=(("user_key", "VARCHAR"), ("problem_key", "VARCHAR")),
     )
 
 
@@ -303,6 +304,155 @@ def test_a_missing_manifest_is_reported_not_silently_passed(
     stale = matrix.compare_manifest(report, tmp_path / "absent.json")
     assert len(stale) == 1
     assert "no committed manifest" in stale[0]
+
+
+def test_the_matrix_carries_the_contest_id_covariate(tmp_path: pathlib.Path) -> None:
+    """Read from the artefact, not from the SQL string.
+
+    Asserting the column name appears in ``matrix._RESPONSES`` would pass on a
+    query that no longer runs. This reads the value back for a known fixture
+    problem, so deleting the projection goes red.
+    """
+    out = tmp_path / "responses.parquet"
+    con = _warehouse(tmp_path / "w.duckdb")
+    try:
+        matrix.build(con, out)
+    finally:
+        con.close()
+    reader = duckdb.connect()
+    sql = "select user_key, problem_key, problem_contest_id from read_parquet(?)"
+    rows = reader.execute(sql, [str(out)]).fetchall()
+    assert ("u3", "200B", 200) in rows
+
+
+def test_the_manifest_records_the_schema_the_build_emitted(
+    tmp_path: pathlib.Path,
+) -> None:
+    report = _report(tmp_path)
+    payload = matrix.build_manifest(report)
+    recorded = [(entry["name"], entry["type"]) for entry in payload["schema"]]
+    assert recorded == list(report.columns)
+    assert ("problem_contest_id", "INTEGER") in recorded
+    # The point of the block: it is the only thing that moves when a column does.
+    assert payload["counts"]["merged_responses"] == report.merged_responses
+
+
+@pytest.mark.parametrize(
+    ("mutation", "expected"),
+    [
+        ("drop", "absent from measured"),
+        ("add", "absent from committed"),
+        ("retype", "type: committed"),
+        ("reorder", "column ORDER differs"),
+    ],
+)
+def test_compare_manifest_catches_every_shape_change(
+    tmp_path: pathlib.Path, mutation: str, expected: str
+) -> None:
+    """Four mutations no count can see. Each must go red on its own.
+
+    A column added, dropped, renamed, retyped or reordered leaves every count in
+    the manifest identical, which is precisely why the schema block exists.
+    """
+    report = _report(tmp_path)
+    path = tmp_path / "responses.manifest.json"
+    matrix.write_manifest(report, path)
+    assert matrix.compare_manifest(report, path) == []
+
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    schema = payload["schema"]
+    if mutation == "drop":
+        schema.append({"name": "invented", "type": "VARCHAR"})
+    elif mutation == "add":
+        schema.pop()
+    elif mutation == "retype":
+        schema[0]["type"] = "BLOB"
+    else:
+        schema[0], schema[1] = schema[1], schema[0]
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    problems = matrix.compare_manifest(report, path)
+    assert any(expected in line for line in problems), problems
+
+
+def test_a_manifest_with_no_schema_block_is_reported(tmp_path: pathlib.Path) -> None:
+    """An older manifest must fail loudly rather than compare vacuously."""
+    report = _report(tmp_path)
+    path = tmp_path / "responses.manifest.json"
+    matrix.write_manifest(report, path)
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    del payload["schema"]
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    problems = matrix.compare_manifest(report, path)
+    assert any("carries no schema block" in line for line in problems), problems
+
+
+def _built(tmp_path: pathlib.Path) -> tuple[pathlib.Path, dict[str, Any]]:
+    out = tmp_path / "responses.parquet"
+    con = _warehouse(tmp_path / "w.duckdb")
+    try:
+        report = matrix.build(con, out)
+    finally:
+        con.close()
+    return out, matrix.build_manifest(report)
+
+
+def _rewrite(out: pathlib.Path, tmp_path: pathlib.Path, projection: str) -> None:
+    """Replace the artefact through a sibling, never in place.
+
+    A COPY that reads and writes one path is a race the engine is not obliged
+    to lose predictably, and a flaky mutation test is worse than none.
+    """
+    staged = tmp_path / "staged.parquet"
+    writer = duckdb.connect()
+    query = projection.format(src=out)
+    writer.execute(f"copy ({query}) to '{staged}' (format parquet)")
+    writer.close()
+    staged.replace(out)
+
+
+def test_verify_artefact_passes_on_the_file_the_build_wrote(
+    tmp_path: pathlib.Path,
+) -> None:
+    out, manifest = _built(tmp_path)
+    assert matrix.verify_artefact(out, manifest) == []
+
+
+def test_verify_artefact_reads_the_file_and_not_the_manifest(
+    tmp_path: pathlib.Path,
+) -> None:
+    """The anti-vacuity test: the manifest is untouched and the FILE changes.
+
+    Every other check here mutates the manifest, so all of them would still pass
+    against a verify_artefact that returned an empty list without opening
+    anything. This one rewrites the Parquet with a row removed and leaves the
+    manifest exactly as the build wrote it, so it can only pass by reading the
+    file.
+    """
+    out, manifest = _built(tmp_path)
+    _rewrite(out, tmp_path, "select * from read_parquet('{src}') limit 2")
+    problems = matrix.verify_artefact(out, manifest)
+    assert any("artefact rows" in line for line in problems), problems
+
+
+def test_verify_artefact_catches_a_column_missing_from_the_file(
+    tmp_path: pathlib.Path,
+) -> None:
+    """Rewrite the FILE without a column. Row count is unchanged throughout."""
+    out, manifest = _built(tmp_path)
+    projection = "select * exclude (problem_contest_id) from read_parquet('{src}')"
+    _rewrite(out, tmp_path, projection)
+    problems = matrix.verify_artefact(out, manifest)
+    assert any("problem_contest_id" in line for line in problems), problems
+    assert not any("artefact rows" in line for line in problems), problems
+
+
+def test_verify_artefact_reports_an_absent_file_rather_than_passing(
+    tmp_path: pathlib.Path,
+) -> None:
+    _, manifest = _built(tmp_path)
+    problems = matrix.verify_artefact(tmp_path / "gone.parquet", manifest)
+    assert len(problems) == 1
+    assert "artefact absent" in problems[0]
 
 
 def test_the_derived_rates_come_from_the_counts_beside_them(
