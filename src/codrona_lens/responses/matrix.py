@@ -316,6 +316,30 @@ def check_invariants(report: BuildReport) -> list[str]:
             f"rating clause now excludes pairs: {report.twin.gap_matches} gap-1 "
             f"name matches, {report.twin.qualifying} qualifying."
         )
+    audit = report.twin.audit
+    classes = (
+        audit.reversed_rating_agree
+        + audit.reversed_both_unrated
+        + audit.reversed_exactly_one_unrated
+        + audit.reversed_rating_differs
+    )
+    if classes != audit.reversed_name_matches:
+        problems.append(
+            f"reversed rating classes sum to {classes} against "
+            f"{audit.reversed_name_matches} name matches. Every pair falls in "
+            "exactly one class, so a gap means a class is not being counted."
+        )
+    passing = (
+        audit.reversed_rating_agree
+        + audit.reversed_both_unrated
+        + audit.reversed_exactly_one_unrated
+    )
+    if passing != len(audit.reversed_pairs):
+        problems.append(
+            f"{len(audit.reversed_pairs)} reversed pairs pass the rating clause "
+            f"but its three admitting classes hold {passing}. The clause and the "
+            "classes have stopped describing the same rule."
+        )
     return problems
 
 
@@ -392,6 +416,10 @@ def build_manifest(report: BuildReport) -> dict[str, Any]:
         "twin_excluded": {
             "reversed_name_matches": report.twin.audit.reversed_name_matches,
             "reversed_passing_rating": len(report.twin.audit.reversed_pairs),
+            "reversed_rating_agree": report.twin.audit.reversed_rating_agree,
+            "reversed_both_unrated": report.twin.audit.reversed_both_unrated,
+            "reversed_exactly_one_unrated": report.twin.audit.reversed_exactly_one_unrated,
+            "reversed_rating_differs": report.twin.audit.reversed_rating_differs,
             "both_published": len(report.twin.audit.both_published),
             "both_published_passing_rating": len(report.twin.audit.both_published_passing_rating),
             "gym_pairs": report.twin.audit.gym_pairs,

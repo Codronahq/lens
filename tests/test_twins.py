@@ -7,10 +7,16 @@ against a symmetric implementation and silently stop testing the rule that
 produced the pinned yield.
 
 THE RATING CLAUSE IS THE QUERY'S, NOT THE PROSE'S. The committed SQL admits a
-pair where EITHER side is unrated; the prose says "neither side is rated". No
-gap-1 pair has exactly one side rated, so the two agree today - and
-``test_exactly_one_side_unrated_is_admitted`` pins which of them the code
-implements, so the day that stops being vacuous it is a visible decision.
+pair where EITHER side is unrated; the prose says "neither side is rated". They
+agree in the rule's own scope, where no gap-1 absent-versus-present pair has
+exactly one side rated - and ``test_exactly_one_side_unrated_is_admitted`` pins
+which of them the code implements, so the day that stops being vacuous it is a
+visible decision. THEY DO NOT AGREE IN THE REVERSED POPULATION: six of the real
+74 name matches have exactly one side rated and all six sit inside the pinned
+43, so the audit carries the class split and
+``test_a_reversed_pair_with_one_side_unrated_is_admitted_and_classed`` keeps that
+path reachable. This docstring claimed the two rules agreed everywhere until
+16 Aug 2026.
 
 THE RAISING TEST NEEDS TWO PUBLISHED PROBLEMS IN ONE CONTEST. Under a directional
 rule an absent key can only draw several partners when one contest publishes the
@@ -148,6 +154,87 @@ def test_a_reversed_pair_failing_the_rating_clause_is_name_matched_only() -> Non
     twin = twins.derive(_warehouse(rows))
     assert twin.audit.reversed_name_matches == 1
     assert twin.audit.reversed_pairs == ()
+
+
+def test_a_reversed_pair_with_one_side_unrated_is_admitted_and_classed() -> None:
+    """The case the real data has six of, and the two documented rules disagree on.
+
+    Under the query's clause this pair passes; under the prose rule - "ratings
+    agree, or neither side is rated" - it does not. In the canonical direction
+    the distinction is vacuous, which is why it went unnoticed. Here it decides
+    whether the pinned reversed count is 43 or 37.
+    """
+    rows: list[ProblemRow] = [
+        *BASE,
+        ("500E", 500, "Epsilon", None, False),
+        ("501E", 501, "Epsilon", 1700, True),
+    ]
+    twin = twins.derive(_warehouse(rows))
+    assert twin.audit.reversed_pairs == (("500E", "501E"),)
+    assert twin.audit.reversed_exactly_one_unrated == 1
+    assert twin.audit.reversed_rating_agree == 0
+    assert twin.audit.reversed_both_unrated == 0
+
+
+def test_reversed_rating_classes_partition_the_name_matches() -> None:
+    """Every reversed pair lands in exactly one class, and the classes reconcile.
+
+    Four pairs, one per class, so no class is exercised only by its absence -
+    a fixture where three classes are empty would pass against an
+    implementation that never populated them.
+    """
+    rows: list[ProblemRow] = [
+        *BASE,
+        ("500E", 500, "Epsilon", 1700, False),
+        ("501E", 501, "Epsilon", 1700, True),
+        ("600F", 600, "Zeta", None, False),
+        ("601F", 601, "Zeta", None, True),
+        ("700G", 700, "Eta", None, False),
+        ("701G", 701, "Eta", 1500, True),
+        ("800H", 800, "Theta", 1200, False),
+        ("801H", 801, "Theta", 2900, True),
+    ]
+    audit = twins.derive(_warehouse(rows)).audit
+    assert audit.reversed_name_matches == 4
+    assert audit.reversed_rating_agree == 1
+    assert audit.reversed_both_unrated == 1
+    assert audit.reversed_exactly_one_unrated == 1
+    assert audit.reversed_rating_differs == 1
+    classes = (
+        audit.reversed_rating_agree
+        + audit.reversed_both_unrated
+        + audit.reversed_exactly_one_unrated
+        + audit.reversed_rating_differs
+    )
+    assert classes == audit.reversed_name_matches
+    assert len(audit.reversed_pairs) == classes - audit.reversed_rating_differs
+
+
+def test_describe_reports_the_class_split_not_only_the_total() -> None:
+    """The CLI report is what a maintainer reads before a fit.
+
+    Without this the split is carried on the dataclass and never surfaces, so
+    43 still reconciles to neither documented rule for anyone reading output
+    rather than JSON.
+
+    EVERY COUNT IS DISTINCT ON PURPOSE. A first version of this test used a
+    fixture where the agreeing count was zero, so replacing the field with a
+    literal zero produced a byte-identical line and the mutation survived. Equal
+    values would likewise hide a swapped pair of fields.
+    """
+    audit = twins.TwinAudit(
+        reversed_name_matches=11,
+        reversed_rating_agree=2,
+        reversed_both_unrated=3,
+        reversed_exactly_one_unrated=4,
+        reversed_rating_differs=2,
+        reversed_pairs=(("500E", "501E"),),
+    )
+    split = [line for line in audit.describe() if "of those passing" in line]
+    assert len(split) == 1, audit.describe()
+    assert "2 agreeing" in split[0]
+    assert "3 neither rated" in split[0]
+    assert "4 exactly one rated" in split[0]
 
 
 def test_both_published_is_audited_and_split_by_rating() -> None:

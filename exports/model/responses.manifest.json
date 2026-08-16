@@ -79,6 +79,10 @@
   "twin_excluded": {
     "reversed_name_matches": 74,
     "reversed_passing_rating": 43,
+    "reversed_rating_agree": 37,
+    "reversed_both_unrated": 0,
+    "reversed_exactly_one_unrated": 6,
+    "reversed_rating_differs": 31,
     "both_published": 4,
     "both_published_passing_rating": 1,
     "gym_pairs": 606

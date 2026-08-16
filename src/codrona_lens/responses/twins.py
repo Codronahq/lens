@@ -128,6 +128,14 @@ class TwinAudit:
 
     reversed_pairs: tuple[Pair, ...] = ()
     reversed_name_matches: int = 0
+    # The rating classes behind reversed_pairs. Carried because the clause the
+    # query applies is wider than the prose rule, and in THIS population the
+    # difference is not vacuous: the total is agreeing plus half-rated, so
+    # without the split the count reconciles to neither documented rule.
+    reversed_rating_agree: int = 0
+    reversed_both_unrated: int = 0
+    reversed_exactly_one_unrated: int = 0
+    reversed_rating_differs: int = 0
     both_published: tuple[Pair, ...] = ()
     both_published_passing_rating: tuple[Pair, ...] = ()
     gym_pairs: int = 0
@@ -137,6 +145,9 @@ class TwinAudit:
             f"reversed direction (published side higher): "
             f"{self.reversed_name_matches} name matches, "
             f"{len(self.reversed_pairs)} passing the rating clause",
+            f"  of those passing: {self.reversed_rating_agree} agreeing, "
+            f"{self.reversed_both_unrated} neither rated, "
+            f"{self.reversed_exactly_one_unrated} exactly one rated",
             f"both sides published at gap 1: {len(self.both_published)}"
             f", of which {len(self.both_published_passing_rating)} pass the"
             " rating clause",
@@ -177,9 +188,16 @@ def _passes_rating(left: int | None, right: int | None) -> bool:
     """The committed query's clause: equal, or either side unrated.
 
     Wider than the prose, which says "ratings agree, or neither side is rated".
-    Measured, the difference is vacuous - no gap-1 pair has exactly one side
-    rated - and ``exactly_one_unrated`` is carried so that stops being true
-    loudly rather than silently.
+    THE DIFFERENCE IS VACUOUS IN THE RULE'S OWN SCOPE AND NOT IN THE AUDIT'S.
+    No gap-1 absent-versus-present pair has exactly one side rated - that is
+    ``exactly_one_unrated``, measured as zero and asserted by G12. The reversed
+    population is the mirror image: zero pairs with neither side rated and
+    **six** with exactly one, all six inside the pinned 43. So the pinned
+    ``twin_reversed_pairs`` is 37 agreeing plus 6 half-rated, and a reader
+    applying the prose rule to it computes 37. This docstring claimed the
+    difference was vacuous everywhere until 16 Aug 2026; the class split is now
+    carried on the audit so the 43 reconciles to either rule without anyone
+    recomputing it by hand.
     """
     return left is None or right is None or left == right
 
@@ -192,6 +210,14 @@ def _audit(con: duckdb.DuckDBPyConnection, mainline: str, *, schema: str) -> Twi
     gym_row = con.execute(
         _GYM.format(schema=schema, floor=GYM_CONTEST_ID_FLOOR, gap=CONTEST_ID_GAP)
     ).fetchone()
+    reversed_classes = {
+        "rating_agree": 0,
+        "both_unrated": 0,
+        "exactly_one_unrated": 0,
+        "rating_differs": 0,
+    }
+    for _, _, left_rating, right_rating in reversed_rows:
+        reversed_classes[_rating_class(left_rating, right_rating)] += 1
     return TwinAudit(
         reversed_pairs=tuple(
             (left, right)
@@ -199,6 +225,10 @@ def _audit(con: duckdb.DuckDBPyConnection, mainline: str, *, schema: str) -> Twi
             if _passes_rating(left_rating, right_rating)
         ),
         reversed_name_matches=len(reversed_rows),
+        reversed_rating_agree=reversed_classes["rating_agree"],
+        reversed_both_unrated=reversed_classes["both_unrated"],
+        reversed_exactly_one_unrated=reversed_classes["exactly_one_unrated"],
+        reversed_rating_differs=reversed_classes["rating_differs"],
         both_published=tuple((left, right) for left, right, _, _ in both_rows),
         both_published_passing_rating=tuple(
             (left, right)

@@ -240,6 +240,49 @@ def test_each_twin_invariant_can_fail(field: str, value: int, expected: str) -> 
     assert any(expected in problem for problem in problems), problems
 
 
+def _audit(**changes: int) -> twins.TwinAudit:
+    base: dict[str, Any] = {
+        "reversed_name_matches": 4,
+        "reversed_rating_agree": 1,
+        "reversed_both_unrated": 1,
+        "reversed_exactly_one_unrated": 1,
+        "reversed_rating_differs": 1,
+        "reversed_pairs": (("500E", "501E"), ("600F", "601F"), ("700G", "701G")),
+    }
+    base.update(changes)
+    return twins.TwinAudit(**base)
+
+
+def test_a_consistent_reversed_audit_raises_nothing() -> None:
+    report = dataclasses.replace(
+        _base_report(),
+        twin=dataclasses.replace(_base_report().twin, audit=_audit()),
+    )
+    assert matrix.check_invariants(report) == []
+
+
+@pytest.mark.parametrize(
+    ("changes", "expected"),
+    [
+        ({"reversed_rating_differs": 2}, "reversed rating classes sum to"),
+        ({"reversed_name_matches": 5}, "reversed rating classes sum to"),
+        ({"reversed_rating_agree": 0}, "admitting classes hold"),
+        ({"reversed_pairs": (("500E", "501E"),)}, "admitting classes hold"),
+    ],
+)
+def test_the_reversed_reconciliation_can_fail(changes: dict[str, Any], expected: str) -> None:
+    """Neither invariant catches every mutation, which is why there are two.
+
+    A miscounted class breaks the sum; a clause that stops matching its classes
+    breaks the passing count. A single check on either would let the other
+    through.
+    """
+    base = _base_report()
+    report = dataclasses.replace(base, twin=dataclasses.replace(base.twin, audit=_audit(**changes)))
+    problems = matrix.check_invariants(report)
+    assert any(expected in problem for problem in problems), problems
+
+
 def test_pinned_counts_reject_the_fixture() -> None:
     """The real-data half must NOT pass on synthetic data - that is the boundary."""
     problems = matrix.check_real_data(_base_report())
