@@ -19,6 +19,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 from __future__ import annotations
 
 import dataclasses
+import json
 import pathlib
 from typing import Any
 
@@ -242,3 +243,76 @@ def test_pinned_counts_reject_the_fixture() -> None:
     """The real-data half must NOT pass on synthetic data - that is the boundary."""
     problems = matrix.check_real_data(_base_report())
     assert len(problems) == len(matrix.REAL_DATA_COUNTS)
+
+
+def test_two_writes_are_byte_identical(tmp_path: pathlib.Path) -> None:
+    """Byte-reproducibility, and an honest statement of what this cannot prove.
+
+    (user_key, problem_key) is unique in the response matrix, so the COPY's
+    ORDER BY is a total order and the file is reproducible. This asserts the
+    positive.
+
+    IT CANNOT DETECT THE ORDER BY BEING REMOVED. Deleting it leaves this test
+    green, because a fixture of a handful of rows never engages DuckDB's
+    parallel writer - the same vacuity as the gym floor in the twin rule, and
+    the reason the project treats a fixture that is merely valid as different
+    from one that is representative. Sizing the fixture up until parallelism
+    engages would make the negative case nondeterministic rather than detectable,
+    which is not a test.
+
+    NOTHING CURRENTLY GATES ON THIS. The artefact is 235 MB and is not
+    committed; the committed half is the manifest, which compares counts, and
+    counts do not depend on row order. The ORDER BY is kept because it costs one
+    clause and makes the artefact md5-comparable if a later gate wants that -
+    not because a gate reads it today. Said out loud so a reader does not
+    mistake this for protection it is not providing.
+    """
+    outputs = []
+    for tag in ("a", "b"):
+        out = tmp_path / f"{tag}.parquet"
+        con = _warehouse(tmp_path / f"{tag}.duckdb")
+        try:
+            matrix.build(con, out)
+        finally:
+            con.close()
+        outputs.append(out)
+    # Separate databases and separate connections, so this also catches a
+    # dependence on connection state rather than only on writer ordering.
+    assert outputs[0].read_bytes() == outputs[1].read_bytes()
+
+
+def test_manifest_round_trips_and_detects_a_stale_count(
+    tmp_path: pathlib.Path,
+) -> None:
+    report = _report(tmp_path)
+    path = tmp_path / "nested" / "responses.manifest.json"
+    matrix.write_manifest(report, path)
+    assert matrix.compare_manifest(report, path) == []
+
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    payload["counts"]["merged_responses"] += 1
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    stale = matrix.compare_manifest(report, path)
+    assert any("counts.merged_responses" in line for line in stale)
+
+
+def test_a_missing_manifest_is_reported_not_silently_passed(
+    tmp_path: pathlib.Path,
+) -> None:
+    report = _report(tmp_path)
+    stale = matrix.compare_manifest(report, tmp_path / "absent.json")
+    assert len(stale) == 1
+    assert "no committed manifest" in stale[0]
+
+
+def test_the_derived_rates_come_from_the_counts_beside_them(
+    tmp_path: pathlib.Path,
+) -> None:
+    """A manifest whose rate disagrees with its own counts would gate nothing."""
+    report = _report(tmp_path)
+    payload = matrix.build_manifest(report)
+    responses = payload["counts"]["bank_responses"]
+    accepted = payload["counts"]["bank_accepted"]
+    rate = accepted / responses
+    assert payload["derived"]["bank_base_rate_pct"] == round(100.0 * rate, 4)
+    assert payload["derived"]["bank_baseline_brier"] == round(rate * (1 - rate), 6)

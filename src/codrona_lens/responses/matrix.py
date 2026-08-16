@@ -48,10 +48,12 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import pathlib
 import sys
 from dataclasses import dataclass
+from typing import Any
 
 import duckdb
 
@@ -305,6 +307,102 @@ def check_real_data(report: BuildReport) -> list[str]:
     ]
 
 
+MANIFEST_NOTE = (
+    "Counts describing responses.parquet, which is 235 MB and lives under "
+    "~/codrona-data/ rather than in the repository. This file is the committed "
+    "half: it is what a reviewer can read and what --verify-current compares a "
+    "fresh build against. No timestamp, because a wall-clock field would make "
+    "every regeneration a diff and destroy the one property a committed artefact "
+    "has - that regenerating it and finding no change means nothing moved."
+)
+
+
+def build_manifest(report: BuildReport) -> dict[str, Any]:
+    """Everything gated, as integers plus two figures derived from them.
+
+    The rates are computed here from two integer counts rather than read back
+    from the engine, so the manifest cannot drift from the counts beside it.
+    """
+    rate = report.bank_accepted / report.bank_responses
+    return {
+        "artefact": "responses.parquet",
+        "note": MANIFEST_NOTE,
+        "counts": {
+            "fact_rows": report.fact_rows,
+            "distinct_submission_keys": report.distinct_submission_keys,
+            "attempts": report.attempts,
+            "unmerged_responses": report.unmerged_responses,
+            "merged_responses": report.merged_responses,
+            "merged_attempts": report.merged_attempts,
+            "collapsed_duplicates": report.collapsed,
+            "merged_keys": report.merged_keys,
+            "twin_map_entries": len(report.twin.mapping),
+            "bank_responses": report.bank_responses,
+            "bank_accepted": report.bank_accepted,
+        },
+        "twin_rule": {
+            "gap_matches": report.twin.gap_matches,
+            "qualifying": report.twin.qualifying,
+            "rating_agree": report.twin.rating_agree,
+            "both_unrated": report.twin.both_unrated,
+            "exactly_one_unrated": report.twin.exactly_one_unrated,
+            "rating_differs": report.twin.rating_differs,
+        },
+        "twin_excluded": {
+            "reversed_name_matches": report.twin.audit.reversed_name_matches,
+            "reversed_passing_rating": len(report.twin.audit.reversed_pairs),
+            "both_published": len(report.twin.audit.both_published),
+            "both_published_passing_rating": len(report.twin.audit.both_published_passing_rating),
+            "gym_pairs": report.twin.audit.gym_pairs,
+        },
+        "derived": {
+            "bank_base_rate_pct": round(100.0 * rate, 4),
+            "bank_baseline_brier": round(rate * (1.0 - rate), 6),
+        },
+    }
+
+
+def write_manifest(report: BuildReport, path: pathlib.Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = json.dumps(build_manifest(report), indent=2, ensure_ascii=False)
+    path.write_text(payload + "\n", encoding="utf-8")
+
+
+def compare_manifest(report: BuildReport, path: pathlib.Path) -> list[str]:
+    """Report every count where a fresh build disagrees with the committed file.
+
+    THIS IS THE GATE G12 DOES NOT PROVIDE. G12 checks the build; it says nothing
+    about the file already on disk. Rebuild fct_submission, forget to regenerate,
+    and Stage A fits a stale matrix while every test stays green - the exact
+    failure the observatory export's --verify-current exists for.
+
+    IT IS DELIBERATELY NOT A PRE-COMMIT HOOK. Regenerating the observatory means
+    five small aggregates; this means a full scan of 23.6 million fact rows with
+    two window functions. A gate slow enough to be skipped is a gate that will be
+    skipped, so this is a maintainer command run before a fit and before a
+    release, and that limit is stated rather than hidden behind a green hook.
+    """
+    if not path.exists():
+        return [f"{path}: no committed manifest - run --check to write one"]
+    committed: Any = json.loads(path.read_text(encoding="utf-8"))
+    fresh = build_manifest(report)
+    problems: list[str] = []
+    for section in ("counts", "twin_rule", "twin_excluded", "derived"):
+        for name, value in fresh[section].items():
+            was = committed.get(section, {}).get(name)
+            if was != value:
+                problems.append(f"{section}.{name}: committed {was}, measured {value}")
+    return problems
+
+
+def default_manifest() -> pathlib.Path:
+    return repo_root() / "exports" / "model" / "responses.manifest.json"
+
+
+def repo_root() -> pathlib.Path:
+    return pathlib.Path(__file__).resolve().parents[3]
+
+
 def default_out() -> pathlib.Path:
     """Artefact path, env-driven. Never the repo - this is hundreds of MB."""
     from_env = os.environ.get("CODRONA_RESPONSES")
@@ -328,13 +426,27 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="measure and gate without writing the artefact",
     )
+    parser.add_argument("--manifest", type=pathlib.Path, default=None)
+    parser.add_argument(
+        "--verify-current",
+        action="store_true",
+        help="do not write; fail if a fresh build disagrees with the manifest",
+    )
     args = parser.parse_args(argv)
 
     database = args.database or warehouse.default_database()
+    manifest_path = args.manifest or default_manifest()
+    if args.verify_current and not database.exists():
+        # A contributor without the warehouse genuinely cannot regenerate this,
+        # so blocking them would be wrong. Said out loud rather than passing
+        # quietly: this is a maintainer gate.
+        print(f"no warehouse at {database} - matrix freshness NOT verified")
+        return 0
     if not database.exists():
         print(f"no warehouse at {database}", file=sys.stderr)
         return 1
-    out_path = None if args.no_write else (args.out or default_out())
+    write_artefact = not (args.no_write or args.verify_current)
+    out_path = (args.out or default_out()) if write_artefact else None
 
     con = warehouse.connect(database)
     try:
@@ -357,7 +469,23 @@ def main(argv: list[str] | None = None) -> int:
     for line in report.twin.audit.describe():
         print(f"  {line}")
     if out_path is not None:
+        write_manifest(report, manifest_path)
         print(f"wrote {out_path}")
+        print(f"wrote {manifest_path}")
+
+    if args.verify_current:
+        stale = compare_manifest(report, manifest_path)
+        if stale:
+            print(f"\n{len(stale)} count(s) stale in {manifest_path}:", file=sys.stderr)
+            for line in stale:
+                print(f"  {line}", file=sys.stderr)
+            print(
+                "run: python3 -m codrona_lens.responses.matrix --real-data",
+                file=sys.stderr,
+            )
+            return 1
+        print(f"\nmanifest is current with the warehouse: {manifest_path}")
+        return 0
 
     problems = check_invariants(report)
     if args.real_data:

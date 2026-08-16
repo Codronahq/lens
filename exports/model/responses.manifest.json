@@ -1,0 +1,36 @@
+{
+  "artefact": "responses.parquet",
+  "note": "Counts describing responses.parquet, which is 235 MB and lives under ~/codrona-data/ rather than in the repository. This file is the committed half: it is what a reviewer can read and what --verify-current compares a fresh build against. No timestamp, because a wall-clock field would make every regeneration a diff and destroy the one property a committed artefact has - that regenerating it and finding no change means nothing moved.",
+  "counts": {
+    "fact_rows": 23607105,
+    "distinct_submission_keys": 23607105,
+    "attempts": 22843153,
+    "unmerged_responses": 11176774,
+    "merged_responses": 11158572,
+    "merged_attempts": 22843153,
+    "collapsed_duplicates": 18202,
+    "merged_keys": 1182,
+    "twin_map_entries": 1183,
+    "bank_responses": 10817555,
+    "bank_accepted": 6303067
+  },
+  "twin_rule": {
+    "gap_matches": 1183,
+    "qualifying": 1183,
+    "rating_agree": 1174,
+    "both_unrated": 9,
+    "exactly_one_unrated": 0,
+    "rating_differs": 0
+  },
+  "twin_excluded": {
+    "reversed_name_matches": 74,
+    "reversed_passing_rating": 43,
+    "both_published": 4,
+    "both_published_passing_rating": 1,
+    "gym_pairs": 606
+  },
+  "derived": {
+    "bank_base_rate_pct": 58.267,
+    "bank_baseline_brier": 0.243166
+  }
+}
