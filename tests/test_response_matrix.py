@@ -178,6 +178,27 @@ def test_duplicate_submission_key_fails_the_uniqueness_invariant(
     assert any("ordering key not unique" in problem for problem in problems)
 
 
+def _split(**changes: object) -> matrix.SplitReport:
+    """Consistent against _base_report: 1 + 2 == 3 bank responses, parts == test.
+
+    The numbers are small because the fixture bank is three responses. Tests
+    that need an INCONSISTENT split pass it explicitly rather than relying on
+    this one drifting.
+    """
+    base: dict[str, object] = {
+        "cutoff": "2026-01-01",
+        "train": 1,
+        "test": 2,
+        "g1_known_user_known_item": 1,
+        "g3_new_item_only": 1,
+        "g2_new_user_only": 0,
+        "both_new": 0,
+        "g1_accepted": 1,
+    }
+    base.update(changes)
+    return matrix.SplitReport(**base)  # type: ignore[arg-type]
+
+
 def _base_report() -> matrix.BuildReport:
     twin = twins.TwinMap(
         mapping={"101A": "100A"},
@@ -200,6 +221,7 @@ def _base_report() -> matrix.BuildReport:
         bank_responses=3,
         bank_accepted=2,
         columns=(("user_key", "VARCHAR"), ("problem_key", "VARCHAR")),
+        split=_split(),
     )
 
 
@@ -281,6 +303,140 @@ def test_the_reversed_reconciliation_can_fail(changes: dict[str, Any], expected:
     report = dataclasses.replace(base, twin=dataclasses.replace(base.twin, audit=_audit(**changes)))
     problems = matrix.check_invariants(report)
     assert any(expected in problem for problem in problems), problems
+
+
+def test_a_consistent_split_raises_nothing() -> None:
+    assert matrix.check_invariants(_base_report()) == []
+
+
+@pytest.mark.parametrize(
+    ("changes", "expected"),
+    [
+        ({"train": 2}, "does not partition the bank"),
+        ({"test": 3}, "does not partition the bank"),
+        ({"g3_new_item_only": 2}, "partition parts sum to"),
+        ({"both_new": 1}, "partition parts sum to"),
+        ({"g1_accepted": 2}, "accepted inside a G1 partition"),
+        ({"g1_known_user_known_item": 0, "g3_new_item_only": 2}, "G1 partition is empty"),
+    ],
+)
+def test_the_split_reconciliations_can_fail(changes: dict[str, object], expected: str) -> None:
+    """The arithmetic error that reached eval-gates.md, as a failing gate.
+
+    Three of four published partition counts were multiplications of rounded
+    shares and summed to twenty-eight more than the population they partition.
+    Nothing could have gone red. These can.
+    """
+    base = _base_report()
+    report = dataclasses.replace(base, split=_split(**changes))
+    problems = matrix.check_invariants(report)
+    assert any(expected in problem for problem in problems), problems
+
+
+def test_the_split_is_measured_from_the_matrix_not_assumed(
+    tmp_path: pathlib.Path,
+) -> None:
+    """Build against the fixture and check the partition reconciles for real.
+
+    _split() is hand-written and could agree with a broken measure_split. This
+    exercises the query.
+    """
+    con = _warehouse(tmp_path / "w.duckdb")
+    try:
+        report = matrix.build(con, None, split_cutoff="2000-01-01")
+    finally:
+        con.close()
+    split = report.split
+    assert split.cutoff == "2000-01-01"
+    assert split.train + split.test == report.bank_responses
+    assert split.parts == split.test
+    assert split.new_item_responses == split.g3_new_item_only + split.both_new
+    # Everything in the fixture postdates 2000, so nothing trains and every
+    # held-out response has an unseen user and an unseen item.
+    assert split.train == 0
+    assert split.g1_known_user_known_item == 0
+    assert split.both_new == split.test
+
+
+def test_moving_the_cutoff_moves_the_partition(tmp_path: pathlib.Path) -> None:
+    """A cutoff past every fixture row puts everything in train and nothing in test."""
+    con = _warehouse(tmp_path / "w.duckdb")
+    try:
+        late = matrix.build(con, None, split_cutoff="2099-01-01")
+    finally:
+        con.close()
+    assert late.split.test == 0
+    assert late.split.train == late.bank_responses
+    assert late.split.parts == 0
+    assert matrix.check_invariants(late) == []
+
+
+def test_the_manifest_carries_the_split(tmp_path: pathlib.Path) -> None:
+    report = _report(tmp_path)
+    payload = matrix.build_manifest(report)
+    assert payload["split"]["cutoff"] == report.split.cutoff
+    assert payload["split"]["test"] == report.split.test
+    path = tmp_path / "responses.manifest.json"
+    matrix.write_manifest(report, path)
+    assert matrix.compare_manifest(report, path) == []
+    committed = json.loads(path.read_text(encoding="utf-8"))
+    committed["split"]["g1_accepted"] += 1
+    path.write_text(json.dumps(committed, indent=2) + "\n", encoding="utf-8")
+    problems = matrix.compare_manifest(report, path)
+    assert any("split.g1_accepted" in line for line in problems), problems
+
+
+def test_a_response_exactly_on_the_cutoff_is_not_lost(tmp_path: pathlib.Path) -> None:
+    """The boundary belongs to test, and every row lands on exactly one side.
+
+    Every fixture row carries `2020-01-01`, so a cutoff of `2020-01-01` puts all
+    of them precisely on the boundary. Train is `< cutoff` and test is
+    `>= cutoff`; narrowing test to `> cutoff` would drop every one of them from
+    both sides, and nothing else in this file exercises that instant.
+    """
+    con = _warehouse(tmp_path / "w.duckdb")
+    try:
+        report = matrix.build(con, None, split_cutoff="2020-01-01")
+    finally:
+        con.close()
+    split = report.split
+    assert split.train == 0
+    assert split.test == report.bank_responses
+    assert split.test > 0
+    assert split.train + split.test == report.bank_responses
+    # Not `check_invariants(report) == []`: with nothing before the cutoff no
+    # user or item is known, so the empty-G1 invariant fires and is right to.
+    # This test is about the boundary instant, so it asserts only that the two
+    # reconciliations stay silent.
+    problems = matrix.check_invariants(report)
+    assert not [p for p in problems if "does not partition" in p or "parts sum to" in p], problems
+    assert any("G1 partition is empty" in p for p in problems), problems
+
+
+def test_the_cli_survives_an_empty_held_out_period(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """The default cutoff postdates every fixture row, so test is empty.
+
+    This is the CLI path, which no other test covers, and it divided a share by
+    an empty held-out period before 17 Aug 2026. A cutoff after all data is a
+    legitimate configuration - it is what a fresh warehouse looks like.
+    """
+    database = tmp_path / "w.duckdb"
+    _warehouse(database).close()
+    code = matrix.main(
+        [
+            "--database",
+            str(database),
+            "--out",
+            str(tmp_path / "r.parquet"),
+            "--manifest",
+            str(tmp_path / "m.json"),
+        ]
+    )
+    assert code == 0
+    out = capsys.readouterr().out
+    assert "held-out period is empty" in out
 
 
 def test_pinned_counts_reject_the_fixture() -> None:

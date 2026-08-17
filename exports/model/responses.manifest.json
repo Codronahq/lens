@@ -76,6 +76,16 @@
     "exactly_one_unrated": 0,
     "rating_differs": 0
   },
+  "split": {
+    "cutoff": "2026-01-01",
+    "train": 6444517,
+    "test": 4373038,
+    "g1_known_user_known_item": 1815276,
+    "g3_new_item_only": 1609380,
+    "g2_new_user_only": 577346,
+    "both_new": 371036,
+    "g1_accepted": 1079812
+  },
   "twin_excluded": {
     "reversed_name_matches": 74,
     "reversed_passing_rating": 43,

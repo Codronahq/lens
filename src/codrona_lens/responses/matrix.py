@@ -166,6 +166,66 @@ where ranked.rn = 1
 """
 
 
+DEFAULT_SPLIT_CUTOFF = "2026-01-01"
+
+
+@dataclass(frozen=True)
+class SplitReport:
+    """The temporal evaluation split, partitioned by which gate can score it.
+
+    A held-out response is scoreable by G1 only if both its user and its item
+    carry fitted parameters, meaning both appeared before the cutoff. The rest
+    belong to G2 (new user), G3 (new item) or both, and a held-out response no
+    gate claims is a response nothing measures.
+
+    THESE COUNTS LIVE HERE BECAUSE PROSE DERIVED FROM THIS ARTEFACT HAS NOTHING
+    WATCHING IT. When the partition was first published in
+    ``quality/eval-gates.md`` on 17 Aug 2026, three of its four counts were
+    arithmetic on rounded shares rather than counts, and summed to twenty-eight
+    more than the population they partition. The reconciliations in
+    ``check_invariants`` turn that class of error into a failing gate instead of
+    something a reader has to notice.
+    """
+
+    cutoff: str
+    train: int
+    test: int
+    g1_known_user_known_item: int
+    g3_new_item_only: int
+    g2_new_user_only: int
+    both_new: int
+    g1_accepted: int
+
+    @property
+    def parts(self) -> int:
+        return (
+            self.g1_known_user_known_item
+            + self.g3_new_item_only
+            + self.g2_new_user_only
+            + self.both_new
+        )
+
+    @property
+    def new_item_responses(self) -> int:
+        """G3's real population: everything landing on an item with no history."""
+        return self.g3_new_item_only + self.both_new
+
+    @property
+    def g1_base_rate(self) -> float:
+        return self.g1_accepted / self.g1_known_user_known_item
+
+    @property
+    def g1_baseline_brier(self) -> float:
+        """The constant predictor on the partition G1 scores.
+
+        Not the whole bank and not the whole held-out period. Those are
+        different populations and give different targets - 0.243166, 0.238812
+        and this one were 1.79% apart when measured.
+        """
+        rate = self.g1_base_rate
+        return rate * (1 - rate)
+
+
 @dataclass(frozen=True)
 class BuildReport:
     """Counts a build must produce, each paired with something it must match."""
@@ -185,6 +245,7 @@ class BuildReport:
     # not what somebody believed it produced. No default: an empty schema in a
     # manifest is a gate that cannot fail, and a default is how one gets there.
     columns: tuple[tuple[str, str], ...]
+    split: SplitReport
 
     @property
     def collapsed(self) -> int:
@@ -207,11 +268,61 @@ def _register_twin_map(con: duckdb.DuckDBPyConnection, twin: twins.TwinMap) -> N
         )
 
 
+_SPLIT = """
+with bank as (select * from response_matrix where in_public_problemset),
+     tr as (select * from bank where submitted_at <  timestamp '{cutoff}'),
+     te as (select * from bank where submitted_at >= timestamp '{cutoff}'),
+     tu as (select distinct user_key from tr),
+     tp as (select distinct problem_key from tr),
+     tagged as (
+        select is_accepted,
+               user_key in (select user_key from tu) as known_user,
+               problem_key in (select problem_key from tp) as known_item
+        from te
+     )
+select (select count(*) from tr) as train,
+       (select count(*) from te) as test,
+       count(*) filter (where known_user and known_item) as g1,
+       count(*) filter (where known_user and not known_item) as g3_only,
+       count(*) filter (where not known_user and known_item) as g2_only,
+       count(*) filter (where not known_user and not known_item) as both_new,
+       count(*) filter (where known_user and known_item and is_accepted) as g1_ok
+from tagged
+"""
+
+
+def measure_split(
+    con: duckdb.DuckDBPyConnection, cutoff: str = DEFAULT_SPLIT_CUTOFF
+) -> SplitReport:
+    """Partition the held-out period by which gate can score each response.
+
+    Reads ``response_matrix``, so it runs after ``build`` has registered it. One
+    pass: the four parts are FILTER aggregates over a single scan rather than
+    four set-difference queries, which is what makes them reconcile by
+    construction rather than by luck.
+    """
+    row = con.execute(_SPLIT.format(cutoff=cutoff)).fetchone()
+    if row is None:
+        raise SystemExit("split measurement returned no row")
+    train, test, g1, g3_only, g2_only, both_new, g1_ok = (int(value) for value in row)
+    return SplitReport(
+        cutoff=cutoff,
+        train=train,
+        test=test,
+        g1_known_user_known_item=g1,
+        g3_new_item_only=g3_only,
+        g2_new_user_only=g2_only,
+        both_new=both_new,
+        g1_accepted=g1_ok,
+    )
+
+
 def build(
     con: duckdb.DuckDBPyConnection,
     out_path: pathlib.Path | None,
     *,
     schema: str = SCHEMA_NAME,
+    split_cutoff: str = DEFAULT_SPLIT_CUTOFF,
 ) -> BuildReport:
     """Derive the twin map, build the response matrix, and measure both sides."""
     twin = twins.derive(con, schema=schema)
@@ -252,6 +363,7 @@ def build(
         con,
         "select count(*) from response_matrix where in_public_problemset and is_accepted",
     )
+    split = measure_split(con, split_cutoff)
 
     if out_path is not None:
         out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -274,6 +386,7 @@ def build(
         bank_responses=bank_responses,
         bank_accepted=bank_accepted,
         columns=columns,
+        split=split,
     )
 
 
@@ -339,6 +452,30 @@ def check_invariants(report: BuildReport) -> list[str]:
             f"{len(audit.reversed_pairs)} reversed pairs pass the rating clause "
             f"but its three admitting classes hold {passing}. The clause and the "
             "classes have stopped describing the same rule."
+        )
+    split = report.split
+    if split.train + split.test != report.bank_responses:
+        problems.append(
+            f"split does not partition the bank: train {split.train:,} plus test "
+            f"{split.test:,} against {report.bank_responses:,} bank responses. Every "
+            "response falls on one side of a timestamp, so a gap means the cutoff is "
+            "dropping rows rather than dividing them."
+        )
+    if split.parts != split.test:
+        problems.append(
+            f"partition parts sum to {split.parts:,} against {split.test:,} held-out "
+            "responses. The four classes are exclusive and exhaustive by construction, "
+            "so a gap means a response is counted twice or not at all."
+        )
+    if split.g1_accepted > split.g1_known_user_known_item:
+        problems.append(
+            f"{split.g1_accepted:,} accepted inside a G1 partition of "
+            f"{split.g1_known_user_known_item:,}."
+        )
+    if split.test and not split.g1_known_user_known_item:
+        problems.append(
+            "the G1 partition is empty while the held-out period is not, so the "
+            "baseline it publishes is undefined and the gate scores nothing."
         )
     return problems
 
@@ -412,6 +549,16 @@ def build_manifest(report: BuildReport) -> dict[str, Any]:
             "both_unrated": report.twin.both_unrated,
             "exactly_one_unrated": report.twin.exactly_one_unrated,
             "rating_differs": report.twin.rating_differs,
+        },
+        "split": {
+            "cutoff": report.split.cutoff,
+            "train": report.split.train,
+            "test": report.split.test,
+            "g1_known_user_known_item": report.split.g1_known_user_known_item,
+            "g3_new_item_only": report.split.g3_new_item_only,
+            "g2_new_user_only": report.split.g2_new_user_only,
+            "both_new": report.split.both_new,
+            "g1_accepted": report.split.g1_accepted,
         },
         "twin_excluded": {
             "reversed_name_matches": report.twin.audit.reversed_name_matches,
@@ -506,7 +653,7 @@ def compare_manifest(report: BuildReport, path: pathlib.Path) -> list[str]:
     committed: Any = json.loads(path.read_text(encoding="utf-8"))
     fresh = build_manifest(report)
     problems: list[str] = []
-    for section in ("counts", "twin_rule", "twin_excluded", "derived"):
+    for section in ("counts", "twin_rule", "twin_excluded", "derived", "split"):
         for name, value in fresh[section].items():
             was = committed.get(section, {}).get(name)
             if was != value:
@@ -601,6 +748,11 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="measure and gate without writing the artefact",
     )
+    parser.add_argument(
+        "--split-cutoff",
+        default=DEFAULT_SPLIT_CUTOFF,
+        help="temporal evaluation cutoff; moving it moves the G1 baseline",
+    )
     parser.add_argument("--manifest", type=pathlib.Path, default=None)
     parser.add_argument(
         "--verify-current",
@@ -657,7 +809,7 @@ def main(argv: list[str] | None = None) -> int:
 
     con = warehouse.connect(database)
     try:
-        report = build(con, out_path, schema=args.schema)
+        report = build(con, out_path, schema=args.schema, split_cutoff=args.split_cutoff)
     finally:
         con.close()
 
@@ -673,6 +825,22 @@ def main(argv: list[str] | None = None) -> int:
     print(f"bank base rate       {rate:>12.4f}%")
     print(f"bank baseline Brier  {rate / 100 * (1 - rate / 100):>12.6f}")
     print(f"artefact columns     {len(report.columns):>12,}")
+    split = report.split
+    print(f"\nevaluation split at {split.cutoff} (train {split.train:,} / test {split.test:,}):")
+    if not split.test:
+        # A cutoff after every response is a legitimate configuration, not an
+        # error, and dividing a share by an empty held-out period is not.
+        print("  held-out period is empty at this cutoff; nothing to partition")
+    else:
+        for label, n in (
+            ("G1  known user x known item", split.g1_known_user_known_item),
+            ("G3  new item only", split.g3_new_item_only),
+            ("G2  new user only", split.g2_new_user_only),
+            ("G2nG3  both new", split.both_new),
+        ):
+            print(f"  {label:<28}{n:>12,}  {100 * n / split.test:>8.4f}%")
+        if split.g1_known_user_known_item:
+            print(f"  G1 baseline Brier {split.g1_baseline_brier:>22.6f}")
     print("\nexcluded by the committed twin rule, counted not dropped:")
     for line in report.twin.audit.describe():
         print(f"  {line}")
