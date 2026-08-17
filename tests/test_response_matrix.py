@@ -439,6 +439,103 @@ def test_the_cli_survives_an_empty_held_out_period(
     assert "held-out period is empty" in out
 
 
+def test_the_sidecar_is_written_beside_the_artefact_and_matches(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """The boundary §14 depends on: a consumer outside lens reads this file.
+
+    Without it, `mind` can fit a stale parquet and nothing can notice, because
+    the gating manifest lives in a repo it has no access to.
+    """
+    database = tmp_path / "w.duckdb"
+    _warehouse(database).close()
+    out = tmp_path / "responses.parquet"
+    manifest = tmp_path / "committed.manifest.json"
+    assert (
+        matrix.main(["--database", str(database), "--out", str(out), "--manifest", str(manifest)])
+        == 0
+    )
+    sidecar = matrix.sidecar_manifest(out)
+    assert sidecar.name == "responses.manifest.json"
+    assert sidecar.parent == out.parent
+    assert sidecar.read_bytes() == manifest.read_bytes()
+    assert matrix.compare_sidecar(out, manifest) == []
+    assert str(sidecar) in capsys.readouterr().out
+
+
+def test_a_diverged_sidecar_is_reported(tmp_path: pathlib.Path) -> None:
+    """Byte comparison, so a formatting difference counts as divergence too."""
+    database = tmp_path / "w.duckdb"
+    _warehouse(database).close()
+    out = tmp_path / "responses.parquet"
+    manifest = tmp_path / "committed.manifest.json"
+    matrix.main(["--database", str(database), "--out", str(out), "--manifest", str(manifest)])
+    sidecar = matrix.sidecar_manifest(out)
+    payload = json.loads(sidecar.read_text(encoding="utf-8"))
+    payload["counts"]["merged_responses"] += 1
+    sidecar.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    problems = matrix.compare_sidecar(out, manifest)
+    assert any("differs from committed" in line for line in problems), problems
+
+
+def test_an_absent_sidecar_is_reported_not_passed(tmp_path: pathlib.Path) -> None:
+    database = tmp_path / "w.duckdb"
+    _warehouse(database).close()
+    out = tmp_path / "responses.parquet"
+    manifest = tmp_path / "committed.manifest.json"
+    matrix.main(["--database", str(database), "--out", str(out), "--manifest", str(manifest)])
+    matrix.sidecar_manifest(out).unlink()
+    problems = matrix.compare_sidecar(out, manifest)
+    assert len(problems) == 1
+    assert "sidecar manifest absent" in problems[0]
+
+
+def test_verify_artefact_fails_on_a_diverged_sidecar(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """The cheap command must close this link; it is the one a consumer uses."""
+    database = tmp_path / "w.duckdb"
+    _warehouse(database).close()
+    out = tmp_path / "responses.parquet"
+    manifest = tmp_path / "committed.manifest.json"
+    matrix.main(["--database", str(database), "--out", str(out), "--manifest", str(manifest)])
+    matrix.sidecar_manifest(out).write_text("{}\n", encoding="utf-8")
+    code = matrix.main(["--out", str(out), "--manifest", str(manifest), "--verify-artefact"])
+    assert code == 1
+    assert "differs from committed" in capsys.readouterr().err
+
+
+def test_verify_current_also_closes_the_sidecar_link(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Both commands close it, and neither subsumes the other.
+
+    --verify-artefact is the cheap hook-able half and --verify-current the
+    maintainer command; a divergence found only by the expensive one is a
+    divergence a consumer meets first.
+    """
+    database = tmp_path / "w.duckdb"
+    _warehouse(database).close()
+    out = tmp_path / "responses.parquet"
+    manifest = tmp_path / "committed.manifest.json"
+    matrix.main(["--database", str(database), "--out", str(out), "--manifest", str(manifest)])
+    capsys.readouterr()
+    matrix.sidecar_manifest(out).write_text("{}\n", encoding="utf-8")
+    code = matrix.main(
+        [
+            "--database",
+            str(database),
+            "--out",
+            str(out),
+            "--manifest",
+            str(manifest),
+            "--verify-current",
+        ]
+    )
+    assert code == 1
+    assert "differs from committed" in capsys.readouterr().err
+
+
 def test_pinned_counts_reject_the_fixture() -> None:
     """The real-data half must NOT pass on synthetic data - that is the boundary."""
     problems = matrix.check_real_data(_base_report())

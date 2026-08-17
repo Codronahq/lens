@@ -578,6 +578,47 @@ def build_manifest(report: BuildReport) -> dict[str, Any]:
     }
 
 
+def sidecar_manifest(artefact: pathlib.Path) -> pathlib.Path:
+    """The manifest written beside the artefact, for consumers outside `lens`.
+
+    §14 makes the artefact the boundary between repos: `lens` writes, a consumer
+    reads a file and never sees the warehouse. But the gate on that artefact is
+    the manifest committed in `lens/exports/`, which a consumer has no access to
+    - so `mind` could fit a stale parquet with nothing able to notice, which is
+    the exact failure the manifest exists to prevent.
+
+    Writing it beside the artefact makes the artefact directory self-describing.
+    The committed copy stays the reviewable half and the gated one; this copy is
+    what crosses the boundary. ``compare_sidecar`` asserts they are byte
+    identical, because two copies with nothing comparing them is how the second
+    one starts lying.
+    """
+    # with_name rather than with_suffix(".manifest.json"): a multi-dot suffix is
+    # accepted on 3.12 and this repo runs 3.11, so the equivalent construction
+    # that cannot depend on that validation is the one worth having.
+    return artefact.with_name(artefact.stem + ".manifest.json")
+
+
+def compare_sidecar(artefact: pathlib.Path, manifest: pathlib.Path) -> list[str]:
+    """Byte-compare the sidecar against the committed manifest.
+
+    Bytes rather than parsed equality: the committed file is what a reviewer
+    reads and what a diff shows, so a formatting difference between the two is
+    itself a divergence worth failing on.
+    """
+    sidecar = sidecar_manifest(artefact)
+    if not sidecar.exists():
+        return [f"{sidecar}: sidecar manifest absent, so nothing outside lens can verify"]
+    if not manifest.exists():
+        return [f"{manifest}: committed manifest absent"]
+    if sidecar.read_bytes() != manifest.read_bytes():
+        return [
+            f"sidecar {sidecar} differs from committed {manifest}. Regenerate: "
+            "python3 -m codrona_lens.responses.matrix --real-data"
+        ]
+    return []
+
+
 def write_manifest(report: BuildReport, path: pathlib.Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(build_manifest(report), indent=2, ensure_ascii=False)
@@ -783,6 +824,10 @@ def main(argv: list[str] | None = None) -> int:
             return 1
         committed: Any = json.loads(manifest_path.read_text(encoding="utf-8"))
         problems = verify_artefact(artefact_path, committed)
+        # The cheap command closes the sidecar link too: it is a byte
+        # comparison of two files, and it is the link a consumer outside
+        # lens depends on entirely.
+        problems += compare_sidecar(artefact_path, manifest_path)
         if problems:
             print(f"{len(problems)} disagreement(s) with {manifest_path}:", file=sys.stderr)
             for problem in problems:
@@ -846,8 +891,11 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  {line}")
     if out_path is not None:
         write_manifest(report, manifest_path)
+        sidecar = sidecar_manifest(out_path)
+        write_manifest(report, sidecar)
         print(f"wrote {out_path}")
         print(f"wrote {manifest_path}")
+        print(f"wrote {sidecar}")
 
     if args.verify_current:
         stale = compare_manifest(report, manifest_path)
@@ -857,6 +905,7 @@ def main(argv: list[str] | None = None) -> int:
         # artefact fails here and skips under --verify-artefact, because this is
         # the command run before a fit and there is then nothing to fit.
         stale += verify_artefact(artefact_path, build_manifest(report))
+        stale += compare_sidecar(artefact_path, manifest_path)
         if stale:
             print(f"\n{len(stale)} disagreement(s) against the warehouse:", file=sys.stderr)
             for line in stale:
